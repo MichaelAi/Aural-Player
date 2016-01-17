@@ -4,5 +4,6 @@ Scale=400
 Scale=150
 Scale=125
 Scale=100
+TargetSize=16
 TargetSize=24
 Language=EN-US
