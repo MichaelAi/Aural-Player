@@ -1,0 +1,81 @@
+﻿<control:TitleBarPage
+    x:Class="Aural.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Aural"
+    xmlns:control="using:Aural.Control"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:vm="using:Aural.ViewModel"
+    xmlns:view="using:Aural.View"
+    control:TitleBarPage.BackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
+    control:TitleBarPage.ForegroundColor="{ThemeResource SystemColorWindowTextColor}"
+    control:TitleBarPage.ButtonBackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
+    control:TitleBarPage.ButtonForegroundColor="{ThemeResource SystemColorWindowTextColor}"
+    DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <control:TitleBarPage.Resources>
+        <MenuFlyout x:Key="OrderByFlyout">
+            <MenuFlyoutItem Text="Track Number" Command="{Binding OrderPlaylistCommand}" CommandParameter="tracknumber"/>
+            <MenuFlyoutItem Text="Title" Command="{Binding OrderPlaylistCommand}" CommandParameter="title"/>
+            <MenuFlyoutItem Text="Artist" Command="{Binding OrderPlaylistCommand}" CommandParameter="artist"/>
+            <MenuFlyoutItem Text="Album" Command="{Binding OrderPlaylistCommand}" CommandParameter="album"/>
+            <MenuFlyoutItem Text="Album Artist" Command="{Binding OrderPlaylistCommand}" CommandParameter="albumartist"/>
+            <MenuFlyoutItem Text="Year" Command="{Binding OrderPlaylistCommand}" CommandParameter="year"/>
+            <MenuFlyoutItem Text="Genre" Command="{Binding OrderPlaylistCommand}" CommandParameter="genre"/>
+            <MenuFlyoutItem Text="Rating" Command="{Binding OrderPlaylistCommand}" CommandParameter="rating"/>
+            <MenuFlyoutItem Text="Duration" Command="{Binding OrderPlaylistCommand}" CommandParameter="duration"/>
+        </MenuFlyout>
+
+        <Flyout x:Key="SearchFlyout">
+            <StackPanel Width="300">
+                <AutoSuggestBox Text="{Binding SearchParameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Search..." QueryIcon="Find"/>
+            </StackPanel>
+        </Flyout>
+    </control:TitleBarPage.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+        <Grid Background="{ThemeResource SystemColorButtonFaceColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Height="60" Width="50" Margin="10,0,10,0" Source="{Binding NowPlayingItem.AlbumArt.Source}"/>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="{Binding NowPlayingItem.Properties.Title}"/>
+                    <TextBlock Text="{Binding NowPlayingItem.Properties.Artist}"/>
+                    <TextBlock Text="{Binding NowPlayingItem.Properties.Album}"/>
+                </StackPanel>
+            </Grid>
+            
+
+            <CommandBar Grid.Column="1" Background="{ThemeResource SystemColorButtonFaceColor}">
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton Icon="Save" Label="Save Playlist"/>
+                    <AppBarButton Icon="OpenFile" Label="Open" Command="{Binding OpenFilesCommand}"/>
+                    <AppBarButton Icon="Setting" Label="Settings"/>
+                </CommandBar.SecondaryCommands>
+                <AppBarButton Icon="List" Label="Playlists"/>
+                <AppBarButton Icon="Sort" Label="Order By" Flyout="{StaticResource OrderByFlyout}"/>
+                <AppBarButton Icon="Find" Label="Search" Flyout="{StaticResource SearchFlyout}"/>
+            </CommandBar>
+            
+        </Grid>
+        
+        <view:PlaylistControl Grid.Row="1"/>
+        <view:PlayerControl Grid.Row="2"/>
+    </Grid>
+</control:TitleBarPage>
+
