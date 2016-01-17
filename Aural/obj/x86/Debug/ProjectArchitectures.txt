@@ -1,0 +1,2 @@
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\Aural.csproj;x86
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\BackgroundAudioTask\BackgroundAudioTask.csproj;x86
