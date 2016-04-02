@@ -197,6 +197,7 @@ namespace Aural.ViewModel
 
         private void TransferPlaylist()
         {
+            LabelPlaylistNumbers();
             CurrentPlaylist = DisplayedPlaylist;
         }
 
@@ -263,12 +264,40 @@ namespace Aural.ViewModel
                     default:
                         break;
                 }
+                DisplayedPlaylist.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
                 TransferPlaylist();
             }
         }
 
+        private void LabelPlaylistNumbers()
+        {
+             int playlistItemCounter = 1;
+                foreach (var item in DisplayedPlaylist)
+                {
+                item.PlaylistTrackNo = playlistItemCounter;
+                playlistItemCounter += 1;
+                }
+        }
+
+        object m_ReorderItem;
+        int m_ReorderIndexFrom;
+
         private void HandleReorder(object sender, NotifyCollectionChangedEventArgs e)
         {
+            switch(e.Action)
+            {
+                case NotifyCollectionChangedAction.Remove:
+                    m_ReorderItem = e.OldItems[0];
+                    m_ReorderIndexFrom = e.OldStartingIndex;
+                    break;
+                case NotifyCollectionChangedAction.Add:
+                    if (m_ReorderItem == null)
+                        return;
+                    var _ReorderIndexTo = e.NewStartingIndex;
+                    TransferPlaylist();
+                    m_ReorderItem = null;
+                    break;
+            }
 
         }
 
@@ -364,7 +393,7 @@ namespace Aural.ViewModel
                 foreach (var file in files)
                 {
                     Windows.Storage.FileProperties.MusicProperties x = await file.Properties.GetMusicPropertiesAsync();
-                    DisplayedPlaylist.Add(new PlaylistItem { Id = Guid.NewGuid(), Properties = x, PlaylistFile = file });
+                    DisplayedPlaylist.Add(new PlaylistItem { Id = Guid.NewGuid(), Properties = x, PlaylistFile = file});
                 }
                 TransferPlaylist();
                 if (fromOpenedFile)
@@ -481,7 +510,7 @@ namespace Aural.ViewModel
                     || x.Properties.Title.ToLower().Contains(SearchParameter.ToLower())
                     ));
 
-            }else
+            } else
             {
                 DisplayedPlaylist = CurrentPlaylist;
             }

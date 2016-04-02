@@ -132,37 +132,39 @@ namespace Aural.Aural_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[14];
+            _typeNameTable = new string[15];
             _typeNameTable[0] = "Aural.ViewModel.ViewModelLocator";
             _typeNameTable[1] = "Object";
             _typeNameTable[2] = "Aural.ViewModel.MainViewModel";
             _typeNameTable[3] = "GalaSoft.MvvmLight.ViewModelBase";
             _typeNameTable[4] = "GalaSoft.MvvmLight.ObservableObject";
-            _typeNameTable[5] = "Aural.Control.TitleBarPage";
-            _typeNameTable[6] = "Windows.UI.Xaml.Controls.Page";
-            _typeNameTable[7] = "Windows.UI.Xaml.Controls.UserControl";
-            _typeNameTable[8] = "Windows.UI.Color";
-            _typeNameTable[9] = "System.ValueType";
-            _typeNameTable[10] = "Windows.UI.Xaml.DependencyObject";
-            _typeNameTable[11] = "Aural.View.PlaylistControl";
-            _typeNameTable[12] = "Aural.View.PlayerControl";
-            _typeNameTable[13] = "Aural.View.MainPage";
+            _typeNameTable[5] = "Aural.Converters.StringFormatConverter";
+            _typeNameTable[6] = "Aural.Control.TitleBarPage";
+            _typeNameTable[7] = "Windows.UI.Xaml.Controls.Page";
+            _typeNameTable[8] = "Windows.UI.Xaml.Controls.UserControl";
+            _typeNameTable[9] = "Windows.UI.Color";
+            _typeNameTable[10] = "System.ValueType";
+            _typeNameTable[11] = "Windows.UI.Xaml.DependencyObject";
+            _typeNameTable[12] = "Aural.View.PlaylistControl";
+            _typeNameTable[13] = "Aural.View.PlayerControl";
+            _typeNameTable[14] = "Aural.View.MainPage";
 
-            _typeTable = new global::System.Type[14];
+            _typeTable = new global::System.Type[15];
             _typeTable[0] = typeof(global::Aural.ViewModel.ViewModelLocator);
             _typeTable[1] = typeof(global::System.Object);
             _typeTable[2] = typeof(global::Aural.ViewModel.MainViewModel);
             _typeTable[3] = typeof(global::GalaSoft.MvvmLight.ViewModelBase);
             _typeTable[4] = typeof(global::GalaSoft.MvvmLight.ObservableObject);
-            _typeTable[5] = typeof(global::Aural.Control.TitleBarPage);
-            _typeTable[6] = typeof(global::Windows.UI.Xaml.Controls.Page);
-            _typeTable[7] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
-            _typeTable[8] = typeof(global::Windows.UI.Color);
-            _typeTable[9] = typeof(global::System.ValueType);
-            _typeTable[10] = typeof(global::Windows.UI.Xaml.DependencyObject);
-            _typeTable[11] = typeof(global::Aural.View.PlaylistControl);
-            _typeTable[12] = typeof(global::Aural.View.PlayerControl);
-            _typeTable[13] = typeof(global::Aural.View.MainPage);
+            _typeTable[5] = typeof(global::Aural.Converters.StringFormatConverter);
+            _typeTable[6] = typeof(global::Aural.Control.TitleBarPage);
+            _typeTable[7] = typeof(global::Windows.UI.Xaml.Controls.Page);
+            _typeTable[8] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
+            _typeTable[9] = typeof(global::Windows.UI.Color);
+            _typeTable[10] = typeof(global::System.ValueType);
+            _typeTable[11] = typeof(global::Windows.UI.Xaml.DependencyObject);
+            _typeTable[12] = typeof(global::Aural.View.PlaylistControl);
+            _typeTable[13] = typeof(global::Aural.View.PlayerControl);
+            _typeTable[14] = typeof(global::Aural.View.MainPage);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -200,10 +202,11 @@ namespace Aural.Aural_XamlTypeInfo
         private object Activate_0_ViewModelLocator() { return new global::Aural.ViewModel.ViewModelLocator(); }
         private object Activate_2_MainViewModel() { return new global::Aural.ViewModel.MainViewModel(); }
         private object Activate_4_ObservableObject() { return new global::GalaSoft.MvvmLight.ObservableObject(); }
-        private object Activate_5_TitleBarPage() { return new global::Aural.Control.TitleBarPage(); }
-        private object Activate_11_PlaylistControl() { return new global::Aural.View.PlaylistControl(); }
-        private object Activate_12_PlayerControl() { return new global::Aural.View.PlayerControl(); }
-        private object Activate_13_MainPage() { return new global::Aural.View.MainPage(); }
+        private object Activate_5_StringFormatConverter() { return new global::Aural.Converters.StringFormatConverter(); }
+        private object Activate_6_TitleBarPage() { return new global::Aural.Control.TitleBarPage(); }
+        private object Activate_12_PlaylistControl() { return new global::Aural.View.PlaylistControl(); }
+        private object Activate_13_PlayerControl() { return new global::Aural.View.PlayerControl(); }
+        private object Activate_14_MainPage() { return new global::Aural.View.MainPage(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -245,57 +248,66 @@ namespace Aural.Aural_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 5:   //  Aural.Control.TitleBarPage
-                userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_5_TitleBarPage;
-                userType.AddMemberName("BackgroundColor");
-                userType.AddMemberName("ForegroundColor");
-                userType.AddMemberName("ButtonBackgroundColor");
-                userType.AddMemberName("ButtonForegroundColor");
+            case 5:   //  Aural.Converters.StringFormatConverter
+                userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_5_StringFormatConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 6:   //  Windows.UI.Xaml.Controls.Page
+            case 6:   //  Aural.Control.TitleBarPage
+                userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_6_TitleBarPage;
+                userType.AddMemberName("BackgroundColor");
+                userType.AddMemberName("ForegroundColor");
+                userType.AddMemberName("ButtonBackgroundColor");
+                userType.AddMemberName("ButtonForegroundColor");
+                userType.AddMemberName("InactiveBackgroundColor");
+                userType.AddMemberName("ButtonInactiveBackgroundColor");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 7:   //  Windows.UI.Xaml.Controls.Page
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 7:   //  Windows.UI.Xaml.Controls.UserControl
+            case 8:   //  Windows.UI.Xaml.Controls.UserControl
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 8:   //  Windows.UI.Color
+            case 9:   //  Windows.UI.Color
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 9:   //  System.ValueType
+            case 10:   //  System.ValueType
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
                 xamlType = userType;
                 break;
 
-            case 10:   //  Windows.UI.Xaml.DependencyObject
+            case 11:   //  Windows.UI.Xaml.DependencyObject
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 11:   //  Aural.View.PlaylistControl
+            case 12:   //  Aural.View.PlaylistControl
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_11_PlaylistControl;
+                userType.Activator = Activate_12_PlaylistControl;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 12:   //  Aural.View.PlayerControl
+            case 13:   //  Aural.View.PlayerControl
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_12_PlayerControl;
+                userType.Activator = Activate_13_PlayerControl;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 13:   //  Aural.View.MainPage
+            case 14:   //  Aural.View.MainPage
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Aural.Control.TitleBarPage"));
-                userType.Activator = Activate_13_MainPage;
+                userType.Activator = Activate_14_MainPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
@@ -340,6 +352,22 @@ namespace Aural.Aural_XamlTypeInfo
         private void set_4_TitleBarPage_ButtonForegroundColor(object instance, object Value)
         {
             global::Aural.Control.TitleBarPage.SetButtonForegroundColor((global::Windows.UI.Xaml.DependencyObject)instance, (global::Windows.UI.Color)Value);
+        }
+        private object get_5_TitleBarPage_InactiveBackgroundColor(object instance)
+        {
+            return global::Aural.Control.TitleBarPage.GetInactiveBackgroundColor((global::Windows.UI.Xaml.DependencyObject)instance);
+        }
+        private void set_5_TitleBarPage_InactiveBackgroundColor(object instance, object Value)
+        {
+            global::Aural.Control.TitleBarPage.SetInactiveBackgroundColor((global::Windows.UI.Xaml.DependencyObject)instance, (global::Windows.UI.Color)Value);
+        }
+        private object get_6_TitleBarPage_ButtonInactiveBackgroundColor(object instance)
+        {
+            return global::Aural.Control.TitleBarPage.GetButtonInactiveBackgroundColor((global::Windows.UI.Xaml.DependencyObject)instance);
+        }
+        private void set_6_TitleBarPage_ButtonInactiveBackgroundColor(object instance, object Value)
+        {
+            global::Aural.Control.TitleBarPage.SetButtonInactiveBackgroundColor((global::Windows.UI.Xaml.DependencyObject)instance, (global::Windows.UI.Color)Value);
         }
 
         private global::Windows.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
@@ -390,6 +418,24 @@ namespace Aural.Aural_XamlTypeInfo
                 xamlMember.SetIsAttachable();
                 xamlMember.Getter = get_4_TitleBarPage_ButtonForegroundColor;
                 xamlMember.Setter = set_4_TitleBarPage_ButtonForegroundColor;
+                break;
+            case "Aural.Control.TitleBarPage.InactiveBackgroundColor":
+                userType = (global::Aural.Aural_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Aural.Control.TitleBarPage");
+                xamlMember = new global::Aural.Aural_XamlTypeInfo.XamlMember(this, "InactiveBackgroundColor", "Windows.UI.Color");
+                xamlMember.SetTargetTypeName("Windows.UI.Xaml.DependencyObject");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.SetIsAttachable();
+                xamlMember.Getter = get_5_TitleBarPage_InactiveBackgroundColor;
+                xamlMember.Setter = set_5_TitleBarPage_InactiveBackgroundColor;
+                break;
+            case "Aural.Control.TitleBarPage.ButtonInactiveBackgroundColor":
+                userType = (global::Aural.Aural_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Aural.Control.TitleBarPage");
+                xamlMember = new global::Aural.Aural_XamlTypeInfo.XamlMember(this, "ButtonInactiveBackgroundColor", "Windows.UI.Color");
+                xamlMember.SetTargetTypeName("Windows.UI.Xaml.DependencyObject");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.SetIsAttachable();
+                xamlMember.Getter = get_6_TitleBarPage_ButtonInactiveBackgroundColor;
+                xamlMember.Setter = set_6_TitleBarPage_ButtonInactiveBackgroundColor;
                 break;
             }
             return xamlMember;

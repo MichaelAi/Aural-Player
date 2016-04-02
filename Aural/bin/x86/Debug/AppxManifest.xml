@@ -54,8 +54,8 @@
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
         <Path>CLRHost.dll</Path>
-        <ActivatableClass ActivatableClassId="BackgroundAudioTask.BackgroundPlaylistManager" ThreadingModel="both" />
         <ActivatableClass ActivatableClassId="BackgroundAudioTask.BackgroundAudioTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="BackgroundAudioTask.BackgroundPlaylistManager" ThreadingModel="both" />
       </InProcessServer>
     </Extension>
   </Extensions>

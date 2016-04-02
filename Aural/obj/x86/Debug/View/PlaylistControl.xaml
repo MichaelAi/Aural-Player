@@ -15,14 +15,19 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        
-                        <TextBlock Text="{Binding Properties.Artist}" Margin="5"/>
-                        <TextBlock Text="\" Margin="5"/>
-                        <TextBlock Text="{Binding Properties.Album}" Margin="5"/>
-                        <TextBlock Text="\" Margin="5"/>
-                        <TextBlock Text="{Binding Properties.TrackNumber}" Margin="5,5,0,5"/>
-                        <TextBlock Text="." Margin="1,5,5,5"/>
-                        <TextBlock Text="{Binding Properties.Title}" Margin="5"/>
+                        <TextBlock Text="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Margin="0,0,5,0" Foreground="Gray" VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Properties.TrackNumber}" Margin="5,5,0,5"/>
+                                <TextBlock Text="." Margin="1,5,5,5"/>
+                                <TextBlock Text="{Binding Properties.Title}" Margin="5"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                <TextBlock Text="{Binding Properties.Artist}" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}" FontSize="10"/>
+                                <TextBlock Text="\" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemColorWindowTextColor}" FontSize="10"/>
+                                <TextBlock Text="{Binding Properties.Album}" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}"  Foreground="{ThemeResource SystemColorWindowTextColor}" FontSize="10"/>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

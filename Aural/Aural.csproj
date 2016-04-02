@@ -100,7 +100,9 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Control\TitleBarPage.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Helpers\ApplicationSettingsHelper.cs" />
+    <Compile Include="Helpers\CollectionUtilsHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Interface\IBackgroundAudioManager.cs" />
     <Compile Include="Model\PlaylistItem.cs" />
@@ -181,6 +183,7 @@
       <HintPath>..\..\Mousiki\Mousiki\Libraries\taglib-sharp.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

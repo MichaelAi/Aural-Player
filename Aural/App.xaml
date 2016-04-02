@@ -3,11 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Aural"
+    xmlns:conv="using:Aural.Converters"
     RequestedTheme="Light">
     
     <Application.Resources>
         <vm:ViewModelLocator x:Key="Locator" xmlns:vm="using:Aural.ViewModel" />
-
+        <conv:StringFormatConverter x:Key="StringFormatConverter"/>
         <!-- Default style for Windows.UI.Xaml.Controls.AppBarButton -->
         <Style TargetType="AppBarButton" x:Key="WhiteAppBarButtonStyle">
             <Setter Property="Background" Value="Transparent"/>
