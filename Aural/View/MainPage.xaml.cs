@@ -1,4 +1,4 @@
-﻿using Aural.Control;
+﻿using Aural.CustomControls;
 using Aural.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,6 +29,56 @@ namespace Aural.View
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void commandBarSettings_Click(object sender, RoutedEventArgs e)
+        {
+            rootSplitView.IsPaneOpen = true;
+        }
+
+        public void TestFirstName()
+        {
+            foreach (var item in playlistsListView.Items)
+            {
+                var _Container = playlistsListView.ItemContainerGenerator
+                    .ContainerFromItem(item);
+                var _Children = AllChildren(_Container);
+
+                var _FirstName = _Children
+                    // only interested in TextBoxes
+                    .OfType<TextBox>()
+                    // only interested in FirstName
+                    .First(x => x.Name.Equals("FirstName"));
+
+                // test & set color
+                _FirstName.Background =
+                    (string.IsNullOrWhiteSpace(_FirstName.Text))
+                    ? new SolidColorBrush(Colors.Red)
+                    : new SolidColorBrush(Colors.White);
+            }
+        }
+
+        public List<Control> AllChildren(DependencyObject parent)
+        {
+            var _List = new List<Control>();
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var _Child = VisualTreeHelper.GetChild(parent, i);
+                if (_Child is Control)
+                    _List.Add(_Child as Control);
+                _List.AddRange(AllChildren(_Child));
+            }
+            return _List;
+        }
+
+        private void playlistControlsGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            playlistSplitView.IsPaneOpen = true;
         }
     }
 }

@@ -8,7 +8,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Aural.Control
+namespace Aural.CustomControls
 {
     public class TitleBarPage : Page
     {
