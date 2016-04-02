@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Roots >
+  <Roots.Interfaces>
+    <RootInterface FullName="Windows.UI.Xaml.Data.IValueConverter" />
+  </Roots.Interfaces>
   <Roots.PropertyPathNames>
     <RootPropertyPathName Name="MediaNextCommand" />
     <RootPropertyPathName Name="Value" />
@@ -19,6 +22,7 @@
     <RootPropertyPathName Name="DisplayedPlaylist" />
     <RootPropertyPathName Name="PreviousPlayingItem" />
     <RootPropertyPathName Name="TrackNumber" />
+    <RootPropertyPathName Name="PlaylistTrackNo" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Windows.UI.Xaml.Application">
@@ -26,6 +30,7 @@
       <RootProperty Name="Resources" />
     </RootType>
     <RootType FullName="Aural.ViewModel.ViewModelLocator" />
+    <RootType FullName="Aural.Converters.StringFormatConverter" />
     <RootType FullName="Windows.UI.Xaml.Controls.AppBarButton">
       <RootProperty Name="Icon" />
       <RootProperty Name="Style" />
@@ -251,6 +256,8 @@
       <RootProperty Name="Source" />
       <RootProperty Name="Mode" />
       <RootProperty Name="UpdateSourceTrigger" />
+      <RootProperty Name="Converter" />
+      <RootProperty Name="ConverterParameter" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.FontIcon">
       <RootProperty Name="Glyph" />
@@ -264,6 +271,7 @@
       <RootProperty Name="Children" />
       <RootProperty Name="MinHeight" />
       <RootProperty Name="Width" />
+      <RootProperty Name="Margin" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.SymbolIcon">
       <RootProperty Name="Symbol" />
@@ -282,6 +290,10 @@
       <RootMethod Name="SetButtonBackgroundColor" />
       <RootMethod Name="GetButtonForegroundColor" />
       <RootMethod Name="SetButtonForegroundColor" />
+      <RootMethod Name="GetInactiveBackgroundColor" />
+      <RootMethod Name="SetInactiveBackgroundColor" />
+      <RootMethod Name="GetButtonInactiveBackgroundColor" />
+      <RootMethod Name="SetButtonInactiveBackgroundColor" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.MenuFlyout">
       <RootProperty Name="Items" />

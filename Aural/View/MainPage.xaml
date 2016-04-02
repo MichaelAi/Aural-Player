@@ -13,6 +13,8 @@
     control:TitleBarPage.ForegroundColor="{ThemeResource SystemColorWindowTextColor}"
     control:TitleBarPage.ButtonBackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
     control:TitleBarPage.ButtonForegroundColor="{ThemeResource SystemColorWindowTextColor}"
+    control:TitleBarPage.InactiveBackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
+    control:TitleBarPage.ButtonInactiveBackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <control:TitleBarPage.Resources>
@@ -67,6 +69,7 @@
                     <AppBarButton Icon="OpenFile" Label="Open" Command="{Binding OpenFilesCommand}"/>
                     <AppBarButton Icon="Setting" Label="Settings"/>
                 </CommandBar.SecondaryCommands>
+                <AppBarButton Icon="MusicInfo" Label="Queue"/>
                 <AppBarButton Icon="List" Label="Playlists"/>
                 <AppBarButton Icon="Sort" Label="Order By" Flyout="{StaticResource OrderByFlyout}"/>
                 <AppBarButton Icon="Find" Label="Search" Flyout="{StaticResource SearchFlyout}"/>

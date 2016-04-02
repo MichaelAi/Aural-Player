@@ -40,5 +40,12 @@ namespace Aural.Model
             get { return _albumArt; }
             set { Set("AlbumArt", ref _albumArt, value); }
         }
+
+        private int _playlistTrackNo;
+        public int PlaylistTrackNo
+        {
+            get { return _playlistTrackNo; }
+            set { Set("PlaylistTrackNo", ref _playlistTrackNo, value); }
+        }
     }
 }

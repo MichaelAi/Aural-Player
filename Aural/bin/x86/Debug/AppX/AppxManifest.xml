@@ -56,8 +56,8 @@
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
         <Path>Aural.exe</Path>
-        <ActivatableClass ActivatableClassId="BackgroundAudioTask.BackgroundPlaylistManager" ThreadingModel="both" />
         <ActivatableClass ActivatableClassId="BackgroundAudioTask.BackgroundAudioTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="BackgroundAudioTask.BackgroundPlaylistManager" ThreadingModel="both" />
       </InProcessServer>
     </Extension>
   </Extensions>
