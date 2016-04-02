@@ -27,6 +27,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Storage.FileProperties;
 using Windows.ApplicationModel.Activation;
+using System.Text.RegularExpressions;
 
 namespace Aural.ViewModel
 {
@@ -36,6 +37,7 @@ namespace Aural.ViewModel
         #region Private Fields and Properties
         private AutoResetEvent SererInitialized;
         private bool isMyBackgroundTaskRunning = false;
+        private bool DisableDeletionConfirmations = false;
 
         /// <summary>
         /// Gets the information about background task is running or not by reading the setting saved by background task
@@ -159,6 +161,41 @@ namespace Aural.ViewModel
             set { Set("SearchParameter", ref _searchParameter, value); SearchPlaylist(); }
         }
 
+        private ObservableCollection<Playlist> _playlists = new ObservableCollection<Playlist>();
+        public ObservableCollection<Playlist> Playlists
+        {
+            get { return _playlists; }
+            set { Set("Playlists", ref _playlists, value); }
+        }
+
+        private bool _hasNoPlaylists = true;
+        public bool HasNoPlaylists
+        {
+            get { return _hasNoPlaylists; }
+            set { Set("HasNoPlaylists", ref _hasNoPlaylists, value); }
+        }
+
+        private bool _displayedPlaylistHasItems = false;
+        public bool DisplayedPlaylistHasItems
+        {
+            get { return _displayedPlaylistHasItems; }
+            set { Set("DisplayedPlaylistHasItems", ref _displayedPlaylistHasItems, value); SavePlaylistCommand.RaiseCanExecuteChanged(); }
+        }
+
+        private Playlist _selectedPlaylist = new Playlist();
+        public Playlist SelectedPlaylist
+        {
+            get { return _selectedPlaylist; }
+            set { Set("SelectedPlaylist", ref _selectedPlaylist, value); SelectedPlaylistChanged(); }
+        }
+
+        private ObservableCollection<string> _accessTokens = new ObservableCollection<string>();
+        public ObservableCollection<string> AccessTokens
+        {
+            get { return _accessTokens; }
+            set { Set("AccessTokens", ref _accessTokens, value); }
+        }
+
         public RelayCommand MediaPlayCommand { get; private set; }
         public RelayCommand MediaPauseCommand { get; private set; }
         public RelayCommand MediaStopCommand { get; private set; }
@@ -166,7 +203,10 @@ namespace Aural.ViewModel
         public RelayCommand MediaNextCommand { get; private set; }
         public RelayCommand OpenFilesCommand { get; private set; }
         public RelayCommand<string> OrderPlaylistCommand { get; private set; }
-
+        public RelayCommand SavePlaylistCommand { get; private set; }
+        public RelayCommand SetMasterFolderCommand { get; private set; }
+        public RelayCommand<string> DeletePlaylistCommand { get; private set; }
+        public RelayCommand<string> EditPlaylistCommand { get; private set; }
         public MainViewModel()
         {
 
@@ -181,7 +221,11 @@ namespace Aural.ViewModel
             MediaNextCommand = new RelayCommand(MediaNext);
             OpenFilesCommand = new RelayCommand(OpenFiles);
             OrderPlaylistCommand = new RelayCommand<string>((mode) => OrderPlaylist(mode));
-
+            SavePlaylistCommand = new RelayCommand(SavePlaylist, DisplayedPlaylistHasItemsCheck);
+            SetMasterFolderCommand = new RelayCommand(SetMasterFolder);
+            DeletePlaylistCommand = new RelayCommand<string>((id) => ShowPlaylistDeletionConfirmation(id));
+            EditPlaylistCommand = new RelayCommand<string>((id) => ShowEditPlaylistDialog(id));
+            MediaElementObject.TransportControls.IsCompact = true;
             MediaElementObject.TransportControls.IsZoomButtonVisible = false;
             MediaElementObject.TransportControls.IsZoomEnabled = false;
             MediaElementObject.TransportControls.IsPlaybackRateButtonVisible = true;
@@ -193,12 +237,36 @@ namespace Aural.ViewModel
             ApplicationSettingsHelper.SaveSettingsValue(Constants.AppState, Constants.ForegroundAppActive);
             DisplayedPlaylist.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
             Messenger.Default.Register<IReadOnlyList<StorageFile>>(this, (x) => PopulatePlayist(x, true));
+            ReadPlaylistsFromFolder();
+            GetAccessTokens();
+            SelectedPlaylist = Playlists.FirstOrDefault();
         }
 
+        private bool DisplayedPlaylistHasItemsCheck()
+        {
+            return DisplayedPlaylistHasItems;
+        }
+        private void SavePlaylist()
+        {
+            if (DisplayedPlaylist != null && DisplayedPlaylist.Count > 0)
+            {
+                ButtonShowContentDialog();
+
+            }
+        }
         private void TransferPlaylist()
         {
             LabelPlaylistNumbers();
-            CurrentPlaylist = DisplayedPlaylist;
+            if (DisplayedPlaylist != null && DisplayedPlaylist.Count > 0)
+            {
+                DisplayedPlaylistHasItems = true;
+                CurrentPlaylist = DisplayedPlaylist;
+            }
+            else
+            {
+                DisplayedPlaylistHasItems = false;
+            }
+
         }
 
         private void OrderPlaylist(string mode)
@@ -271,12 +339,12 @@ namespace Aural.ViewModel
 
         private void LabelPlaylistNumbers()
         {
-             int playlistItemCounter = 1;
-                foreach (var item in DisplayedPlaylist)
-                {
+            int playlistItemCounter = 1;
+            foreach (var item in DisplayedPlaylist)
+            {
                 item.PlaylistTrackNo = playlistItemCounter;
                 playlistItemCounter += 1;
-                }
+            }
         }
 
         object m_ReorderItem;
@@ -284,7 +352,7 @@ namespace Aural.ViewModel
 
         private void HandleReorder(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch(e.Action)
+            switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Remove:
                     m_ReorderItem = e.OldItems[0];
@@ -298,7 +366,6 @@ namespace Aural.ViewModel
                     m_ReorderItem = null;
                     break;
             }
-
         }
 
         //link the player to the system media controls
@@ -393,7 +460,7 @@ namespace Aural.ViewModel
                 foreach (var file in files)
                 {
                     Windows.Storage.FileProperties.MusicProperties x = await file.Properties.GetMusicPropertiesAsync();
-                    DisplayedPlaylist.Add(new PlaylistItem { Id = Guid.NewGuid(), Properties = x, PlaylistFile = file});
+                    DisplayedPlaylist.Add(new PlaylistItem { Id = Guid.NewGuid(), Properties = x, PlaylistFile = file });
                 }
                 TransferPlaylist();
                 if (fromOpenedFile)
@@ -510,11 +577,334 @@ namespace Aural.ViewModel
                     || x.Properties.Title.ToLower().Contains(SearchParameter.ToLower())
                     ));
 
-            } else
+            }
+            else
             {
                 DisplayedPlaylist = CurrentPlaylist;
             }
         }
 
+        private async void ButtonShowContentDialog()
+        {
+            var dialog = new ContentDialog()
+            {
+                Title = "Save Playlist",
+            };
+
+            var panel = new StackPanel();
+            var tb = new TextBox
+            {
+                PlaceholderText = "Enter the new playlist's name",
+                Margin = new Windows.UI.Xaml.Thickness { Top = 10 }
+            };
+            panel.Children.Add(tb);
+            dialog.Content = panel;
+
+            // The CanExecute of the Command does not enable/disable the button :-(
+            dialog.PrimaryButtonText = "Save";
+            var cmd = new RelayCommand(async () =>
+            {
+                Playlists.Add(new Playlist { Items = CurrentPlaylist, PlaylistId = Guid.NewGuid(), PlaylistName = tb.Text });
+                var TempSelectedPlaylist = Playlists.Where(x => x.PlaylistName == tb.Text).FirstOrDefault();
+                HasNoPlaylists = false;
+                string contents = await PrepareM3uFile(TempSelectedPlaylist);
+                await WriteToPlaylistFile(TempSelectedPlaylist.PlaylistName, contents);
+                SelectedPlaylist = TempSelectedPlaylist;
+            }, () => CanSave(tb.Text));
+
+            dialog.IsPrimaryButtonEnabled = false;
+            dialog.PrimaryButtonCommand = cmd;
+
+            dialog.SecondaryButtonText = "Cancel";
+            dialog.SecondaryButtonCommand = new RelayCommand(() =>
+            {
+                //nothing to do here
+            });
+
+            tb.TextChanged += delegate
+            {
+                cmd.RaiseCanExecuteChanged();
+                if (tb.Text.Trim().Length > 0)
+                {
+                    dialog.IsPrimaryButtonEnabled = true;
+                }
+                else
+                {
+                    dialog.IsPrimaryButtonEnabled = false;
+                }
+
+            };
+
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.None)
+            {
+                //sdfdfs
+            }
+        }
+
+        private bool CanSave(string parameter)
+        {
+            if (parameter != "")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private async void ShowEditPlaylistDialog(string oldPlaylistName)
+        {
+            var dialog = new ContentDialog()
+            {
+                Title = "Edit Playlist",
+            };
+
+            var panel = new StackPanel();
+            var tb = new TextBox
+            {
+                PlaceholderText = "Enter the playlist's new name",
+                Margin = new Windows.UI.Xaml.Thickness { Top = 10 }
+            };
+            panel.Children.Add(tb);
+            dialog.Content = panel;
+
+            dialog.PrimaryButtonText = "Save";
+            var cmd = new RelayCommand(async () =>
+            {
+                //add the new playlist
+                Playlists.Add(new Playlist { Items = CurrentPlaylist, PlaylistId = Guid.NewGuid(), PlaylistName = tb.Text });
+                var TempSelectedPlaylist = Playlists.Where(x => x.PlaylistName == tb.Text).FirstOrDefault();
+                HasNoPlaylists = false;
+                string contents = await PrepareM3uFile(TempSelectedPlaylist);
+                await WriteToPlaylistFile(TempSelectedPlaylist.PlaylistName, contents);
+                SelectedPlaylist = TempSelectedPlaylist;
+                //delete the old
+                await DeletePlaylistFile(oldPlaylistName);
+                DeletePlaylistFromList(oldPlaylistName);
+            }, () => CanSave(tb.Text));
+
+            dialog.IsPrimaryButtonEnabled = false;
+            dialog.PrimaryButtonCommand = cmd;
+
+            dialog.SecondaryButtonText = "Cancel";
+            dialog.SecondaryButtonCommand = new RelayCommand(() =>
+            {
+                //nothing to do here
+            });
+
+            tb.TextChanged += delegate
+            {
+                cmd.RaiseCanExecuteChanged();
+                if (tb.Text.Trim().Length > 0)
+                {
+                    dialog.IsPrimaryButtonEnabled = true;
+                }
+                else
+                {
+                    dialog.IsPrimaryButtonEnabled = false;
+                }
+
+            };
+
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.None)
+            {
+                //sdfdfs
+            }
+        }
+
+        private async Task<string> PrepareM3uFile(Playlist playlistToSave)
+        {
+            string contents = "";
+            contents += "#EXTM3U";
+            contents += "\r\n";
+            foreach (var item in playlistToSave.Items)
+            {
+                Windows.Storage.FileProperties.BasicProperties basicProperties =
+                     await item.PlaylistFile.GetBasicPropertiesAsync();
+                string filePath = item.PlaylistFile.Path;
+                contents += "#EXTINF:" + item.Properties.Duration.TotalSeconds + ", "
+                    + item.Properties.Artist + " - " + item.Properties.Title;
+                contents += "\r\n";
+                contents += filePath;
+                contents += "\r\n";
+            }
+            return contents;
+        }
+
+        private async Task<bool> WriteToPlaylistFile(string playlistName, string contents)
+        {
+            try
+            {
+
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                StorageFolder playlistsFolder = await storageFolder.CreateFolderAsync("Playlists", CreationCollisionOption.OpenIfExists);
+                StorageFile playlist = await playlistsFolder.CreateFileAsync(playlistName + ".m3u",
+                        CreationCollisionOption.ReplaceExisting);
+
+
+                var stream = await playlist.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+                using (var outputStream = stream.GetOutputStreamAt(0))
+                {
+                    using (var dataWriter = new Windows.Storage.Streams.DataWriter(outputStream))
+                    {
+                        dataWriter.WriteString(contents);
+                        await dataWriter.StoreAsync();
+                        await outputStream.FlushAsync();
+                    }
+                }
+                stream.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private async void ReadPlaylistsFromFolder()
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder playlistsFolder = await storageFolder.CreateFolderAsync("Playlists", CreationCollisionOption.OpenIfExists);
+            foreach (var item in await playlistsFolder.GetItemsAsync())
+            {
+                Playlists.Add(new Playlist { PlaylistName = item.Name.Substring(0, item.Name.LastIndexOf(".")) });
+            }
+
+            if (Playlists.Count > 0)
+            {
+                HasNoPlaylists = false;
+            }
+        }
+
+        private async Task ReadPlaylistFromFile(Playlist play)
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder playlistsFolder = await storageFolder.CreateFolderAsync("Playlists", CreationCollisionOption.OpenIfExists);
+            StorageFile playlistFile = await playlistsFolder.GetFileAsync(play.PlaylistName + ".m3u");
+            string contents = await Windows.Storage.FileIO.ReadTextAsync(playlistFile);
+            string[] paths = Regex.Split(contents, "\r\n|\r|\n");
+            List<StorageFile> items = new List<StorageFile>();
+            DisplayedPlaylist.Clear();
+            foreach (var path in paths)
+            {
+                if (path.Contains("#") || path.Length == 0)
+                {
+                    //do nothing
+                }
+                else
+                {
+                    items.Add(await StorageFile.GetFileFromPathAsync(path));
+                }
+            }
+            PopulatePlayist(items, false);
+        }
+
+        private async void ShowPlaylistDeletionConfirmation(string playlistName)
+        {
+            if (!DisableDeletionConfirmations)
+            {
+                var dialog = new ContentDialog()
+                {
+                    Title = "Are you sure?",
+                };
+
+                var panel = new StackPanel();
+                var tb = new TextBlock
+                {
+                    Text = "Deleting a playlist cannot be undone. Are you sure you want to proceed?",
+                };
+
+                var cb = new CheckBox
+                {
+                    Content = "Disable confirmations for this session",
+                    Margin = new Windows.UI.Xaml.Thickness { Top = 10 }
+                };
+
+                panel.Children.Add(tb);
+                panel.Children.Add(cb);
+                dialog.Content = panel;
+
+                dialog.PrimaryButtonText = "Delete";
+                var cmd = new RelayCommand(async () =>
+                {
+                    await DeletePlaylistFile(playlistName);
+                    DeletePlaylistFromList(playlistName);
+                    var disable = cb.IsChecked ?? false;
+                    if (disable)
+                        DisableDeletionConfirmations = true;
+                });
+
+                dialog.PrimaryButtonCommand = cmd;
+
+                dialog.SecondaryButtonText = "Cancel";
+                dialog.SecondaryButtonCommand = new RelayCommand(() =>
+                {
+                //nothing to do here
+            });
+
+
+                var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.None)
+                {
+                    //nothing to do here
+                }
+            }
+            else
+            {
+                await DeletePlaylistFile(playlistName);
+                DeletePlaylistFromList(playlistName);
+            }
+        }
+
+        private async Task DeletePlaylistFile(string playlistName)
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder playlistsFolder = await storageFolder.CreateFolderAsync("Playlists", CreationCollisionOption.OpenIfExists);
+            StorageFile playlistFile = await playlistsFolder.GetFileAsync(playlistName + ".m3u");
+            await playlistFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+        }
+
+        private void DeletePlaylistFromList(string playlistName)
+        {
+            var tempPlaylist = Playlists.Where(x => x.PlaylistName == playlistName).FirstOrDefault();
+            if (tempPlaylist.Items == DisplayedPlaylist)
+                DisplayedPlaylist.Clear();
+            Playlists.Remove(tempPlaylist);
+            SelectedPlaylist = null;
+        }
+
+
+        private async void SelectedPlaylistChanged()
+        {
+            if (SelectedPlaylist != null)
+                await ReadPlaylistFromFile(SelectedPlaylist);
+            else
+                DisplayedPlaylist.Clear();
+        }
+
+        private void GetAccessTokens()
+        {
+            //Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Clear();
+            var tokens = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Entries;
+            AccessTokens.Clear();
+            foreach (var token in tokens)
+            {
+                AccessTokens.Add(token.Metadata);
+            }
+        }
+        private async void SetMasterFolder()
+        {
+            FolderPicker picker = new FolderPicker();
+            //a filter is needed despite being a folder picker
+            picker.FileTypeFilter.Add(".mp3");
+            picker.SuggestedStartLocation = PickerLocationId.MusicLibrary;
+            StorageFolder masterFolder = await picker.PickSingleFolderAsync();
+            // Store the folder to access again later
+            if (masterFolder != null)
+            {
+                var listToken = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(masterFolder,masterFolder.Path);
+                GetAccessTokens();
+            }
+        }
     }
 }

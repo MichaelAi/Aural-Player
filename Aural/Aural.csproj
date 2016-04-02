@@ -99,12 +99,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="Control\TitleBarPage.cs" />
+    <Compile Include="CustomControls\TitleBarPage.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Helpers\ApplicationSettingsHelper.cs" />
     <Compile Include="Helpers\CollectionUtilsHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Interface\IBackgroundAudioManager.cs" />
+    <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\PlaylistItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BackgroundAudioManager.cs" />
