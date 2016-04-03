@@ -196,7 +196,14 @@ namespace Aural.ViewModel
             set { Set("AccessTokens", ref _accessTokens, value); }
         }
 
-        public RelayCommand MediaPlayCommand { get; private set; }
+        private PlaylistItem _selectedDisplayedItem = new PlaylistItem();
+        public PlaylistItem SelectedDisplayedItem
+        {
+            get { return _selectedDisplayedItem; }
+            set { Set("SelectedDisplayedItem", ref _selectedDisplayedItem, value); }
+        }
+
+        public RelayCommand<int> MediaPlayCommand { get; private set; }
         public RelayCommand MediaPauseCommand { get; private set; }
         public RelayCommand MediaStopCommand { get; private set; }
         public RelayCommand MediaPreviousCommand { get; private set; }
@@ -214,7 +221,7 @@ namespace Aural.ViewModel
             {
                 MediaElementObject = new MediaElement() { AutoPlay = true, IsLooping = false, AudioCategory = Windows.UI.Xaml.Media.AudioCategory.BackgroundCapableMedia, AreTransportControlsEnabled = true };
             }
-            MediaPlayCommand = new RelayCommand(MediaPlay);
+            MediaPlayCommand = new RelayCommand<int>((id)=>MediaPlay(id));
             MediaPauseCommand = new RelayCommand(MediaPause);
             MediaStopCommand = new RelayCommand(MediaStop);
             MediaPreviousCommand = new RelayCommand(MediaPrevious);
@@ -236,7 +243,18 @@ namespace Aural.ViewModel
             SererInitialized = new AutoResetEvent(false);
             ApplicationSettingsHelper.SaveSettingsValue(Constants.AppState, Constants.ForegroundAppActive);
             DisplayedPlaylist.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
-            Messenger.Default.Register<IReadOnlyList<StorageFile>>(this, (x) => PopulatePlayist(x, true));
+            Messenger.Default.Register<NotificationMessage<IReadOnlyList<StorageFile>>>(this,
+                nm =>
+                {
+                    if (nm.Notification != null)
+                    {
+                        if ((string)nm.Notification == "fromDragDrop")
+                            PopulatePlayist(nm.Content, false, true,false);
+                        else if ((string)nm.Notification == "fromFileOpen")
+                            PopulatePlayist(nm.Content, true, false,false);
+                    }
+                }
+                );
             ReadPlaylistsFromFolder();
             GetAccessTokens();
             SelectedPlaylist = Playlists.FirstOrDefault();
@@ -260,7 +278,7 @@ namespace Aural.ViewModel
             if (DisplayedPlaylist != null && DisplayedPlaylist.Count > 0)
             {
                 DisplayedPlaylistHasItems = true;
-                CurrentPlaylist = DisplayedPlaylist;
+                CurrentPlaylist = new ObservableCollection<PlaylistItem>(DisplayedPlaylist);
             }
             else
             {
@@ -362,7 +380,7 @@ namespace Aural.ViewModel
                     if (m_ReorderItem == null)
                         return;
                     var _ReorderIndexTo = e.NewStartingIndex;
-                    TransferPlaylist();
+                    LabelPlaylistNumbers();
                     m_ReorderItem = null;
                     break;
             }
@@ -389,7 +407,7 @@ namespace Aural.ViewModel
                     {
                         if (MediaElementObject.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Paused || MediaElementObject.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Stopped)
                         {
-                            MediaPlay();
+                            MediaPlay(0);
                         }
                         else
                         {
@@ -403,7 +421,7 @@ namespace Aural.ViewModel
                     {
                         if (MediaElementObject.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Paused || MediaElementObject.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Stopped)
                         {
-                            MediaPlay();
+                            MediaPlay(0);
                         }
                         else
                         {
@@ -443,41 +461,64 @@ namespace Aural.ViewModel
             // Filter to include a sample subset of file types
             fileOpenPicker.FileTypeFilter.Add(".mp3");
             fileOpenPicker.FileTypeFilter.Add(".wma");
+            fileOpenPicker.FileTypeFilter.Add(".flac");
             fileOpenPicker.SuggestedStartLocation = PickerLocationId.MusicLibrary;
 
             IReadOnlyList<StorageFile> files = await fileOpenPicker.PickMultipleFilesAsync();
 
             //add files to playlist
             if (files.Count != 0)
-                PopulatePlayist(files, false);
+                PopulatePlayist(files, false, false, false);
         }
 
-        public async void PopulatePlayist(IReadOnlyList<StorageFile> files, bool fromOpenedFile)
+        public async void PopulatePlayist(IReadOnlyList<StorageFile> files, bool fromOpenedFile, bool fromDragOver, bool fromPlaylist)
         {
             // Ensure files were selected
+            ObservableCollection<PlaylistItem> tempPlaylist = new ObservableCollection<PlaylistItem>();
             if (files != null)
             {
                 foreach (var file in files)
                 {
                     Windows.Storage.FileProperties.MusicProperties x = await file.Properties.GetMusicPropertiesAsync();
-                    DisplayedPlaylist.Add(new PlaylistItem { Id = Guid.NewGuid(), Properties = x, PlaylistFile = file });
+                    tempPlaylist.Add(new PlaylistItem { Id = Guid.NewGuid(), Properties = x, PlaylistFile = file });
                 }
-                TransferPlaylist();
+                
                 if (fromOpenedFile)
                 {
-                    NowPlayingItem = CurrentPlaylist.Last();
+                    TransferPlaylist();
+                    NowPlayingItem = CurrentPlaylist.FirstOrDefault();
+                }
+                else if (fromDragOver)
+                {
+                    TransferPlaylist();
+                }
+                else if (fromPlaylist)
+                {
+                    int playIndex = Playlists.IndexOf(SelectedPlaylist);
+                    Playlists[playIndex] = new Playlist { PlaylistId = Guid.NewGuid(), PlaylistName = SelectedPlaylist.PlaylistName, Items = tempPlaylist };                    
                 }
                 if (MediaElementObject.CurrentState != Windows.UI.Xaml.Media.MediaElementState.Playing && !fromOpenedFile)
                 {
-                    NowPlayingItem = CurrentPlaylist.First();
+                    
                 }
+                DisplayedPlaylist = new ObservableCollection<PlaylistItem>(tempPlaylist);
+                LabelPlaylistNumbers();
+                HighlightCurrentlyPlayingItem();
             }
         }
 
 
-        private void MediaPlay()
+        private void MediaPlay(int id)
         {
-            MediaElementObject.Play();
+            if(id == 0)
+            {
+                MediaElementObject.Play();
+            }
+            else
+            {
+                NowPlayingItem = DisplayedPlaylist.Where(x => x.PlaylistTrackNo == id).FirstOrDefault();
+            }
+            
         }
 
         private void MediaPause()
@@ -518,7 +559,7 @@ namespace Aural.ViewModel
         {
             if (PreviousPlayingItem != null)
             {
-                NowPlayingItem = PreviousPlayingItem;
+               // NowPlayingItem = PreviousPlayingItem;
             }
         }
 
@@ -540,9 +581,9 @@ namespace Aural.ViewModel
                 NowPlayingStream = await NowPlayingFile.OpenAsync(FileAccessMode.Read);
                 MediaStop();
                 MediaElementObject.SetSource(NowPlayingStream, NowPlayingFile.FileType);
-                MediaPlay();
+                MediaPlay(0);
                 GetAlbumArt();
-
+                TransferPlaylist();
             }
         }
 
@@ -784,7 +825,7 @@ namespace Aural.ViewModel
             string contents = await Windows.Storage.FileIO.ReadTextAsync(playlistFile);
             string[] paths = Regex.Split(contents, "\r\n|\r|\n");
             List<StorageFile> items = new List<StorageFile>();
-            DisplayedPlaylist.Clear();
+            
             foreach (var path in paths)
             {
                 if (path.Contains("#") || path.Length == 0)
@@ -796,7 +837,7 @@ namespace Aural.ViewModel
                     items.Add(await StorageFile.GetFileFromPathAsync(path));
                 }
             }
-            PopulatePlayist(items, false);
+            PopulatePlayist(items, false, false, true);
         }
 
         private async void ShowPlaylistDeletionConfirmation(string playlistName)
@@ -877,9 +918,23 @@ namespace Aural.ViewModel
         private async void SelectedPlaylistChanged()
         {
             if (SelectedPlaylist != null)
-                await ReadPlaylistFromFile(SelectedPlaylist);
-            else
-                DisplayedPlaylist.Clear();
+            {
+                if (SelectedPlaylist.Items.Count > 0)
+                {
+                    DisplayedPlaylist = SelectedPlaylist.Items;
+                    HighlightCurrentlyPlayingItem();
+                }
+                else
+                    await ReadPlaylistFromFile(SelectedPlaylist);
+            }
+        }
+
+        private void HighlightCurrentlyPlayingItem()
+        {
+            if(NowPlayingItem != null)
+            {
+                SelectedDisplayedItem = DisplayedPlaylist.Where(x => x.Id == NowPlayingItem.Id).FirstOrDefault();
+            }
         }
 
         private void GetAccessTokens()

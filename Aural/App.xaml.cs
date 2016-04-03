@@ -119,7 +119,7 @@ namespace Aural
                     var file = (StorageFile)fileArgs.Files[0];
                     List<StorageFile> files = new List<StorageFile>();
                     files.Add(file);
-                    Messenger.Default.Send<IReadOnlyList<StorageFile>>(files);
+                    Messenger.Default.Send<NotificationMessage<IReadOnlyList<StorageFile>>>(new NotificationMessage<IReadOnlyList<StorageFile>>(files, "fromFileOpen"));
                 }
             }
 
