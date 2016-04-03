@@ -73,7 +73,12 @@
                                 <RowDefinition Height="48"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="10" VerticalAlignment="Center" Grid.Row="0" Text="Playlists" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal">
+                                <AppBarButton x:ConnectionId='5'                            Grid.Column="0" Background="{ThemeResource SystemColorButtonFaceColor}" Height="48" Width="48">
+                                    <TextBlock x:ConnectionId='6' x:Name="Glyph" Text="&#xe700;" Style="{StaticResource SplitViewTextBlockStyle}" />
+                                </AppBarButton>
+                                <TextBlock Margin="10" VerticalAlignment="Center" Grid.Row="0" Text="Playlists" FontWeight="Bold"/>
+                            </StackPanel>
                             <ListView x:ConnectionId='3' Grid.Row="1" x:Name="playlistsListView" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
@@ -105,14 +110,14 @@
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <AppBarButton x:ConnectionId='5'                            Grid.Column="0" Background="{ThemeResource SystemColorButtonFaceColor}" Height="48" Width="48">
-                                <TextBlock x:ConnectionId='7' x:Name="Glyph" Text="&#xe700;" Style="{StaticResource SplitViewTextBlockStyle}" />
+                            <AppBarButton x:ConnectionId='7'                            Grid.Column="0" Background="{ThemeResource SystemColorButtonFaceColor}" Height="48" Width="48">
+                                <TextBlock Text="&#xe700;" Style="{StaticResource SplitViewTextBlockStyle}" />
                             </AppBarButton>
             <CommandBar Grid.Column="1" Background="{ThemeResource SystemColorButtonFaceColor}">
                 <CommandBar.SecondaryCommands>
                     <AppBarButton Icon="Save" Label="Save Playlist" Command="{Binding SavePlaylistCommand}"/>
                     <AppBarButton Icon="OpenFile" Label="Open" Command="{Binding OpenFilesCommand}"/>
-                    <AppBarButton x:ConnectionId='6' x:Name="commandBarSettings" Icon="Setting" Label="Settings"                                 />
+                    <AppBarButton x:ConnectionId='8' x:Name="commandBarSettings" Icon="Setting" Label="Settings"                                 />
                 </CommandBar.SecondaryCommands>
                   <AppBarButton Icon="MusicInfo" Label="Queue"/>
                   <AppBarButton Icon="Sort" Label="Order By" Flyout="{StaticResource OrderByFlyout}"/>

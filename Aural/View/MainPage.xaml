@@ -73,7 +73,12 @@
                                 <RowDefinition Height="48"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="10" VerticalAlignment="Center" Grid.Row="0" Text="Playlists" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal">
+                                <AppBarButton Click="AppBarButton_Click" Grid.Column="0" Background="{ThemeResource SystemColorButtonFaceColor}" Height="48" Width="48">
+                                    <TextBlock x:Name="Glyph" Text="&#xe700;" Style="{StaticResource SplitViewTextBlockStyle}" />
+                                </AppBarButton>
+                                <TextBlock Margin="10" VerticalAlignment="Center" Grid.Row="0" Text="Playlists" FontWeight="Bold"/>
+                            </StackPanel>
                             <ListView Grid.Row="1" x:Name="playlistsListView" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
@@ -106,7 +111,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <AppBarButton Click="AppBarButton_Click" Grid.Column="0" Background="{ThemeResource SystemColorButtonFaceColor}" Height="48" Width="48">
-                                <TextBlock x:Name="Glyph" Text="&#xe700;" Style="{StaticResource SplitViewTextBlockStyle}" />
+                                <TextBlock Text="&#xe700;" Style="{StaticResource SplitViewTextBlockStyle}" />
                             </AppBarButton>
             <CommandBar Grid.Column="1" Background="{ThemeResource SystemColorButtonFaceColor}">
                 <CommandBar.SecondaryCommands>

@@ -78,7 +78,7 @@ namespace Aural.View
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            playlistSplitView.IsPaneOpen = true;
+            playlistSplitView.IsPaneOpen = !playlistSplitView.IsPaneOpen;
         }
     }
 }
