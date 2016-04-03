@@ -5,17 +5,37 @@
     xmlns:local="using:Aural.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
+    <UserControl.Resources>
+        <MenuFlyout x:Key="PlaylistItemContextMenuFlyout">
+            <MenuFlyoutItem Text="Play" Command="{Binding Main.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding PlaylistTrackNo}"/>
+        </MenuFlyout>
+    </UserControl.Resources>
     <Grid>
-        <ListView x:ConnectionId='1' AllowDrop="True"                                             ReorderMode="Enabled"  x:Name="PlaylistListView" ItemsSource="{Binding DisplayedPlaylist}" SelectedItem="{Binding PreviousPlayingItem, Mode=TwoWay}" CanDragItems="True" CanReorderItems="True">
+        <ListView x:ConnectionId='1' AllowDrop="True"                                             ReorderMode="Enabled"  x:Name="PlaylistListView" ItemsSource="{Binding DisplayedPlaylist}" SelectedItem="{Binding SelectedDisplayedItem, Mode=TwoWay}" CanDragItems="True" CanReorderItems="True">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
+                    <Grid x:ConnectionId='2' Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}"                                     >
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="DoubleTapped">
+                                <core:InvokeCommandAction Command="{Binding Main.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding PlaylistTrackNo}"/>
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                    
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Margin="0,0,5,0" Foreground="Gray" VerticalAlignment="Center"/>
+                        
+                        <Button x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Margin="0,0,5,0" Foreground="Gray" Background="Transparent" VerticalAlignment="Center" Command="{Binding Main.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding PlaylistTrackNo}"/>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Properties.TrackNumber}" Margin="5,5,0,5"/>
@@ -29,6 +49,7 @@
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

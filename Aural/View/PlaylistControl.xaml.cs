@@ -48,10 +48,16 @@ namespace Aural.View
                     {
                         files.Add(item.File);
                     }
-                    Messenger.Default.Send<IReadOnlyList<StorageFile>>(files);
+                    Messenger.Default.Send<NotificationMessage<IReadOnlyList<StorageFile>>>(new NotificationMessage<IReadOnlyList<StorageFile>>(files,"fromDragDrop"));
                 }
             }
         }
+
+        private void StackPanel_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+        }
+
     }
 
     public class AppFile

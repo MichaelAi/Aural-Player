@@ -215,3 +215,7 @@ C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\B
 C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\taglib-sharp.dll
 C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\BackgroundAudioTask.pdb
 C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\BackgroundAudioTask.pri
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Microsoft.Xaml.Interactions.dll
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Microsoft.Xaml.Interactivity.dll
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\Microsoft.Xaml.Interactions.pri.xml
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\Microsoft.Xaml.Interactivity.pri.xml
