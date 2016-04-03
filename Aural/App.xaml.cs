@@ -1,5 +1,6 @@
 ﻿using Aural.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Xaml.Interactivity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,7 @@ namespace Aural
     /// </summary>
     sealed partial class App : Application
     {
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -148,5 +150,9 @@ namespace Aural
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+
     }
+
+
 }
