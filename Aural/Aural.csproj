@@ -104,6 +104,7 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Helpers\ApplicationSettingsHelper.cs" />
     <Compile Include="Helpers\CollectionUtilsHelper.cs" />
+    <Compile Include="Helpers\FlyoutHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Interface\IBackgroundAudioManager.cs" />
     <Compile Include="Model\Playlist.cs" />
@@ -161,6 +162,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

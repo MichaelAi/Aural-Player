@@ -73,12 +73,10 @@ namespace Aural.View
 
         private void playlistControlsGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
-        }
-
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            playlistSplitView.IsPaneOpen = !playlistSplitView.IsPaneOpen;
+            var uiSender = sender as UIElement;
+            var flyout = (FlyoutBase)uiSender.GetValue(FlyoutBase.AttachedFlyoutProperty);
+            flyout.Placement = FlyoutPlacementMode.Bottom;
+            flyout.ShowAt(uiSender as FrameworkElement);
         }
     }
 }

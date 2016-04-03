@@ -10,7 +10,7 @@
     <PackageArchitecture>x86</PackageArchitecture>
     <PackageIdentityName>142a87f8-f6b1-4368-ac09-308a2eec8389</PackageIdentityName>
     <IntermediateOutputPath>C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\</IntermediateOutputPath>
-    <RegisteredManifestChecksum>CDF161539F423E4BB884180538BAD36CD4CCF624515C128E59EAC3BA79DCD5FE</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>11EBC477866B51F6185FE68F9B51C3F9A22FC7476DF169D33EF95636C60A9A90</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>142a87f8-f6b1-4368-ac09-308a2eec8389_1.0.0.0_x86__3pn73vjv4a5p4</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>142a87f8-f6b1-4368-ac09-308a2eec8389_3pn73vjv4a5p4!App</RegisteredUserModeAppID>
     <RegisteredPackageID>142a87f8-f6b1-4368-ac09-308a2eec8389</RegisteredPackageID>
@@ -22,13 +22,13 @@
     <AppXManifest Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-04-03T11:06:49.009</Modified>
+      <Modified>2016-04-03T17:33:18.694</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Aural.exe">
       <PackagePath>entrypoint\Aural.exe</PackagePath>
-      <Modified>2016-04-03T11:06:46.948</Modified>
+      <Modified>2016-04-03T17:33:16.705</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\micha\.nuget\packages\CommonServiceLocator\1.3.0\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll">
       <PackagePath>Microsoft.Practices.ServiceLocation.dll</PackagePath>
@@ -640,7 +640,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Aural.xr.xml">
       <PackagePath>Aural.xr.xml</PackagePath>
-      <Modified>2016-04-03T11:06:46.346</Modified>
+      <Modified>2016-04-03T16:16:18.892</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -648,11 +648,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2016-04-03T11:06:48.469</Modified>
+      <Modified>2016-04-03T17:33:18.157</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Core\Aural.exe">
       <PackagePath>Aural.exe</PackagePath>
-      <Modified>2016-04-03T11:06:49.006</Modified>
+      <Modified>2016-04-03T17:33:18.691</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
