@@ -224,7 +224,6 @@ namespace Aural.Aural_XamlTypeInfo
         }
 
         private object Activate_0_ViewModelLocator() { return new global::Aural.ViewModel.ViewModelLocator(); }
-        private object Activate_2_MainViewModel() { return new global::Aural.ViewModel.MainViewModel(); }
         private object Activate_4_ObservableObject() { return new global::GalaSoft.MvvmLight.ObservableObject(); }
         private object Activate_5_StringFormatConverter() { return new global::Aural.Converters.StringFormatConverter(); }
         private object Activate_6_BooleanToVisibilityConverter() { return new global::Aural.Converters.BooleanToVisibilityConverter(); }

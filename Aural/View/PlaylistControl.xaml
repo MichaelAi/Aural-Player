@@ -18,7 +18,7 @@
         </MenuFlyout>
     </UserControl.Resources>
     <Grid>
-        <ListView AllowDrop="True" DragOver="OnFileDragOver" Drop="OnFileDrop" ReorderMode="Enabled"  x:Name="PlaylistListView" ItemsSource="{Binding DisplayedPlaylist}" SelectedItem="{Binding SelectedDisplayedItem, Mode=TwoWay}" CanDragItems="True" CanReorderItems="True">
+        <ListView AllowDrop="True" DragOver="OnFileDragOver" Drop="OnFileDrop" ReorderMode="Enabled"  x:Name="PlaylistListView" ItemsSource="{Binding DisplayedPlaylistItems}" SelectedItem="{Binding SelectedDisplayedItem, Mode=TwoWay}" CanDragItems="True" CanReorderItems="True">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

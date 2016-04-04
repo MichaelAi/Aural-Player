@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aural.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace Aural.Interface
 {
-    interface IContentDialogService
+    public interface IContentDialogService
     {
+        Task<Playlist> CreateNewPlaylist();
+        Task<bool> ShowPlaylistDeletionConfirmation(Playlist play);
+        Task<Playlist> ShowEditPlaylistDialog(Playlist oldPlay);
     }
 }

@@ -10,7 +10,7 @@
     <RootPropertyPathName Name="MediaStopCommand" />
     <RootPropertyPathName Name="MediaPreviousCommand" />
     <RootPropertyPathName Name="MediaStopAfterCurrentCommand" />
-    <RootPropertyPathName Name="CurrentPlaylist" />
+    <RootPropertyPathName Name="CurrentPlaylistItems" />
     <RootPropertyPathName Name="Properties" />
     <RootPropertyPathName Name="Album" />
     <RootPropertyPathName Name="Artist" />
@@ -33,7 +33,7 @@
     <RootPropertyPathName Name="SavePlaylistCommand" />
     <RootPropertyPathName Name="MediaElementObject" />
     <RootPropertyPathName Name="MediaPlayCommand" />
-    <RootPropertyPathName Name="DisplayedPlaylist" />
+    <RootPropertyPathName Name="DisplayedPlaylistItems" />
     <RootPropertyPathName Name="SelectedDisplayedItem" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
