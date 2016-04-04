@@ -38,35 +38,11 @@
             <MenuFlyoutItem Text="&#xE107; Delete" FontFamily="Segoe MDL2 Assets" Command="{Binding Main.DeletePlaylistCommand, Source={StaticResource Locator}}" CommandParameter="{Binding PlaylistName}"/>
         </MenuFlyout>
         
-        <Flyout x:Key="QueueFlyout">
-            <Grid Width="300" Height="400">
-                <ListView ItemsSource="{Binding CurrentPlaylist}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Margin="0,0,5,0" Foreground="Gray" VerticalAlignment="Center"/>
-                                <StackPanel Orientation="Vertical">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Properties.TrackNumber}" Margin="5,5,0,5"/>
-                                        <TextBlock Text="." Margin="1,5,5,5"/>
-                                        <TextBlock Text="{Binding Properties.Title}" Margin="5"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                                        <TextBlock Text="{Binding Properties.Artist}" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}" FontSize="10"/>
-                                        <TextBlock Text="\" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemColorWindowTextColor}" FontSize="10"/>
-                                        <TextBlock Text="{Binding Properties.Album}" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}"  Foreground="{ThemeResource SystemColorWindowTextColor}" FontSize="10"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        </Flyout>
+       
         
-        <Flyout x:Key="SearchFlyout">
+        <Flyout x:Key="SearchFlyout" Placement="Bottom">
             <StackPanel Width="300">
-                <AutoSuggestBox Text="{Binding SearchParameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Search..." QueryIcon="Find"/>
+                <AutoSuggestBox Text="{Binding SearchParameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Filter..." QueryIcon="Filter"/>
             </StackPanel>
         </Flyout>
     </control:TitleBarPage.Resources>
@@ -88,96 +64,91 @@
             </Border>
         </SplitView.Pane>
         <SplitView.Content>
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="48"/>
-                </Grid.RowDefinitions>
+            <SplitView x:Name="NavBarSplitView">
+                <SplitView.Pane>
+                    <Border Background="#99FFFFFF" BorderBrush="{ThemeResource SystemAccentColor}" BorderThickness="0,0,1,0">
+                        <StackPanel>
 
-                <SplitView x:Name="playlistSplitView" Grid.Row="1" IsPaneOpen="True" OpenPaneLength="200" DisplayMode="Inline">
-                    <SplitView.Pane>
-                        <Border  Background="#99FFFFFF" BorderBrush="{ThemeResource SystemBaseMediumColor}" BorderThickness="0,0,1,0">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="48"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+                        
+                        </StackPanel>
+                    </Border>
+                </SplitView.Pane>
+                <SplitView.Content>
+                    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="48"/>
+                        </Grid.RowDefinitions>
+
+                        <SplitView x:Name="playlistSplitView" Grid.Row="0" IsPaneOpen="True" OpenPaneLength="200" DisplayMode="Inline" PaneBackground="{ThemeResource SystemColorButtonFaceColor}">
+                            <SplitView.Pane>
+                                <Border Background="#99FFFFFF" BorderBrush="{ThemeResource SystemBaseMediumColor}" BorderThickness="0,0,1,0">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="48"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <TextBlock Margin="10" VerticalAlignment="Center" Grid.Row="0" Text="Playlists"/>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Command="{Binding SavePlaylistCommand}"/>
+                                                <Button x:Name="commandBarSettings" Style="{StaticResource TextBlockButtonStyle}" Content="&#xE713;" FontFamily="Segoe MDL2 Assets" Click="commandBarSettings_Click"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <ListView Grid.Row="1" x:Name="playlistsListView" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid FlyoutBase.AttachedFlyout="{StaticResource PlaylistControlsFlyout}" x:Name="playlistControlsGrid" RightTapped="playlistControlsGrid_RightTapped">
+                                                        <TextBlock Text="{Binding PlaylistName}" FontWeight="Light"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <Grid Visibility="{Binding HasNoPlaylists, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <TextBlock Text="No Playlists" Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="Save a playlist to get started." HorizontalAlignment="Center" FontSize="9"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </SplitView.Pane>
+                            <SplitView.Content>
                                 <Grid>
-                                    <!--
-                                    <AppBarButton Click="AppBarButton_Click" Grid.Column="0" Background="{ThemeResource SystemColorButtonFaceColor}" Height="48" Width="48">
-                                        <TextBlock x:Name="Glyph" Text="&#xe700;" Style="{StaticResource SplitViewTextBlockStyle}" />
-                                    </AppBarButton>
-                                    -->
-                                    <TextBlock Margin="10" VerticalAlignment="Center" Grid.Row="0" Text="Playlists"/>
-                                    <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Command="{Binding SavePlaylistCommand}">
-                                        <FlyoutBase.AttachedFlyout>
-                                            <MenuFlyout>
-                                                <MenuFlyoutItem Text="Stop"/>
-                                                <MenuFlyoutItem Text="Stop after Current"/>
-                                            </MenuFlyout>
-                                        </FlyoutBase.AttachedFlyout>
-                                    </Button>
-                                </Grid>
-                                <ListView Grid.Row="1" x:Name="playlistsListView" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid FlyoutBase.AttachedFlyout="{StaticResource PlaylistControlsFlyout}" x:Name="playlistControlsGrid" RightTapped="playlistControlsGrid_RightTapped">
-                                                <TextBlock Text="{Binding PlaylistName}" FontWeight="Light"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                                <Grid Visibility="{Binding HasNoPlaylists, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="No Playlists" Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="Save a playlist to get started." HorizontalAlignment="Center" FontSize="9"/>
+                                <view:PlaylistControl/>
+                                    <StackPanel  Margin="12.5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                        <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE71C;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource SearchFlyout}"/>
+                                        <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE8CB;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource OrderByFlyout}"/>
                                     </StackPanel>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </SplitView.Pane>
-                    <SplitView.Content>
+                            </SplitView.Content>
+                        </SplitView>
+                        
 
-                        <view:PlaylistControl/>
-                    </SplitView.Content>
-                </SplitView>
-                <Grid Background="{ThemeResource SystemColorButtonFaceColor}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <AppBarButton Grid.Column="0" Background="{ThemeResource SystemColorButtonFaceColor}" Height="48" Width="48">
-                        <TextBlock Text="&#xe700;" Style="{StaticResource SplitViewTextBlockStyle}" />
-                    </AppBarButton>
-                    <CommandBar Grid.Column="1" Background="{ThemeResource SystemColorButtonFaceColor}">
-                        <CommandBar.SecondaryCommands>
-                            <AppBarButton Icon="OpenFile" Label="Open" Command="{Binding OpenFilesCommand}"/>
-                            <AppBarButton x:Name="commandBarSettings" Icon="Setting" Label="Settings" Click="commandBarSettings_Click"/>
-                        </CommandBar.SecondaryCommands>
-                        <AppBarButton Icon="MusicInfo" Label="Queue" Flyout="{StaticResource QueueFlyout}"/>
-                        <AppBarButton Icon="Sort" Label="Order By" Flyout="{StaticResource OrderByFlyout}"/>
-                        <AppBarButton Icon="Find" Label="Search" Flyout="{StaticResource SearchFlyout}"/>
-                    </CommandBar>
-                </Grid>
 
-               
-                <view:PlayerControl Grid.Row="3"/>
-                <Grid Grid.Row="2" Background="{ThemeResource SystemAccentColor}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
 
-                    <Image Height="60" Width="50" Margin="10,0,10,0" Source="{Binding NowPlayingItem.AlbumArt.Source}"/>
-                    <StackPanel Grid.Column="1">
-                        <TextBlock Text="{Binding NowPlayingItem.Properties.Title}" Foreground="{ThemeResource SystemAltHighColor}"/>
-                        <TextBlock Text="{Binding NowPlayingItem.Properties.Artist}" Foreground="{ThemeResource SystemAltHighColor}"/>
-                        <TextBlock Text="{Binding NowPlayingItem.Properties.Album}" Foreground="{ThemeResource SystemAltHighColor}"/>
-                    </StackPanel>
-                </Grid>
-            </Grid>
+                        
+                        <Grid Grid.Row="1" Background="{ThemeResource SystemAccentColor}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Height="60" Width="50" Margin="10,0,10,0" Source="{Binding NowPlayingItem.AlbumArt.Source}"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding NowPlayingItem.Properties.Title}" Foreground="{ThemeResource SystemAltHighColor}"/>
+                                <TextBlock Text="{Binding NowPlayingItem.Properties.Artist}" Foreground="{ThemeResource SystemAltHighColor}"/>
+                                <TextBlock Text="{Binding NowPlayingItem.Properties.Album}" Foreground="{ThemeResource SystemAltHighColor}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <view:PlayerControl Grid.Row="2"/>
+                        
+                        
+                    </Grid>
+                </SplitView.Content>
+            </SplitView>
         </SplitView.Content>
     </SplitView>
 </control:TitleBarPage>

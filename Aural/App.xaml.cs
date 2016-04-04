@@ -144,10 +144,24 @@ namespace Aural
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
+
+            try
+            {
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                StorageFolder playlistsFolder = await storageFolder.CreateFolderAsync("Playlists", CreationCollisionOption.OpenIfExists);
+                StorageFile playlistFile = await playlistsFolder.GetFileAsync("Explorer Queue" + ".m3u");
+                await playlistFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            }
+            catch
+            {
+
+            }
+
+
             deferral.Complete();
         }
 
