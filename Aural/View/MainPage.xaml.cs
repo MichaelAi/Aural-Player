@@ -35,18 +35,5 @@ namespace Aural.View
         {
             rootSplitView.IsPaneOpen = !rootSplitView.IsPaneOpen;
         }
-
-        private void playlistControlsGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-            var uiSender = sender as UIElement;
-            var flyout = (FlyoutBase)uiSender.GetValue(FlyoutBase.AttachedFlyoutProperty);
-            flyout.Placement = FlyoutPlacementMode.Bottom;
-            flyout.ShowAt(uiSender as FrameworkElement);
-        }
-
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavBarSplitView.IsPaneOpen = !NavBarSplitView.IsPaneOpen;
-        }
     }
 }

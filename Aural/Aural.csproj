@@ -125,7 +125,16 @@
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\MainPage.xaml.cs" />
     <Compile Include="View\PlayerControl.xaml.cs" />
+    <Compile Include="View\PlayingInfoUserControl.xaml.cs">
+      <DependentUpon>PlayingInfoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PlaylistControl.xaml.cs" />
+    <Compile Include="View\PlaylistListUserControl.xaml.cs">
+      <DependentUpon>PlaylistListUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsUserControl.xaml.cs">
+      <DependentUpon>SettingsUserControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -183,9 +192,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\PlayingInfoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PlaylistControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PlaylistListUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

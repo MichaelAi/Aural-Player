@@ -8,16 +8,39 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
-    DataContext="{Binding Main, Source={StaticResource Locator}}"
+    DataContext="{Binding Playlist, Source={StaticResource Locator}}"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <UserControl.Resources>
         <MenuFlyout x:Key="PlaylistItemContextMenuFlyout">
-            <MenuFlyoutItem Text="Play" Command="{Binding Main.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding PlaylistTrackNo}"/>
+            <MenuFlyoutItem Text="Play" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
         </MenuFlyout>
+
+        <MenuFlyout x:Key="OrderByFlyout">
+            <MenuFlyoutItem Text="Track Number" Command="{Binding OrderPlaylistCommand}" CommandParameter="tracknumber"/>
+            <MenuFlyoutItem Text="Title" Command="{Binding OrderPlaylistCommand}" CommandParameter="title"/>
+            <MenuFlyoutItem Text="Artist" Command="{Binding OrderPlaylistCommand}" CommandParameter="artist"/>
+            <MenuFlyoutItem Text="Album" Command="{Binding OrderPlaylistCommand}" CommandParameter="album"/>
+            <MenuFlyoutItem Text="Album Artist" Command="{Binding OrderPlaylistCommand}" CommandParameter="albumartist"/>
+            <MenuFlyoutItem Text="Year" Command="{Binding OrderPlaylistCommand}" CommandParameter="year"/>
+            <MenuFlyoutItem Text="Genre" Command="{Binding OrderPlaylistCommand}" CommandParameter="genre"/>
+            <MenuFlyoutItem Text="Rating" Command="{Binding OrderPlaylistCommand}" CommandParameter="rating"/>
+            <MenuFlyoutItem Text="Duration" Command="{Binding OrderPlaylistCommand}" CommandParameter="duration"/>
+        </MenuFlyout>
+
+        <Flyout x:Key="SearchFlyout" Placement="Bottom">
+            <StackPanel Width="300">
+                <AutoSuggestBox Text="{Binding SearchParameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Filter..." QueryIcon="Filter"/>
+            </StackPanel>
+        </Flyout>
+        
     </UserControl.Resources>
     <Grid>
+        <StackPanel  Margin="12.5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE71C;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource SearchFlyout}"/>
+            <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE8CB;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource OrderByFlyout}"/>
+        </StackPanel>
         <ListView AllowDrop="True" DragOver="OnFileDragOver" Drop="OnFileDrop" ReorderMode="Enabled"  x:Name="PlaylistListView" ItemsSource="{Binding DisplayedPlaylistItems}" SelectedItem="{Binding SelectedDisplayedItem, Mode=TwoWay}" CanDragItems="True" CanReorderItems="True">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -29,13 +52,13 @@
                     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}" RightTapped="StackPanel_RightTapped">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="DoubleTapped">
-                                <core:InvokeCommandAction Command="{Binding Main.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding PlaylistTrackNo}"/>
+                                <core:InvokeCommandAction Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
                     
                     <StackPanel Orientation="Horizontal">
                         
-                        <Button x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Margin="0,0,5,0" Foreground="Gray" Background="Transparent" VerticalAlignment="Center" Command="{Binding Main.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding PlaylistTrackNo}"/>
+                        <Button x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Margin="0,0,5,0" Foreground="Gray" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Properties.TrackNumber}" Margin="5,5,0,5"/>

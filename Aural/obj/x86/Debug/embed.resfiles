@@ -2,4 +2,7 @@ App.xbf
 View\Generic.xbf
 View\MainPage.xbf
 View\PlayerControl.xbf
+View\PlayingInfoUserControl.xbf
 View\PlaylistControl.xbf
+View\PlaylistListUserControl.xbf
+View\SettingsUserControl.xbf

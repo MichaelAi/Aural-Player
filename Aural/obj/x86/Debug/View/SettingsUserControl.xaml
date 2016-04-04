@@ -1,0 +1,26 @@
+﻿<UserControl
+    x:Class="Aural.View.SettingsUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Aural.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    DataContext="{Binding Settings, Source={StaticResource Locator}}">
+
+    <StackPanel  Orientation="Vertical" Margin="10">
+        <TextBlock Text="Set Master Folders" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Bold" Foreground="{ThemeResource SystemBaseMediumColor}"/>
+        <TextBlock  Foreground="{ThemeResource SystemBaseMediumColor}" FontWeight="Light" Text="The master folders are needed to access your music files outside the music library and not on removable devices in the future." TextWrapping="WrapWholeWords"/>
+        <Button Content="Set" Command="{Binding SetMasterFolderCommand}"/>
+        <ListView ItemsSource="{Binding AccessTokens}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock  Foreground="{ThemeResource SystemBaseMediumColor}" Text="{Binding}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
+</UserControl>
+

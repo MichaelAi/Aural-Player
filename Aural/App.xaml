@@ -639,8 +639,8 @@
                                                 </AppBarButton.Icon>
                                                 <FlyoutBase.AttachedFlyout>
                                                     <MenuFlyout>
-                                                        <MenuFlyoutItem Text="Stop" Command="{Binding Main.MediaStopCommand, Source={StaticResource Locator}}"/>
-                                                        <MenuFlyoutItem Text="Stop after current" Command="{Binding Main.MediaStopAfterCurrentCommand, Source={StaticResource Locator}}" />
+                                                        <MenuFlyoutItem Text="Stop" Command="{Binding Player.MediaStopCommand, Source={StaticResource Locator}}"/>
+                                                        <MenuFlyoutItem Text="Stop after current" Command="{Binding Player.MediaStopAfterCurrentCommand, Source={StaticResource Locator}}" />
                                                     </MenuFlyout>
                                                 </FlyoutBase.AttachedFlyout>
                                                 <interactivity:Interaction.Behaviors>
@@ -696,7 +696,7 @@
                                                     </AppBarButton.Icon>
                                                     <FlyoutBase.AttachedFlyout>
                                                         <MenuFlyout>
-                                                            <MenuFlyoutItem Text="Stop" Command="{Binding Main.MediaStopCommand, Source={StaticResource Locator}}"/>
+                                                            <MenuFlyoutItem Text="Stop" Command="{Binding Player.MediaStopCommand, Source={StaticResource Locator}}"/>
                                                             <MenuFlyoutItem Text="Stop after Current"/>
                                                         </MenuFlyout>
                                                     </FlyoutBase.AttachedFlyout>
