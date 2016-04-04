@@ -17,6 +17,8 @@ using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Views;
 using Aural.ViewModel;
+using Aural.Service;
+using Aural.Interface;
 
 namespace Aural.ViewModel
 {
@@ -44,7 +46,13 @@ namespace Aural.ViewModel
             ////}
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
+            //services
+            SimpleIoc.Default.Register<ISettingsService, SettingsService>();
+            SimpleIoc.Default.Register<IFileIOService, FileIOService>();
+            SimpleIoc.Default.Register<IContentDialogService, ContentDialogService>();
+            //viewmodels
             SimpleIoc.Default.Register<MainViewModel>();
+
         }
 
         public MainViewModel Main
