@@ -52,6 +52,10 @@ namespace Aural.ViewModel
             SimpleIoc.Default.Register<IContentDialogService, ContentDialogService>();
             //viewmodels
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<PlayerViewModel>();
+            SimpleIoc.Default.Register<PlaylistViewModel>();
+            SimpleIoc.Default.Register<PlaylistListViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();
 
         }
 
@@ -63,6 +67,37 @@ namespace Aural.ViewModel
             }
         }
 
+        public PlayerViewModel Player
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PlayerViewModel>();
+            }
+        }
+
+        public PlaylistViewModel Playlist
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PlaylistViewModel>();
+            }
+        }
+
+        public PlaylistListViewModel PlaylistList
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PlaylistListViewModel>();
+            }
+        }
+
+        public SettingsViewModel Settings
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SettingsViewModel>();
+            }
+        }
 
         public static void Cleanup()
         {

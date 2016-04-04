@@ -37,7 +37,6 @@ namespace Aural.View
 
         private async void OnFileDrop(object sender, DragEventArgs e)
         {
-            var viewModel = (MainViewModel)DataContext;
             if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
                 var items = await e.DataView.GetStorageItemsAsync();
@@ -57,6 +56,7 @@ namespace Aural.View
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
+
 
     }
 
