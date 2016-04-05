@@ -19,6 +19,9 @@ namespace Aural.View
 {
     public sealed partial class PlaylistListUserControl : UserControl
     {
+
+        public event EventHandler SettingsButtonClicked;
+
         public PlaylistListUserControl()
         {
             this.InitializeComponent();
@@ -34,7 +37,8 @@ namespace Aural.View
 
         private void commandBarSettings_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.SettingsButtonClicked != null)
+                this.SettingsButtonClicked(new object(), new EventArgs());
         }
     }
 }

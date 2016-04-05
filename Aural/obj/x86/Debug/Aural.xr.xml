@@ -26,6 +26,7 @@
     <RootPropertyPathName Name="SearchParameter" />
     <RootPropertyPathName Name="OrderPlaylistCommand" />
     <RootPropertyPathName Name="MediaPlayCommand" />
+    <RootPropertyPathName Name="IsPlaylistLoadInProgress" />
     <RootPropertyPathName Name="DisplayedPlaylistItems" />
     <RootPropertyPathName Name="SelectedDisplayedItem" />
     <RootPropertyPathName Name="PlaylistList" />
@@ -97,17 +98,17 @@
       <RootMethod Name="SetIsTemplateFocusTarget" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
-      <RootProperty Name="Width" />
       <RootProperty Name="Style" />
       <RootProperty Name="Content" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="Flyout" />
+      <RootProperty Name="Width" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Foreground" />
       <RootProperty Name="Background" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Command" />
       <RootProperty Name="CommandParameter" />
-      <RootProperty Name="FontFamily" />
-      <RootProperty Name="Flyout" />
       <RootProperty Name="HorizontalAlignment" />
       <RootEvent Name="Click" />
     </RootType>
@@ -193,6 +194,7 @@
       <RootProperty Name="Orientation" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Width" />
+      <RootProperty Name="Background" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
     </RootType>
@@ -356,6 +358,7 @@
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="Visibility" />
       <RootProperty Name="AllowDrop" />
       <RootProperty Name="ReorderMode" />
       <RootProperty Name="SelectedItem" />

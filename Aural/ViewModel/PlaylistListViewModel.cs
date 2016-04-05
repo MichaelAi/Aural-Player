@@ -7,18 +7,22 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace Aural.ViewModel
 {
     public class PlaylistListViewModel : ViewModelBase
     {
-        ISettingsService settingsService;
         IFileIOService fileIOService;
         IContentDialogService contentDialogService;
+        CancellationTokenSource cts = new CancellationTokenSource();
+        bool isPlaylistLoadInProgress = false;
 
         private ObservableCollection<Playlist> _playlists = new ObservableCollection<Playlist>();
         public ObservableCollection<Playlist> Playlists
@@ -45,17 +49,20 @@ namespace Aural.ViewModel
         public RelayCommand<string> DeletePlaylistCommand { get; private set; }
         public RelayCommand<string> EditPlaylistCommand { get; private set; }
 
-        public PlaylistListViewModel(IFileIOService fileIOService)
+        public PlaylistListViewModel(IFileIOService fileIOService, IContentDialogService contentDialogService)
         {
             this.fileIOService = fileIOService;
+            this.contentDialogService = contentDialogService;
             SavePlaylistCommand = new RelayCommand(CreatePlaylist);
             Startup();
         }
 
+        //do stuff at app launch
         private async void Startup()
         {
             await LoadPlaylists();
         }
+
         //Create a new playlist button handler
         private async void CreatePlaylist()
         {
@@ -65,12 +72,27 @@ namespace Aural.ViewModel
         }
 
         //listen when the selected playist changes and change the displayed playlist
+        //only read the playlist when it has been clicked for the first time, otherwise reference it
+        //consider cleaning up the playlists when they have not been used for a while.
         private async void SelectedPlaylistChanged()
-        {
-            if (SelectedPlaylist.PlaylistId == Guid.Empty)
+        { 
+            Messenger.Default.Send(new NotificationMessage<string>("ShowPlaylistLoadingBar", "ShowPlaylistLoadingBar"));
+            await Task.Delay(5);     
+            if (SelectedPlaylist.PlaylistName != "")
             {
-                SelectedPlaylist.PlaylistId = Guid.NewGuid();
-                SelectedPlaylist.Items = new ObservableCollection<PlaylistItem>(await AcceptFiles(await fileIOService.ReadPlaylistFile(SelectedPlaylist)));
+                if (SelectedPlaylist.PlaylistId == Guid.Empty)
+                {
+                    try
+                    {
+                        SelectedPlaylist.PlaylistId = Guid.NewGuid();
+                        var files = await fileIOService.ReadPlaylistFile(SelectedPlaylist);
+                        SelectedPlaylist.Items = new ObservableCollection<PlaylistItem>(await AcceptFiles(files));
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("oops!");
+                    }
+                }
             }
             Messenger.Default.Send(new NotificationMessage<Playlist>(SelectedPlaylist, "SelectedPlaylistChanged"));
         }
@@ -87,7 +109,7 @@ namespace Aural.ViewModel
             if (Playlists != null)
                 if (Playlists.Count > 0)
                     SelectedPlaylist = Playlists.First();
-
+ 
             Playlists.CollectionChanged += new NotifyCollectionChangedEventHandler(PlaylistsChanged);
         }
 
