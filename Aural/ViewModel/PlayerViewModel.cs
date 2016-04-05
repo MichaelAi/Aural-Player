@@ -35,8 +35,6 @@ namespace Aural.ViewModel
             set { Set("NowPlayingFile", ref _nowPlayingFile, value); }
         }
 
-
-
         private double _nowPlayingMaxDuration;
         public double NowPlayingMaxDuration
         {
@@ -109,6 +107,12 @@ namespace Aural.ViewModel
             MediaNextCommand = new RelayCommand(MediaNext);
             MediaStopAfterCurrentCommand = new RelayCommand(MediaStopAfterCurrent);
 
+            Startup();
+        }
+
+        //do stuff at app launch
+        private void Startup()
+        {
             InitializeMediaObject();
             InitializeSystemMediaControls();
             RegisterMessaging();
@@ -121,15 +125,15 @@ namespace Aural.ViewModel
                 {
                     if (nm.Notification != null)
                     {
-                        if ((string)nm.Notification == "DisplayToCurrent")
+                        if (nm.Notification == "DisplayToCurrent")
                         {
                             TransferPlaylist(nm.Content);
                         }
-                        if ((string)nm.Notification == "DisplayToDisplay")
+                        if (nm.Notification == "DisplayToDisplay")
                         {
                             DisplayedPlaylistItems = nm.Content;
                         }
-                        if ((string)nm.Notification == "PlayFirst")
+                        if (nm.Notification == "PlayFirst")
                         {
                             DisplayedPlaylistItems = nm.Content;
                             MediaPlay(nm.Content.FirstOrDefault());
@@ -139,6 +143,7 @@ namespace Aural.ViewModel
                 );
         }
 
+        //create the media element that is responsible for actually playing files
         private void InitializeMediaObject()
         {
             if (MediaElementObject == null)
@@ -161,9 +166,11 @@ namespace Aural.ViewModel
             {
                 MediaElementObject.Play();
             }
+            //this else block triggers when a displayed playlist item is opened explicitely 
             else
             {
-               NowPlayingItem = DisplayedPlaylistItems.Where(x => x == item).FirstOrDefault();
+                NowPlayingItem = DisplayedPlaylistItems.Where(x => x == item).FirstOrDefault();
+                Messenger.Default.Send(new NotificationMessage<string>("RequestDisplayed", "RequestDisplayed"));
             }
             properties = await TryGetProperties(NowPlayingFile);
             MediaElementObject.SeekCompleted += MediaElementObject_SeekCompleted;
@@ -288,6 +295,7 @@ namespace Aural.ViewModel
             }
         }
 
+        //when the track changes from opening a playlist item, change the current queue to the displayed playlist
         private void TransferPlaylist(ObservableCollection<PlaylistItem> DisplayedPlaylistItems)
         {
             if (DisplayedPlaylistItems != null && DisplayedPlaylistItems.Count > 0)
@@ -317,10 +325,6 @@ namespace Aural.ViewModel
             }
 
         }
-
-
-
-
 
         //link the player to the system media controls
         private void InitializeSystemMediaControls()

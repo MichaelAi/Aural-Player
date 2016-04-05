@@ -37,11 +37,7 @@
         
     </UserControl.Resources>
     <Grid>
-        <StackPanel  Margin="12.5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE71C;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource SearchFlyout}"/>
-            <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE8CB;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource OrderByFlyout}"/>
-        </StackPanel>
-        <ListView x:ConnectionId='1' AllowDrop="True"                                             ReorderMode="Enabled"  x:Name="PlaylistListView" ItemsSource="{Binding DisplayedPlaylistItems}" SelectedItem="{Binding SelectedDisplayedItem, Mode=TwoWay}" CanDragItems="True" CanReorderItems="True">
+        <ListView x:ConnectionId='1' Visibility="{Binding IsPlaylistLoadInProgress, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter='!'}" AllowDrop="True"                                             ReorderMode="Enabled"  x:Name="PlaylistListView" ItemsSource="{Binding DisplayedPlaylistItems}" SelectedItem="{Binding SelectedDisplayedItem, Mode=TwoWay}" CanDragItems="True" CanReorderItems="True">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -76,6 +72,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="12.5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE71C;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource SearchFlyout}"/>
+            <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE8CB;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource OrderByFlyout}"/>
+        </StackPanel>
+        <ProgressBar IsIndeterminate="True" Visibility="{Binding IsPlaylistLoadInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="20"/>
     </Grid>
 </UserControl>
 

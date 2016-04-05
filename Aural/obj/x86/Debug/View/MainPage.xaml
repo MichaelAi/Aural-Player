@@ -45,7 +45,7 @@
                         <SplitView x:ConnectionId='3' x:Name="playlistSplitView" Grid.Row="0" IsPaneOpen="True" OpenPaneLength="200" DisplayMode="Inline" PaneBackground="{ThemeResource SystemColorButtonFaceColor}">
                             <SplitView.Pane>
                                 <Border Background="#99FFFFFF" BorderBrush="{ThemeResource SystemBaseMediumColor}" BorderThickness="0,0,1,0">
-                                    <view:PlaylistListUserControl/>
+                                    <view:PlaylistListUserControl x:ConnectionId='4' x:Name="PlaylistList"/>
                                 </Border>
                             </SplitView.Pane>
                             <SplitView.Content>

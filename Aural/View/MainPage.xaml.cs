@@ -29,9 +29,10 @@ namespace Aural.View
         public MainPage()
         {
             this.InitializeComponent();
+            this.PlaylistList.SettingsButtonClicked += new EventHandler(PlaylistList_SettingsButtonClicked);
         }
 
-        private void commandBarSettings_Click(object sender, RoutedEventArgs e)
+        public void PlaylistList_SettingsButtonClicked(object sender, EventArgs e)
         {
             rootSplitView.IsPaneOpen = !rootSplitView.IsPaneOpen;
         }

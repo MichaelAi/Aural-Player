@@ -62,6 +62,13 @@ namespace Aural.ViewModel
             set { Set("SelectedDisplayedItem", ref _selectedDisplayedItem, value); }
         }
 
+        private bool _isPlaylistLoadInProgress = true;
+        public bool IsPlaylistLoadInProgress
+        {
+            get { return _isPlaylistLoadInProgress; }
+            set { Set("IsPlaylistLoadInProgress", ref _isPlaylistLoadInProgress, value); }
+        }
+
         public RelayCommand<string> OrderPlaylistCommand { get; private set; }
 
         public PlaylistViewModel(IFileIOService fileIOService)
@@ -69,6 +76,12 @@ namespace Aural.ViewModel
             this.fileIOService = fileIOService;
             OrderPlaylistCommand = new RelayCommand<string>((mode) => OrderPlaylist(mode));
             DisplayedPlaylistItems.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
+            Startup();
+        }
+
+        //do stuff at app launch
+        private void Startup()
+        {
             RegisterMessaging();
         }
 
@@ -95,6 +108,7 @@ namespace Aural.ViewModel
                         if(nm.Notification == "fromDragDrop")
                         {
                             PopulatePlaylist(nm.Content);
+                            SavePlaylist(SelectedPlaylist);
                         }
                         else if (nm.Notification == "fromFileOpen")
                         {
@@ -105,6 +119,23 @@ namespace Aural.ViewModel
                     }
                 }
                 );
+            Messenger.Default.Register<NotificationMessage<string>>(this,
+        nm =>
+        {
+            if (nm.Notification != null)
+            {
+                if (nm.Notification == "RequestDisplayed")
+                {
+                    TransferPlaylist();
+                }
+                if (nm.Notification == "ShowPlaylistLoadingBar")
+                {
+                    IsPlaylistLoadInProgress = true;
+                }
+            }
+        }
+        );
+
         }
 
         private void PlayItems(ObservableCollection<PlaylistItem> play)
@@ -168,13 +199,14 @@ namespace Aural.ViewModel
         {
             if (SelectedPlaylist != null)
             {
+                IsPlaylistLoadInProgress = true;
                 foreach (var item in items)
                 {
                     DisplayedPlaylistItems.Add(item);
                 }
                 SelectedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems);
-                SavePlaylist(SelectedPlaylist);
                 Messenger.Default.Send(new NotificationMessage<ObservableCollection<PlaylistItem>>(DisplayedPlaylistItems, "DisplayToDisplay"));
+                IsPlaylistLoadInProgress = false;
             }
         }
 
@@ -272,14 +304,14 @@ namespace Aural.ViewModel
                     SavePlaylist(SelectedPlaylist);
 
                 }
-                TransferPlaylist(SelectedPlaylist);
+                //TransferPlaylist(SelectedPlaylist);
             }
         }
 
-        public void TransferPlaylist(Playlist play)
-        {
+        //public void TransferPlaylist(Playlist play)
+        //{
 
-        }
+        //}
 
         //put a numeric label on each playlist item in the playlist
         private void LabelPlaylistNumbers()

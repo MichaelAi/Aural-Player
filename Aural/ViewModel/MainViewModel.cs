@@ -1,33 +1,16 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using Windows.UI.Xaml.Controls;
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.Storage.Pickers;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using System;
-using Windows.UI.Xaml;
 using Aural.Model;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.Media;
-using Windows.Media.Playback;
-using System.Diagnostics;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Aural.Helpers;
 using System.Threading;
-using Windows.ApplicationModel.Background;
-using System.Collections.Specialized;
 using Aural;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.Storage.FileProperties;
-using Windows.ApplicationModel.Activation;
-using System.Text.RegularExpressions;
 using Aural.Interface;
 
 namespace Aural.ViewModel
@@ -46,18 +29,16 @@ namespace Aural.ViewModel
             this.settingsService = settingsService;
             this.fileIOService = fileIOService;
             this.contentDialogService = contentDialogService;
-            //Do app launch operations
-            RegisterMessaging();
-            RegisterCommands();
-
-        }
-
-        //initialize the commands
-        private void RegisterCommands()
-        {
             OpenFilesCommand = new RelayCommand(OpenFiles);
-
+            Startup();
         }
+
+        //do stuff at app launch
+        private void Startup()
+        {
+            RegisterMessaging();
+        }
+
         //set up the mvvmlight messaging service
         private void RegisterMessaging()
         {
