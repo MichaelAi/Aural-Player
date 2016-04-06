@@ -99,6 +99,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Converters\ListViewSelectedItemsConverter.cs" />
     <Compile Include="CustomControls\TitleBarPage.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Helpers\CollectionUtilsHelper.cs" />
     <Compile Include="Helpers\FlyoutHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Interface\IBackgroundAudioManager.cs" />
     <Compile Include="Interface\IContentDialogService.cs" />
     <Compile Include="Interface\IFileIOService.cs" />
