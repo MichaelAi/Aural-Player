@@ -113,10 +113,9 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Command" />
       <RootProperty Name="CommandParameter" />
-      <RootProperty Name="HorizontalContentAlignment" />
-      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Padding" />
-      <RootEvent Name="RightTapped" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="HorizontalContentAlignment" />
       <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.AppBarButton">
@@ -156,6 +155,8 @@
       <RootProperty Name="RenderTransformOrigin" />
       <RootProperty Name="RenderTransform" />
       <RootProperty Name="Width" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="IsHitTestVisible" />
       <RootEvent Name="RightTapped" />
       <RootMethod Name="GetRow" />
       <RootMethod Name="SetRow" />
