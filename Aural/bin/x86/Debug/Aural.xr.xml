@@ -36,6 +36,7 @@
     <RootPropertyPathName Name="HasNoPlaylists" />
     <RootPropertyPathName Name="Playlists" />
     <RootPropertyPathName Name="SelectedPlaylist" />
+    <RootPropertyPathName Name="SelectedPlaylistChangedCommand" />
     <RootPropertyPathName Name="SavePlaylistCommand" />
     <RootPropertyPathName Name="Settings" />
     <RootPropertyPathName Name="AccessTokens" />
@@ -78,6 +79,7 @@
       <RootProperty Name="FlowDirection" />
       <RootProperty Name="Width" />
       <RootProperty Name="Height" />
+      <RootProperty Name="Margin" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.MediaTransportControls" />
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
@@ -94,6 +96,7 @@
       <RootProperty Name="FontWeight" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="HorizontalContentAlignment" />
+      <RootProperty Name="VerticalContentAlignment" />
       <RootMethod Name="GetIsTemplateFocusTarget" />
       <RootMethod Name="SetIsTemplateFocusTarget" />
     </RootType>
@@ -109,7 +112,9 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Command" />
       <RootProperty Name="CommandParameter" />
+      <RootProperty Name="Padding" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="HorizontalContentAlignment" />
       <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.AppBarButton">
@@ -365,6 +370,7 @@
       <RootProperty Name="CanDragItems" />
       <RootProperty Name="CanReorderItems" />
       <RootProperty Name="ItemContainerStyle" />
+      <RootProperty Name="SelectionMode" />
       <RootEvent Name="DragOver" />
       <RootEvent Name="Drop" />
     </RootType>
