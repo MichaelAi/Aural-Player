@@ -41,11 +41,11 @@ namespace Aural.ViewModel
             set { Set("NowPlayingItem", ref _nowPlayingItem, value); NowPlayingItem_Changed(); }
         }
 
-        private ObservableCollection<PlaylistItem> _displayedPlaylistItems = new ObservableCollection<PlaylistItem>();
-        public ObservableCollection<PlaylistItem> DisplayedPlaylistItems
+        private Playlist _displayedPlaylist = new Playlist { PlaylistId = Guid.Empty, PlaylistName = "", Items = new ObservableCollection<PlaylistItem>() };
+        public Playlist DisplayedPlaylist
         {
-            get { return _displayedPlaylistItems; }
-            set { Set("DisplayedPlaylistItems", ref _displayedPlaylistItems, value); }
+            get { return _displayedPlaylist; }
+            set { Set("DisplayedPlaylist", ref _displayedPlaylist, value); }
         }
 
         private Playlist _selectedPlaylist = new Playlist();
@@ -70,13 +70,23 @@ namespace Aural.ViewModel
         }
 
         public RelayCommand<string> OrderPlaylistCommand { get; private set; }
+        public RelayCommand<PlaylistItem> RemoveItemFromPlaylistCommand { get; private set; }
 
         public PlaylistViewModel(IFileIOService fileIOService)
         {
             this.fileIOService = fileIOService;
             OrderPlaylistCommand = new RelayCommand<string>((mode) => OrderPlaylist(mode));
-            DisplayedPlaylistItems.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
+            DisplayedPlaylist.Items.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
+            RemoveItemFromPlaylistCommand = new RelayCommand<PlaylistItem>((playItem) => RemoveItemFromPlaylist(playItem));
             Startup();
+        }
+
+        private void RemoveItemFromPlaylist(PlaylistItem playItem)
+        {
+            DisplayedPlaylist.Items.Remove(playItem);
+            SelectedPlaylist.Items.Remove(playItem);
+            Messenger.Default.Send(new NotificationMessage<Playlist>(SelectedPlaylist, "ItemRemovedFromPlaylist"));
+            SavePlaylist(SelectedPlaylist);
         }
 
         //do stuff at app launch
@@ -135,6 +145,13 @@ namespace Aural.ViewModel
             }
         }
         );
+            Messenger.Default.Register<NotificationMessage<PlaylistItem>>(this, nm =>
+            {
+                if (nm.Notification == "NowPlayingItemChanged")
+                {
+                    NowPlayingItem = nm.Content;
+                }
+            });
 
         }
 
@@ -160,7 +177,7 @@ namespace Aural.ViewModel
         {
             if (SearchParameter != null && SearchParameter.Length != 0)
             {
-                DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(unfilteredPlaylist.Where
+                DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(unfilteredPlaylist.Where
                     (x => x.Properties.Title.ToLower().Contains(SearchParameter.ToLower())
                     || x.Properties.Artist.ToLower().Contains(SearchParameter.ToLower())
                     || x.Properties.Album.ToLower().Contains(SearchParameter.ToLower())
@@ -170,17 +187,16 @@ namespace Aural.ViewModel
             }
             else
             {
-                DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(unfilteredPlaylist);
+                DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(unfilteredPlaylist);
             }
         }
 
         private void TransferPlaylist()
         {
             LabelPlaylistNumbers();
-            if (DisplayedPlaylistItems != null && DisplayedPlaylistItems.Count > 0)
+            if (SelectedPlaylist.Items != null && SelectedPlaylist.Items.Count > 0)
             {
-                DisplayedPlaylistHasItems = true;
-                Messenger.Default.Send(new NotificationMessage<ObservableCollection<PlaylistItem>>(DisplayedPlaylistItems, "DisplayToCurrent"));
+                Messenger.Default.Send(new NotificationMessage<Playlist>(SelectedPlaylist, "DisplayToCurrent"));
             }
             else
             {
@@ -202,10 +218,10 @@ namespace Aural.ViewModel
                 IsPlaylistLoadInProgress = true;
                 foreach (var item in items)
                 {
-                    DisplayedPlaylistItems.Add(item);
+                    DisplayedPlaylist.Items.Add(item);
                 }
-                SelectedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems);
-                Messenger.Default.Send(new NotificationMessage<ObservableCollection<PlaylistItem>>(DisplayedPlaylistItems, "DisplayToDisplay"));
+                SelectedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items);
+                Messenger.Default.Send(new NotificationMessage<Playlist>(SelectedPlaylist, "DisplayToDisplay"));
                 IsPlaylistLoadInProgress = false;
             }
         }
@@ -213,7 +229,7 @@ namespace Aural.ViewModel
         //clear the displayed playlist
         private void ClearDisplayedPlaylist()
         {
-            DisplayedPlaylistItems.Clear();
+            DisplayedPlaylist.Items.Clear();
         }
 
         //highlight the current item
@@ -221,7 +237,7 @@ namespace Aural.ViewModel
         {
             if (NowPlayingItem != null)
             {
-                SelectedDisplayedItem = DisplayedPlaylistItems.Where(x => x.Id == NowPlayingItem.Id).FirstOrDefault();
+                SelectedDisplayedItem = DisplayedPlaylist.Items.Where(x => x.Id == NowPlayingItem.Id).FirstOrDefault();
             }
         }
 
@@ -233,74 +249,74 @@ namespace Aural.ViewModel
         //Handle the order event, that is order the playlist items by the given parameter
         private void OrderPlaylist(string mode)
         {
-            if (DisplayedPlaylistItems != null && DisplayedPlaylistItems.Count > 0)
+            if (DisplayedPlaylist.Items != null && DisplayedPlaylist.Items.Count > 0)
             {
-                DisplayedPlaylistItems.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
+                DisplayedPlaylist.Items.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
                 switch (mode)
                 {
                     case ("artist"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.Artist)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.Artist));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Artist)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.Artist));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.Artist));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Artist));
                         break;
                     case ("album"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.Album)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.Album));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Album)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.Album));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.Album));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Album));
                         break;
                     case ("title"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.Title)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.Title));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Title)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.Title));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.Title));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Title));
                         break;
                     case ("year"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.Year)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.Year));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Year)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.Year));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.Year));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Year));
                         break;
                     case ("albumartist"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.AlbumArtist)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.AlbumArtist));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.AlbumArtist)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.AlbumArtist));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.AlbumArtist));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.AlbumArtist));
                         break;
                     case ("genre"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.Genre)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.Genre));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Genre)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.Genre));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.Genre));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Genre));
                         break;
                     case ("tracknumber"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.TrackNumber)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.TrackNumber));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.TrackNumber)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.TrackNumber));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.TrackNumber));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.TrackNumber));
                         break;
                     case ("rating"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.Rating)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.Rating));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Rating)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.Rating));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.Rating));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Rating));
                         break;
                     case ("duration"):
-                        if (DisplayedPlaylistItems.SequenceEqual(DisplayedPlaylistItems.OrderBy(x => x.Properties.Duration)))
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderByDescending(x => x.Properties.Duration));
+                        if (DisplayedPlaylist.Items.SequenceEqual(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Duration)))
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderByDescending(x => x.Properties.Duration));
                         else
-                            DisplayedPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems.OrderBy(x => x.Properties.Duration));
+                            DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items.OrderBy(x => x.Properties.Duration));
                         break;
                     default:
                         break;
                 }
-                DisplayedPlaylistItems.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
+                DisplayedPlaylist.Items.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
                 if (SelectedPlaylist != null)
                 {
                     LabelPlaylistNumbers();
                     HighlightCurrentlyPlayingItem();
-                    SelectedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems);
+                    SelectedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items);
                     SavePlaylist(SelectedPlaylist);
 
                 }
@@ -317,7 +333,7 @@ namespace Aural.ViewModel
         private void LabelPlaylistNumbers()
         {
             int playlistItemCounter = 1;
-            foreach (var item in DisplayedPlaylistItems)
+            foreach (var item in DisplayedPlaylist.Items)
             {
                 item.PlaylistTrackNo = playlistItemCounter;
                 playlistItemCounter += 1;

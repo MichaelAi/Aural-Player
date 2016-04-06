@@ -20,7 +20,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <ListView ItemsSource="{Binding CurrentPlaylistItems}">
+                <ListView ItemsSource="{Binding CurrentPlaylist.Items}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

@@ -54,7 +54,10 @@ namespace Aural.View
 
         private void StackPanel_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+            var uiSender = sender as UIElement;
+            var flyout = (FlyoutBase)uiSender.GetValue(FlyoutBase.AttachedFlyoutProperty);
+            flyout.Placement = FlyoutPlacementMode.Bottom;
+            flyout.ShowAt(uiSender as FrameworkElement);
         }
 
 
