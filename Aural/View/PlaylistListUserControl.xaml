@@ -12,8 +12,8 @@
 
     <UserControl.Resources>
         <MenuFlyout x:Key="PlaylistControlsFlyout">
-            <MenuFlyoutItem Text="&#xE104; Edit" FontFamily="Segoe MDL2 Assets" Command="{Binding PlaylistList.EditPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="{Binding PlaylistName}"/>
-            <MenuFlyoutItem Text="&#xE107; Delete" FontFamily="Segoe MDL2 Assets" Command="{Binding PlaylistList.DeletePlaylistCommand, Source={StaticResource Locator}}" CommandParameter="{Binding PlaylistName}"/>
+            <MenuFlyoutItem Text="&#xE104; Edit" FontFamily="Segoe MDL2 Assets" Command="{Binding PlaylistList.EditPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+            <MenuFlyoutItem Text="&#xE107; Delete" FontFamily="Segoe MDL2 Assets" Command="{Binding PlaylistList.DeletePlaylistCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
         </MenuFlyout>
     </UserControl.Resources>
     <Grid>

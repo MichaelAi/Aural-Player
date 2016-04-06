@@ -14,8 +14,8 @@
 
     <UserControl.Resources>
         <MenuFlyout x:Key="PlaylistItemContextMenuFlyout">
-            <MenuFlyoutItem Text="Play" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
-            <MenuFlyoutItem Text="Remove" Command="{Binding Playlist.RemoveItemFromPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+            <MenuFlyoutItem Text="&#xE768; Play" FontFamily="Segoe MDL2 Assets" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+            <MenuFlyoutItem Text="&#xE894; Remove" FontFamily="Segoe MDL2 Assets" Command="{Binding Playlist.RemoveItemFromPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
         </MenuFlyout>
 
         <MenuFlyout x:Key="OrderByFlyout">

@@ -32,12 +32,12 @@
     <RootPropertyPathName Name="DisplayedPlaylist" />
     <RootPropertyPathName Name="PlaylistList" />
     <RootPropertyPathName Name="DeletePlaylistCommand" />
-    <RootPropertyPathName Name="PlaylistName" />
     <RootPropertyPathName Name="EditPlaylistCommand" />
     <RootPropertyPathName Name="HasNoPlaylists" />
     <RootPropertyPathName Name="Playlists" />
     <RootPropertyPathName Name="SelectedPlaylist" />
     <RootPropertyPathName Name="SelectedPlaylistChangedCommand" />
+    <RootPropertyPathName Name="PlaylistName" />
     <RootPropertyPathName Name="SavePlaylistCommand" />
     <RootPropertyPathName Name="Settings" />
     <RootPropertyPathName Name="AccessTokens" />

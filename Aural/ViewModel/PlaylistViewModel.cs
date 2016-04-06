@@ -84,9 +84,9 @@ namespace Aural.ViewModel
 
         private void RemoveItemFromPlaylist(PlaylistItem playItem)
         {
+            unfilteredPlaylist.Remove(playItem);
             DisplayedPlaylist.Items.Remove(playItem);
             SelectedPlaylist.Items.Remove(playItem);
-            unfilteredPlaylist.Remove(playItem);
             Messenger.Default.Send(new NotificationMessage<Playlist>(SelectedPlaylist, "ItemRemovedFromPlaylist"));
             SavePlaylist(SelectedPlaylist);
         }
