@@ -1,4 +1,5 @@
-﻿using Aural.Interface;
+﻿using Aural.Helpers;
+using Aural.Interface;
 using Aural.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -71,22 +72,26 @@ namespace Aural.ViewModel
         }
 
         public RelayCommand<string> OrderPlaylistCommand { get; private set; }
-        public RelayCommand<PlaylistItem> RemoveItemFromPlaylistCommand { get; private set; }
+        public RelayCommand<ObservableCollection<PlaylistItem>> RemoveItemsFromPlaylistCommand { get; private set; }
 
         public PlaylistViewModel(IFileIOService fileIOService)
         {
             this.fileIOService = fileIOService;
             OrderPlaylistCommand = new RelayCommand<string>((mode) => OrderPlaylist(mode));
             DisplayedPlaylist.Items.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
-            RemoveItemFromPlaylistCommand = new RelayCommand<PlaylistItem>((playItem) => RemoveItemFromPlaylist(playItem));
+            RemoveItemsFromPlaylistCommand = new RelayCommand<ObservableCollection<PlaylistItem>>((playItems) => RemoveItemFromPlaylist(playItems));
             Startup();
         }
 
-        private void RemoveItemFromPlaylist(PlaylistItem playItem)
+        private void RemoveItemFromPlaylist(ObservableCollection<PlaylistItem> playItems)
         {
-            DisplayedPlaylist.Items.Remove(playItem);
-            SelectedPlaylist.Items.Remove(playItem);
-            unfilteredPlaylist.Remove(playItem);
+            foreach(var playItem in playItems)
+            {
+                unfilteredPlaylist.Remove(playItem);
+                DisplayedPlaylist.Items.Remove(playItem);
+                SelectedPlaylist.Items.Remove(playItem);
+            }
+
             Messenger.Default.Send(new NotificationMessage<Playlist>(SelectedPlaylist, "ItemRemovedFromPlaylist"));
             SavePlaylist(SelectedPlaylist);
         }

@@ -132,7 +132,7 @@ namespace Aural.Aural_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[34];
+            _typeNameTable = new string[35];
             _typeNameTable[0] = "Aural.ViewModel.ViewModelLocator";
             _typeNameTable[1] = "Object";
             _typeNameTable[2] = "Aural.ViewModel.MainViewModel";
@@ -144,31 +144,32 @@ namespace Aural.Aural_XamlTypeInfo
             _typeNameTable[8] = "Aural.ViewModel.SettingsViewModel";
             _typeNameTable[9] = "Aural.Converters.StringFormatConverter";
             _typeNameTable[10] = "Aural.Converters.BooleanToVisibilityConverter";
-            _typeNameTable[11] = "Microsoft.Xaml.Interactivity.Interaction";
-            _typeNameTable[12] = "Microsoft.Xaml.Interactivity.BehaviorCollection";
-            _typeNameTable[13] = "Windows.UI.Xaml.DependencyObjectCollection";
-            _typeNameTable[14] = "Windows.UI.Xaml.DependencyObject";
-            _typeNameTable[15] = "Microsoft.Xaml.Interactions.Core.EventTriggerBehavior";
-            _typeNameTable[16] = "Microsoft.Xaml.Interactivity.Behavior";
-            _typeNameTable[17] = "Microsoft.Xaml.Interactivity.ActionCollection";
-            _typeNameTable[18] = "String";
-            _typeNameTable[19] = "Aural.Helpers.OpenFlyoutAction";
-            _typeNameTable[20] = "Aural.CustomControls.TitleBarPage";
-            _typeNameTable[21] = "Windows.UI.Xaml.Controls.Page";
-            _typeNameTable[22] = "Windows.UI.Xaml.Controls.UserControl";
-            _typeNameTable[23] = "Windows.UI.Color";
-            _typeNameTable[24] = "System.ValueType";
-            _typeNameTable[25] = "Aural.View.SettingsUserControl";
-            _typeNameTable[26] = "Aural.View.PlayingInfoUserControl";
-            _typeNameTable[27] = "Aural.View.PlayerControl";
-            _typeNameTable[28] = "Aural.View.PlaylistListUserControl";
-            _typeNameTable[29] = "Aural.View.PlaylistControl";
-            _typeNameTable[30] = "Aural.View.MainPage";
-            _typeNameTable[31] = "Microsoft.Xaml.Interactions.Core.InvokeCommandAction";
-            _typeNameTable[32] = "System.Windows.Input.ICommand";
-            _typeNameTable[33] = "Windows.UI.Xaml.Data.IValueConverter";
+            _typeNameTable[11] = "Aural.Converters.ListViewSelectedItemsConverter";
+            _typeNameTable[12] = "Microsoft.Xaml.Interactivity.Interaction";
+            _typeNameTable[13] = "Microsoft.Xaml.Interactivity.BehaviorCollection";
+            _typeNameTable[14] = "Windows.UI.Xaml.DependencyObjectCollection";
+            _typeNameTable[15] = "Windows.UI.Xaml.DependencyObject";
+            _typeNameTable[16] = "Microsoft.Xaml.Interactions.Core.EventTriggerBehavior";
+            _typeNameTable[17] = "Microsoft.Xaml.Interactivity.Behavior";
+            _typeNameTable[18] = "Microsoft.Xaml.Interactivity.ActionCollection";
+            _typeNameTable[19] = "String";
+            _typeNameTable[20] = "Aural.Helpers.OpenFlyoutAction";
+            _typeNameTable[21] = "Aural.CustomControls.TitleBarPage";
+            _typeNameTable[22] = "Windows.UI.Xaml.Controls.Page";
+            _typeNameTable[23] = "Windows.UI.Xaml.Controls.UserControl";
+            _typeNameTable[24] = "Windows.UI.Color";
+            _typeNameTable[25] = "System.ValueType";
+            _typeNameTable[26] = "Aural.View.SettingsUserControl";
+            _typeNameTable[27] = "Aural.View.PlayingInfoUserControl";
+            _typeNameTable[28] = "Aural.View.PlayerControl";
+            _typeNameTable[29] = "Aural.View.PlaylistListUserControl";
+            _typeNameTable[30] = "Aural.View.PlaylistControl";
+            _typeNameTable[31] = "Aural.View.MainPage";
+            _typeNameTable[32] = "Microsoft.Xaml.Interactions.Core.InvokeCommandAction";
+            _typeNameTable[33] = "System.Windows.Input.ICommand";
+            _typeNameTable[34] = "Windows.UI.Xaml.Data.IValueConverter";
 
-            _typeTable = new global::System.Type[34];
+            _typeTable = new global::System.Type[35];
             _typeTable[0] = typeof(global::Aural.ViewModel.ViewModelLocator);
             _typeTable[1] = typeof(global::System.Object);
             _typeTable[2] = typeof(global::Aural.ViewModel.MainViewModel);
@@ -180,29 +181,30 @@ namespace Aural.Aural_XamlTypeInfo
             _typeTable[8] = typeof(global::Aural.ViewModel.SettingsViewModel);
             _typeTable[9] = typeof(global::Aural.Converters.StringFormatConverter);
             _typeTable[10] = typeof(global::Aural.Converters.BooleanToVisibilityConverter);
-            _typeTable[11] = typeof(global::Microsoft.Xaml.Interactivity.Interaction);
-            _typeTable[12] = typeof(global::Microsoft.Xaml.Interactivity.BehaviorCollection);
-            _typeTable[13] = typeof(global::Windows.UI.Xaml.DependencyObjectCollection);
-            _typeTable[14] = typeof(global::Windows.UI.Xaml.DependencyObject);
-            _typeTable[15] = typeof(global::Microsoft.Xaml.Interactions.Core.EventTriggerBehavior);
-            _typeTable[16] = typeof(global::Microsoft.Xaml.Interactivity.Behavior);
-            _typeTable[17] = typeof(global::Microsoft.Xaml.Interactivity.ActionCollection);
-            _typeTable[18] = typeof(global::System.String);
-            _typeTable[19] = typeof(global::Aural.Helpers.OpenFlyoutAction);
-            _typeTable[20] = typeof(global::Aural.CustomControls.TitleBarPage);
-            _typeTable[21] = typeof(global::Windows.UI.Xaml.Controls.Page);
-            _typeTable[22] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
-            _typeTable[23] = typeof(global::Windows.UI.Color);
-            _typeTable[24] = typeof(global::System.ValueType);
-            _typeTable[25] = typeof(global::Aural.View.SettingsUserControl);
-            _typeTable[26] = typeof(global::Aural.View.PlayingInfoUserControl);
-            _typeTable[27] = typeof(global::Aural.View.PlayerControl);
-            _typeTable[28] = typeof(global::Aural.View.PlaylistListUserControl);
-            _typeTable[29] = typeof(global::Aural.View.PlaylistControl);
-            _typeTable[30] = typeof(global::Aural.View.MainPage);
-            _typeTable[31] = typeof(global::Microsoft.Xaml.Interactions.Core.InvokeCommandAction);
-            _typeTable[32] = typeof(global::System.Windows.Input.ICommand);
-            _typeTable[33] = typeof(global::Windows.UI.Xaml.Data.IValueConverter);
+            _typeTable[11] = typeof(global::Aural.Converters.ListViewSelectedItemsConverter);
+            _typeTable[12] = typeof(global::Microsoft.Xaml.Interactivity.Interaction);
+            _typeTable[13] = typeof(global::Microsoft.Xaml.Interactivity.BehaviorCollection);
+            _typeTable[14] = typeof(global::Windows.UI.Xaml.DependencyObjectCollection);
+            _typeTable[15] = typeof(global::Windows.UI.Xaml.DependencyObject);
+            _typeTable[16] = typeof(global::Microsoft.Xaml.Interactions.Core.EventTriggerBehavior);
+            _typeTable[17] = typeof(global::Microsoft.Xaml.Interactivity.Behavior);
+            _typeTable[18] = typeof(global::Microsoft.Xaml.Interactivity.ActionCollection);
+            _typeTable[19] = typeof(global::System.String);
+            _typeTable[20] = typeof(global::Aural.Helpers.OpenFlyoutAction);
+            _typeTable[21] = typeof(global::Aural.CustomControls.TitleBarPage);
+            _typeTable[22] = typeof(global::Windows.UI.Xaml.Controls.Page);
+            _typeTable[23] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
+            _typeTable[24] = typeof(global::Windows.UI.Color);
+            _typeTable[25] = typeof(global::System.ValueType);
+            _typeTable[26] = typeof(global::Aural.View.SettingsUserControl);
+            _typeTable[27] = typeof(global::Aural.View.PlayingInfoUserControl);
+            _typeTable[28] = typeof(global::Aural.View.PlayerControl);
+            _typeTable[29] = typeof(global::Aural.View.PlaylistListUserControl);
+            _typeTable[30] = typeof(global::Aural.View.PlaylistControl);
+            _typeTable[31] = typeof(global::Aural.View.MainPage);
+            _typeTable[32] = typeof(global::Microsoft.Xaml.Interactions.Core.InvokeCommandAction);
+            _typeTable[33] = typeof(global::System.Windows.Input.ICommand);
+            _typeTable[34] = typeof(global::Windows.UI.Xaml.Data.IValueConverter);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -242,25 +244,26 @@ namespace Aural.Aural_XamlTypeInfo
         private object Activate_5_PlayerViewModel() { return new global::Aural.ViewModel.PlayerViewModel(); }
         private object Activate_9_StringFormatConverter() { return new global::Aural.Converters.StringFormatConverter(); }
         private object Activate_10_BooleanToVisibilityConverter() { return new global::Aural.Converters.BooleanToVisibilityConverter(); }
-        private object Activate_12_BehaviorCollection() { return new global::Microsoft.Xaml.Interactivity.BehaviorCollection(); }
-        private object Activate_15_EventTriggerBehavior() { return new global::Microsoft.Xaml.Interactions.Core.EventTriggerBehavior(); }
-        private object Activate_17_ActionCollection() { return new global::Microsoft.Xaml.Interactivity.ActionCollection(); }
-        private object Activate_19_OpenFlyoutAction() { return new global::Aural.Helpers.OpenFlyoutAction(); }
-        private object Activate_20_TitleBarPage() { return new global::Aural.CustomControls.TitleBarPage(); }
-        private object Activate_25_SettingsUserControl() { return new global::Aural.View.SettingsUserControl(); }
-        private object Activate_26_PlayingInfoUserControl() { return new global::Aural.View.PlayingInfoUserControl(); }
-        private object Activate_27_PlayerControl() { return new global::Aural.View.PlayerControl(); }
-        private object Activate_28_PlaylistListUserControl() { return new global::Aural.View.PlaylistListUserControl(); }
-        private object Activate_29_PlaylistControl() { return new global::Aural.View.PlaylistControl(); }
-        private object Activate_30_MainPage() { return new global::Aural.View.MainPage(); }
-        private object Activate_31_InvokeCommandAction() { return new global::Microsoft.Xaml.Interactions.Core.InvokeCommandAction(); }
-        private void VectorAdd_12_BehaviorCollection(object instance, object item)
+        private object Activate_11_ListViewSelectedItemsConverter() { return new global::Aural.Converters.ListViewSelectedItemsConverter(); }
+        private object Activate_13_BehaviorCollection() { return new global::Microsoft.Xaml.Interactivity.BehaviorCollection(); }
+        private object Activate_16_EventTriggerBehavior() { return new global::Microsoft.Xaml.Interactions.Core.EventTriggerBehavior(); }
+        private object Activate_18_ActionCollection() { return new global::Microsoft.Xaml.Interactivity.ActionCollection(); }
+        private object Activate_20_OpenFlyoutAction() { return new global::Aural.Helpers.OpenFlyoutAction(); }
+        private object Activate_21_TitleBarPage() { return new global::Aural.CustomControls.TitleBarPage(); }
+        private object Activate_26_SettingsUserControl() { return new global::Aural.View.SettingsUserControl(); }
+        private object Activate_27_PlayingInfoUserControl() { return new global::Aural.View.PlayingInfoUserControl(); }
+        private object Activate_28_PlayerControl() { return new global::Aural.View.PlayerControl(); }
+        private object Activate_29_PlaylistListUserControl() { return new global::Aural.View.PlaylistListUserControl(); }
+        private object Activate_30_PlaylistControl() { return new global::Aural.View.PlaylistControl(); }
+        private object Activate_31_MainPage() { return new global::Aural.View.MainPage(); }
+        private object Activate_32_InvokeCommandAction() { return new global::Microsoft.Xaml.Interactions.Core.InvokeCommandAction(); }
+        private void VectorAdd_13_BehaviorCollection(object instance, object item)
         {
             var collection = (global::System.Collections.Generic.ICollection<global::Windows.UI.Xaml.DependencyObject>)instance;
             var newItem = (global::Windows.UI.Xaml.DependencyObject)item;
             collection.Add(newItem);
         }
-        private void VectorAdd_17_ActionCollection(object instance, object item)
+        private void VectorAdd_18_ActionCollection(object instance, object item)
         {
             var collection = (global::System.Collections.Generic.ICollection<global::Windows.UI.Xaml.DependencyObject>)instance;
             var newItem = (global::Windows.UI.Xaml.DependencyObject)item;
@@ -353,31 +356,38 @@ namespace Aural.Aural_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 11:   //  Microsoft.Xaml.Interactivity.Interaction
+            case 11:   //  Aural.Converters.ListViewSelectedItemsConverter
+                userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_11_ListViewSelectedItemsConverter;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 12:   //  Microsoft.Xaml.Interactivity.Interaction
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
                 userType.AddMemberName("Behaviors");
                 xamlType = userType;
                 break;
 
-            case 12:   //  Microsoft.Xaml.Interactivity.BehaviorCollection
+            case 13:   //  Microsoft.Xaml.Interactivity.BehaviorCollection
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObjectCollection"));
-                userType.Activator = Activate_12_BehaviorCollection;
-                userType.CollectionAdd = VectorAdd_12_BehaviorCollection;
+                userType.Activator = Activate_13_BehaviorCollection;
+                userType.CollectionAdd = VectorAdd_13_BehaviorCollection;
                 userType.AddMemberName("AssociatedObject");
                 xamlType = userType;
                 break;
 
-            case 13:   //  Windows.UI.Xaml.DependencyObjectCollection
+            case 14:   //  Windows.UI.Xaml.DependencyObjectCollection
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 14:   //  Windows.UI.Xaml.DependencyObject
+            case 15:   //  Windows.UI.Xaml.DependencyObject
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 15:   //  Microsoft.Xaml.Interactions.Core.EventTriggerBehavior
+            case 16:   //  Microsoft.Xaml.Interactions.Core.EventTriggerBehavior
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.Xaml.Interactivity.Behavior"));
-                userType.Activator = Activate_15_EventTriggerBehavior;
+                userType.Activator = Activate_16_EventTriggerBehavior;
                 userType.SetContentPropertyName("Microsoft.Xaml.Interactions.Core.EventTriggerBehavior.Actions");
                 userType.AddMemberName("Actions");
                 userType.AddMemberName("EventName");
@@ -385,33 +395,33 @@ namespace Aural.Aural_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 16:   //  Microsoft.Xaml.Interactivity.Behavior
+            case 17:   //  Microsoft.Xaml.Interactivity.Behavior
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
                 userType.AddMemberName("AssociatedObject");
                 xamlType = userType;
                 break;
 
-            case 17:   //  Microsoft.Xaml.Interactivity.ActionCollection
+            case 18:   //  Microsoft.Xaml.Interactivity.ActionCollection
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObjectCollection"));
-                userType.CollectionAdd = VectorAdd_17_ActionCollection;
+                userType.CollectionAdd = VectorAdd_18_ActionCollection;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 18:   //  String
+            case 19:   //  String
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 19:   //  Aural.Helpers.OpenFlyoutAction
+            case 20:   //  Aural.Helpers.OpenFlyoutAction
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
-                userType.Activator = Activate_19_OpenFlyoutAction;
+                userType.Activator = Activate_20_OpenFlyoutAction;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 20:   //  Aural.CustomControls.TitleBarPage
+            case 21:   //  Aural.CustomControls.TitleBarPage
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_20_TitleBarPage;
+                userType.Activator = Activate_21_TitleBarPage;
                 userType.AddMemberName("BackgroundColor");
                 userType.AddMemberName("ForegroundColor");
                 userType.AddMemberName("ButtonBackgroundColor");
@@ -422,70 +432,70 @@ namespace Aural.Aural_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 21:   //  Windows.UI.Xaml.Controls.Page
+            case 22:   //  Windows.UI.Xaml.Controls.Page
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 22:   //  Windows.UI.Xaml.Controls.UserControl
+            case 23:   //  Windows.UI.Xaml.Controls.UserControl
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 23:   //  Windows.UI.Color
+            case 24:   //  Windows.UI.Color
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 24:   //  System.ValueType
+            case 25:   //  System.ValueType
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
                 xamlType = userType;
                 break;
 
-            case 25:   //  Aural.View.SettingsUserControl
+            case 26:   //  Aural.View.SettingsUserControl
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_25_SettingsUserControl;
+                userType.Activator = Activate_26_SettingsUserControl;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 26:   //  Aural.View.PlayingInfoUserControl
+            case 27:   //  Aural.View.PlayingInfoUserControl
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_26_PlayingInfoUserControl;
+                userType.Activator = Activate_27_PlayingInfoUserControl;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 27:   //  Aural.View.PlayerControl
+            case 28:   //  Aural.View.PlayerControl
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_27_PlayerControl;
+                userType.Activator = Activate_28_PlayerControl;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 28:   //  Aural.View.PlaylistListUserControl
+            case 29:   //  Aural.View.PlaylistListUserControl
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_28_PlaylistListUserControl;
+                userType.Activator = Activate_29_PlaylistListUserControl;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 29:   //  Aural.View.PlaylistControl
+            case 30:   //  Aural.View.PlaylistControl
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.UserControl"));
-                userType.Activator = Activate_29_PlaylistControl;
+                userType.Activator = Activate_30_PlaylistControl;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 30:   //  Aural.View.MainPage
+            case 31:   //  Aural.View.MainPage
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Aural.CustomControls.TitleBarPage"));
-                userType.Activator = Activate_30_MainPage;
+                userType.Activator = Activate_31_MainPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 31:   //  Microsoft.Xaml.Interactions.Core.InvokeCommandAction
+            case 32:   //  Microsoft.Xaml.Interactions.Core.InvokeCommandAction
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
-                userType.Activator = Activate_31_InvokeCommandAction;
+                userType.Activator = Activate_32_InvokeCommandAction;
                 userType.AddMemberName("Command");
                 userType.AddMemberName("CommandParameter");
                 userType.AddMemberName("InputConverter");
@@ -494,13 +504,13 @@ namespace Aural.Aural_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 32:   //  System.Windows.Input.ICommand
+            case 33:   //  System.Windows.Input.ICommand
                 userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, null);
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 33:   //  Windows.UI.Xaml.Data.IValueConverter
+            case 34:   //  Windows.UI.Xaml.Data.IValueConverter
                 xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
             }

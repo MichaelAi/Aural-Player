@@ -1,4 +1,5 @@
 ﻿<UserControl
+    x:Name="PlaylistControlPage"
     x:Class="Aural.View.PlaylistControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,8 +15,8 @@
 
     <UserControl.Resources>
         <MenuFlyout x:Key="PlaylistItemContextMenuFlyout">
-            <MenuFlyoutItem Text="Play" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
-            <MenuFlyoutItem Text="Remove" Command="{Binding Playlist.RemoveItemFromPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+            <MenuFlyoutItem Text="&#xE768; Play" FontFamily="Segoe MDL2 Assets"  CommandParameter="{Binding ElementName=PlaylistListView, Path=SelectedItems}" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"/>
+            <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="&#xE894; Remove" CommandParameter="{Binding}" FontFamily="Segoe MDL2 Assets"/>
         </MenuFlyout>
 
         <MenuFlyout x:Key="OrderByFlyout">
@@ -37,15 +38,8 @@
         </Flyout>
         
     </UserControl.Resources>
-    <Grid>
-        <ListView Visibility="{Binding IsPlaylistLoadInProgress, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter='!'}" AllowDrop="True" DragOver="OnFileDragOver" Drop="OnFileDrop" ReorderMode="Enabled"  x:Name="PlaylistListView" ItemsSource="{Binding DisplayedPlaylist.Items}" SelectedItem="{Binding NowPlayingItem, Mode=TwoWay}" CanDragItems="True" CanReorderItems="True">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="VerticalAlignment" Value="Stretch"/>
-                    <Setter Property="Margin" Value="0"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+    <Grid x:Name="PlaylistRoot">
+        <ListView x:Name="PlaylistListView" ItemContainerStyle="{StaticResource ListViewItemNoCheckbox}" Visibility="{Binding IsPlaylistLoadInProgress, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter='!'}" AllowDrop="True" DragOver="OnFileDragOver" Drop="OnFileDrop" ReorderMode="Enabled" ItemsSource="{Binding DisplayedPlaylist.Items}" CanDragItems="True" CanReorderItems="True" SelectionMode="Multiple">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -53,8 +47,9 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
                         <Button Margin="0" x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Foreground="Gray" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
-                        <Grid Grid.Column="1" RightTapped="StackPanel_RightTapped" FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" IsHitTestVisible="True">
+                        <Grid Tapped="Grid_Tapped" Grid.Column="1" RightTapped="StackPanel_RightTapped" FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" IsHitTestVisible="True">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="DoubleTapped">
                                     <core:InvokeCommandAction Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
