@@ -28,11 +28,25 @@
                 <Button x:ConnectionId='3' x:Name="commandBarSettings" Style="{StaticResource TextBlockButtonStyle}" Content="&#xE713;" FontFamily="Segoe MDL2 Assets"                                 />
             </StackPanel>
         </Grid>
-        <ListView x:ConnectionId='1' Grid.Row="1" x:Name="playlistsListView" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+        <ListView x:ConnectionId='1' Grid.Row="1" x:Name="playlistsListView" SelectionMode="Single" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid x:ConnectionId='2' FlyoutBase.AttachedFlyout="{StaticResource PlaylistControlsFlyout}" x:Name="playlistControlsGrid"                                               >
-                        <TextBlock Text="{Binding PlaylistName}" FontWeight="Light"/>
+                        <Button Command="{Binding PlaylistList.SelectedPlaylistChangedCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Foreground="{ThemeResource SystemBaseHighColor}" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Style="{StaticResource TextBlockButtonStyle}">
+                            <Button.Content>
+                                <TextBlock FontWeight="Light"  Text="{Binding PlaylistName}" HorizontalAlignment="Left" Margin="5,0,5,0"/>
+                            </Button.Content>
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
