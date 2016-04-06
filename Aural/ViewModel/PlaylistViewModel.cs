@@ -17,6 +17,7 @@ namespace Aural.ViewModel
     public class PlaylistViewModel : ViewModelBase
     {
         IFileIOService fileIOService;
+        private ObservableCollection<PlaylistItem> unfilteredPlaylist = new ObservableCollection<PlaylistItem>();
 
         private string _searchParameter = "";
         public string SearchParameter
@@ -38,7 +39,7 @@ namespace Aural.ViewModel
         public PlaylistItem NowPlayingItem
         {
             get { return _nowPlayingItem; }
-            set { Set("NowPlayingItem", ref _nowPlayingItem, value); NowPlayingItem_Changed(); }
+            set { Set("NowPlayingItem", ref _nowPlayingItem, value); }
         }
 
         private Playlist _displayedPlaylist = new Playlist { PlaylistId = Guid.Empty, PlaylistName = "", Items = new ObservableCollection<PlaylistItem>() };
@@ -85,6 +86,7 @@ namespace Aural.ViewModel
         {
             DisplayedPlaylist.Items.Remove(playItem);
             SelectedPlaylist.Items.Remove(playItem);
+            unfilteredPlaylist.Remove(playItem);
             Messenger.Default.Send(new NotificationMessage<Playlist>(SelectedPlaylist, "ItemRemovedFromPlaylist"));
             SavePlaylist(SelectedPlaylist);
         }
@@ -172,11 +174,12 @@ namespace Aural.ViewModel
         }
 
         //filter the playlist using the given term
-        private ObservableCollection<PlaylistItem> unfilteredPlaylist = new ObservableCollection<PlaylistItem>();
+        
         private void SearchPlaylist()
         {
             if (SearchParameter != null && SearchParameter.Length != 0)
             {
+                DisplayedPlaylist.Items.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
                 DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(unfilteredPlaylist.Where
                     (x => x.Properties.Title.ToLower().Contains(SearchParameter.ToLower())
                     || x.Properties.Artist.ToLower().Contains(SearchParameter.ToLower())
@@ -188,7 +191,9 @@ namespace Aural.ViewModel
             else
             {
                 DisplayedPlaylist.Items = new ObservableCollection<PlaylistItem>(unfilteredPlaylist);
+                LabelPlaylistNumbers();
             }
+            DisplayedPlaylist.Items.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
         }
 
         private void TransferPlaylist()
@@ -222,7 +227,10 @@ namespace Aural.ViewModel
                 }
                 SelectedPlaylist.Items = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items);
                 Messenger.Default.Send(new NotificationMessage<Playlist>(SelectedPlaylist, "DisplayToDisplay"));
+                unfilteredPlaylist = new ObservableCollection<PlaylistItem>(DisplayedPlaylist.Items);
+                DisplayedPlaylist.Items.CollectionChanged += new NotifyCollectionChangedEventHandler(HandleReorder);
                 IsPlaylistLoadInProgress = false;
+
             }
         }
 
@@ -241,10 +249,6 @@ namespace Aural.ViewModel
             }
         }
 
-        private void NowPlayingItem_Changed()
-        {
-
-        }
 
         //Handle the order event, that is order the playlist items by the given parameter
         private void OrderPlaylist(string mode)
@@ -332,34 +336,22 @@ namespace Aural.ViewModel
         //put a numeric label on each playlist item in the playlist
         private void LabelPlaylistNumbers()
         {
-            int playlistItemCounter = 1;
-            foreach (var item in DisplayedPlaylist.Items)
+            if (unfilteredPlaylist.Count <= DisplayedPlaylist.Items.Count)
             {
-                item.PlaylistTrackNo = playlistItemCounter;
-                playlistItemCounter += 1;
+                int playlistItemCounter = 1;
+                foreach (var item in DisplayedPlaylist.Items)
+                {
+                    item.PlaylistTrackNo = playlistItemCounter;
+                    playlistItemCounter += 1;
+                }
             }
         }
-
         //save the playlist on reorder and relabel the items
         object m_ReorderItem;
         int m_ReorderIndexFrom;
         private void HandleReorder(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Remove:
-                    m_ReorderItem = e.OldItems[0];
-                    m_ReorderIndexFrom = e.OldStartingIndex;
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    break;
-                case NotifyCollectionChangedAction.Add:
-                    var _ReorderIndexTo = e.NewStartingIndex;
-                    LabelPlaylistNumbers();
-                    m_ReorderItem = null;
-                    break;
-            }
-           
+            LabelPlaylistNumbers();         
         }
     }
 }
