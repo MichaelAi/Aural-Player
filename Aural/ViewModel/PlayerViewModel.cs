@@ -70,11 +70,11 @@ namespace Aural.ViewModel
             set { Set("NowPlayingStream", ref _nowPlayingStream, value); }
         }
 
-        private ObservableCollection<PlaylistItem> _currentPlaylistItems = new ObservableCollection<PlaylistItem>();
-        public ObservableCollection<PlaylistItem> CurrentPlaylistItems
+        private Playlist _currentPlaylist = new Playlist { PlaylistId = Guid.Empty, PlaylistName = "", Items = null };
+        public Playlist CurrentPlaylist
         {
-            get { return _currentPlaylistItems; }
-            set { Set("CurrentPlaylistItems", ref _currentPlaylistItems, value); }
+            get { return _currentPlaylist; }
+            set { Set("CurrentPlaylist", ref _currentPlaylist, value); }
         }
 
         private PlaylistItem _nowPlayingItem;
@@ -84,11 +84,11 @@ namespace Aural.ViewModel
             set { Set("NowPlayingItem", ref _nowPlayingItem, value); NowPlayingItem_Changed(); }
         }
 
-        private ObservableCollection<PlaylistItem> _displayedPlaylistItems = new ObservableCollection<PlaylistItem>();
-        public ObservableCollection<PlaylistItem> DisplayedPlaylistItems
+        private Playlist _displayedPlaylist = new Playlist { PlaylistId = Guid.Empty, PlaylistName = "", Items = new ObservableCollection<PlaylistItem>() };
+        public Playlist DisplayedPlaylist
         {
-            get { return _displayedPlaylistItems; }
-            set { Set("DisplayedPlaylistItems", ref _displayedPlaylistItems, value); }
+            get { return _displayedPlaylist; }
+            set { Set("DisplayedPlaylist", ref _displayedPlaylist, value); }
         }
 
         public RelayCommand<PlaylistItem> MediaPlayCommand { get; private set; }
@@ -120,7 +120,7 @@ namespace Aural.ViewModel
 
         private void RegisterMessaging()
         {
-            Messenger.Default.Register<NotificationMessage<ObservableCollection<PlaylistItem>>>(this,
+            Messenger.Default.Register<NotificationMessage<Playlist>>(this,
                 nm =>
                 {
                     if (nm.Notification != null)
@@ -129,18 +129,25 @@ namespace Aural.ViewModel
                         {
                             TransferPlaylist(nm.Content);
                         }
-                        if (nm.Notification == "DisplayToDisplay")
+                        else if (nm.Notification == "DisplayToDisplay")
                         {
-                            DisplayedPlaylistItems = nm.Content;
+                            CurrentPlaylist = nm.Content;
+
                         }
-                        if (nm.Notification == "PlayFirst")
+                        else if (nm.Notification == "PlayFirst")
                         {
-                            DisplayedPlaylistItems = nm.Content;
-                            MediaPlay(nm.Content.FirstOrDefault());
+                            CurrentPlaylist = nm.Content;
+                            MediaPlay(nm.Content.Items.FirstOrDefault());
+                        }
+                        else if (nm.Notification == "ItemRemovedFromPlaylist")
+                        {
+                            if (CurrentPlaylist.PlaylistId == nm.Content.PlaylistId)
+                            {
+                                CurrentPlaylist = nm.Content;
+                            }
                         }
                     }
-                }
-                );
+                });
         }
 
         //create the media element that is responsible for actually playing files
@@ -169,7 +176,7 @@ namespace Aural.ViewModel
             //this else block triggers when a displayed playlist item is opened explicitely 
             else
             {
-                NowPlayingItem = DisplayedPlaylistItems.Where(x => x == item).FirstOrDefault();
+                NowPlayingItem = CurrentPlaylist.Items.Where(x => x == item).FirstOrDefault();
                 Messenger.Default.Send(new NotificationMessage<string>("RequestDisplayed", "RequestDisplayed"));
             }
             properties = await TryGetProperties(NowPlayingFile);
@@ -216,20 +223,20 @@ namespace Aural.ViewModel
         //previous
         private void MediaPrevious()
         {
-            int index = CurrentPlaylistItems.IndexOf(NowPlayingItem);
-            if (index > CurrentPlaylistItems.Count - 1 && index > -1)
+            int index = CurrentPlaylist.Items.IndexOf(NowPlayingItem);
+            if (index > CurrentPlaylist.Items.Count - 1 && index > -1)
             {
-                NowPlayingItem = CurrentPlaylistItems.ElementAt(index - 1);
+                NowPlayingItem = CurrentPlaylist.Items.ElementAt(index - 1);
             }
         }
 
         //next
         private void MediaNext()
         {
-            int index = CurrentPlaylistItems.IndexOf(NowPlayingItem);
-            if (index < CurrentPlaylistItems.Count - 1 && index > -1)
+            int index = CurrentPlaylist.Items.IndexOf(NowPlayingItem);
+            if (index < CurrentPlaylist.Items.Count - 1 && index > -1)
             {
-                NowPlayingItem = CurrentPlaylistItems.ElementAt(index + 1);
+                NowPlayingItem = CurrentPlaylist.Items.ElementAt(index + 1);
             }
         }
 
@@ -270,6 +277,7 @@ namespace Aural.ViewModel
                 MediaElementObject.SetSource(NowPlayingStream, NowPlayingFile.FileType);
                 MediaPlay(null);
                 GetAlbumArt();
+                Messenger.Default.Send(new NotificationMessage<PlaylistItem>(NowPlayingItem, "NowPlayingItemChanged"));
             }
         }
 
@@ -296,11 +304,13 @@ namespace Aural.ViewModel
         }
 
         //when the track changes from opening a playlist item, change the current queue to the displayed playlist
-        private void TransferPlaylist(ObservableCollection<PlaylistItem> DisplayedPlaylistItems)
+        private void TransferPlaylist(Playlist play)
         {
-            if (DisplayedPlaylistItems != null && DisplayedPlaylistItems.Count > 0)
+            if (CurrentPlaylist.Items != null && CurrentPlaylist.Items.Count > 0)
             {
-                CurrentPlaylistItems = new ObservableCollection<PlaylistItem>(DisplayedPlaylistItems);
+                CurrentPlaylist.PlaylistId = play.PlaylistId;
+                CurrentPlaylist.PlaylistName = play.PlaylistName;
+                CurrentPlaylist.Items = new ObservableCollection<PlaylistItem>(play.Items);
             }
         }
 

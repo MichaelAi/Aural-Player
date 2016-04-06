@@ -10,7 +10,8 @@
     <RootPropertyPathName Name="MediaStopCommand" />
     <RootPropertyPathName Name="MediaPreviousCommand" />
     <RootPropertyPathName Name="MediaStopAfterCurrentCommand" />
-    <RootPropertyPathName Name="CurrentPlaylistItems" />
+    <RootPropertyPathName Name="CurrentPlaylist" />
+    <RootPropertyPathName Name="Items" />
     <RootPropertyPathName Name="Properties" />
     <RootPropertyPathName Name="Album" />
     <RootPropertyPathName Name="Artist" />
@@ -25,10 +26,10 @@
     <RootPropertyPathName Name="Playlist" />
     <RootPropertyPathName Name="SearchParameter" />
     <RootPropertyPathName Name="OrderPlaylistCommand" />
+    <RootPropertyPathName Name="RemoveItemFromPlaylistCommand" />
     <RootPropertyPathName Name="MediaPlayCommand" />
     <RootPropertyPathName Name="IsPlaylistLoadInProgress" />
-    <RootPropertyPathName Name="DisplayedPlaylistItems" />
-    <RootPropertyPathName Name="SelectedDisplayedItem" />
+    <RootPropertyPathName Name="DisplayedPlaylist" />
     <RootPropertyPathName Name="PlaylistList" />
     <RootPropertyPathName Name="DeletePlaylistCommand" />
     <RootPropertyPathName Name="PlaylistName" />
@@ -105,16 +106,17 @@
       <RootProperty Name="Content" />
       <RootProperty Name="FontFamily" />
       <RootProperty Name="Flyout" />
-      <RootProperty Name="Width" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="Width" />
       <RootProperty Name="Foreground" />
       <RootProperty Name="Background" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Command" />
       <RootProperty Name="CommandParameter" />
-      <RootProperty Name="Padding" />
-      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="HorizontalContentAlignment" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Padding" />
+      <RootEvent Name="RightTapped" />
       <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.AppBarButton">
@@ -154,7 +156,6 @@
       <RootProperty Name="RenderTransformOrigin" />
       <RootProperty Name="RenderTransform" />
       <RootProperty Name="Width" />
-      <RootProperty Name="HorizontalAlignment" />
       <RootEvent Name="RightTapped" />
       <RootMethod Name="GetRow" />
       <RootMethod Name="SetRow" />
