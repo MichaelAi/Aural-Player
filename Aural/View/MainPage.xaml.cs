@@ -29,12 +29,20 @@ namespace Aural.View
         public MainPage()
         {
             this.InitializeComponent();
+
+
             this.PlaylistList.SettingsButtonClicked += new EventHandler(PlaylistList_SettingsButtonClicked);
+            this.PlaylistList.NowPlayingButtonClicked += new EventHandler(PlaylistList_NowPlayingButtonClicked);
         }
 
         public void PlaylistList_SettingsButtonClicked(object sender, EventArgs e)
         {
             rootSplitView.IsPaneOpen = !rootSplitView.IsPaneOpen;
+        }
+
+        public void PlaylistList_NowPlayingButtonClicked(object sender, EventArgs e)
+        {
+            NavBarSplitView.IsPaneOpen = !NavBarSplitView.IsPaneOpen;
         }
     }
 }

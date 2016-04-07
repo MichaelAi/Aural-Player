@@ -12,6 +12,8 @@
     <RootPropertyPathName Name="MediaStopCommand" />
     <RootPropertyPathName Name="MediaPreviousCommand" />
     <RootPropertyPathName Name="MediaStopAfterCurrentCommand" />
+    <RootPropertyPathName Name="SelectedItems" />
+    <RootPropertyPathName Name="MediaPlayCommand" />
     <RootPropertyPathName Name="CurrentPlaylist" />
     <RootPropertyPathName Name="Items" />
     <RootPropertyPathName Name="Properties" />
@@ -21,6 +23,8 @@
     <RootPropertyPathName Name="TrackNumber" />
     <RootPropertyPathName Name="PlaylistTrackNo" />
     <RootPropertyPathName Name="Main" />
+    <RootPropertyPathName Name="Settings" />
+    <RootPropertyPathName Name="UseDarkTheme" />
     <RootPropertyPathName Name="MediaElementObject" />
     <RootPropertyPathName Name="NowPlayingItem" />
     <RootPropertyPathName Name="AlbumArt" />
@@ -28,20 +32,17 @@
     <RootPropertyPathName Name="Playlist" />
     <RootPropertyPathName Name="SearchParameter" />
     <RootPropertyPathName Name="OrderPlaylistCommand" />
-    <RootPropertyPathName Name="SelectedItems" />
-    <RootPropertyPathName Name="MediaPlayCommand" />
     <RootPropertyPathName Name="IsPlaylistLoadInProgress" />
     <RootPropertyPathName Name="DisplayedPlaylist" />
     <RootPropertyPathName Name="PlaylistList" />
     <RootPropertyPathName Name="DeletePlaylistCommand" />
     <RootPropertyPathName Name="EditPlaylistCommand" />
+    <RootPropertyPathName Name="SavePlaylistCommand" />
     <RootPropertyPathName Name="HasNoPlaylists" />
     <RootPropertyPathName Name="Playlists" />
     <RootPropertyPathName Name="SelectedPlaylist" />
     <RootPropertyPathName Name="SelectedPlaylistChangedCommand" />
     <RootPropertyPathName Name="PlaylistName" />
-    <RootPropertyPathName Name="SavePlaylistCommand" />
-    <RootPropertyPathName Name="Settings" />
     <RootPropertyPathName Name="AccessTokens" />
     <RootPropertyPathName Name="SetMasterFolderCommand" />
   </Roots.PropertyPathNames>
@@ -50,15 +51,17 @@
       <RootProperty Name="RequestedTheme" />
       <RootProperty Name="Resources" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.ResourceDictionary">
+      <RootProperty Name="ThemeDictionaries" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Media.SolidColorBrush">
+      <RootProperty Name="Color" />
+    </RootType>
     <RootType FullName="Aural.ViewModel.ViewModelLocator" />
     <RootType FullName="Aural.Converters.StringFormatConverter" />
     <RootType FullName="Aural.Converters.BooleanToVisibilityConverter" />
     <RootType FullName="Aural.Converters.ListViewSelectedItemsConverter" />
-    <RootType FullName="Windows.UI.Xaml.Controls.Flyout">
-      <RootProperty Name="Content" />
-      <RootProperty Name="FlyoutPresenterStyle" />
-      <RootProperty Name="Placement" />
-    </RootType>
+    <RootType FullName="Aural.Converters.BooleanToThemeConverter" />
     <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
       <RootProperty Name="FontFamily" />
       <RootProperty Name="Opacity" />
@@ -110,19 +113,19 @@
       <RootMethod Name="SetIsTemplateFocusTarget" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
-      <RootProperty Name="Style" />
-      <RootProperty Name="Content" />
-      <RootProperty Name="FontFamily" />
-      <RootProperty Name="Flyout" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Width" />
+      <RootProperty Name="Style" />
+      <RootProperty Name="Content" />
       <RootProperty Name="Foreground" />
       <RootProperty Name="Background" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Command" />
       <RootProperty Name="CommandParameter" />
-      <RootProperty Name="Padding" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="Flyout" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Padding" />
       <RootProperty Name="HorizontalContentAlignment" />
       <RootEvent Name="Click" />
     </RootType>
@@ -169,9 +172,9 @@
       <RootProperty Name="Visibility" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="RenderTransformOrigin" />
-      <RootProperty Name="Width" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="IsHitTestVisible" />
+      <RootProperty Name="RequestedTheme" />
       <RootEvent Name="Tapped" />
       <RootEvent Name="RightTapped" />
       <RootMethod Name="GetColumnSpan" />
@@ -383,11 +386,17 @@
     <RootType FullName="Windows.UI.Xaml.Controls.FontIcon">
       <RootProperty Name="Glyph" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Flyout">
+      <RootProperty Name="FlyoutPresenterStyle" />
+      <RootProperty Name="Content" />
+      <RootProperty Name="Placement" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ToggleSwitch">
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="OnContent" />
       <RootProperty Name="OffContent" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="IsOn" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.SymbolIcon">
       <RootProperty Name="Symbol" />
@@ -398,8 +407,8 @@
     <RootType FullName="Windows.UI.Xaml.Controls.MenuFlyoutItem">
       <RootProperty Name="Text" />
       <RootProperty Name="Command" />
-      <RootProperty Name="CommandParameter" />
       <RootProperty Name="FontFamily" />
+      <RootProperty Name="CommandParameter" />
       <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.Interactions.Core.EventTriggerBehavior">
@@ -407,32 +416,39 @@
       <RootProperty Name="Actions" />
     </RootType>
     <RootType FullName="Aural.Helpers.OpenFlyoutAction" />
+    <RootType FullName="Windows.UI.Xaml.Controls.UserControl">
+      <RootProperty Name="DataContext" />
+      <RootProperty Name="Resources" />
+      <RootProperty Name="Content" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.MenuFlyoutSeparator" />
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
-      <RootProperty Name="ItemsSource" />
-      <RootProperty Name="ItemTemplate" />
       <RootProperty Name="ItemContainerStyle" />
-      <RootProperty Name="Visibility" />
       <RootProperty Name="AllowDrop" />
       <RootProperty Name="ReorderMode" />
+      <RootProperty Name="ItemsSource" />
       <RootProperty Name="CanDragItems" />
       <RootProperty Name="CanReorderItems" />
       <RootProperty Name="SelectionMode" />
+      <RootProperty Name="Header" />
+      <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="Visibility" />
       <RootProperty Name="SelectedItem" />
       <RootEvent Name="DragOver" />
       <RootEvent Name="Drop" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.ToggleButton">
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="Margin" />
-      <RootProperty Name="Content" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.ResourceDictionary" />
+    <RootType FullName="Microsoft.Xaml.Interactions.Core.InvokeCommandAction">
+      <RootProperty Name="Command" />
+      <RootProperty Name="CommandParameter" />
+    </RootType>
+    <RootType FullName="Aural.View.CurrentPlaylistUserControl" />
     <RootType FullName="Microsoft.Xaml.Interactivity.BehaviorCollection" />
     <RootType FullName="Aural.CustomControls.TitleBarPage">
       <RootProperty Name="DataContext" />
+      <RootProperty Name="RequestedTheme" />
       <RootProperty Name="Content" />
       <RootMethod Name="GetBackgroundColor" />
       <RootMethod Name="SetBackgroundColor" />
@@ -454,7 +470,6 @@
       <RootProperty Name="Content" />
       <RootProperty Name="OpenPaneLength" />
       <RootProperty Name="DisplayMode" />
-      <RootProperty Name="PaneBackground" />
     </RootType>
     <RootType FullName="Aural.View.SettingsUserControl" />
     <RootType FullName="Aural.View.PlayingInfoUserControl" />
@@ -462,11 +477,6 @@
     <RootType FullName="Aural.View.PlaylistListUserControl" />
     <RootType FullName="Aural.View.PlaylistControl" />
     <RootType FullName="Aural.View.MainPage" />
-    <RootType FullName="Windows.UI.Xaml.Controls.UserControl">
-      <RootProperty Name="DataContext" />
-      <RootProperty Name="Content" />
-      <RootProperty Name="Resources" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ContentControl">
       <RootProperty Name="Content" />
     </RootType>
@@ -481,9 +491,10 @@
       <RootProperty Name="PlaceholderText" />
       <RootProperty Name="QueryIcon" />
     </RootType>
-    <RootType FullName="Microsoft.Xaml.Interactions.Core.InvokeCommandAction">
-      <RootProperty Name="Command" />
-      <RootProperty Name="CommandParameter" />
+    <RootType FullName="Windows.UI.Xaml.Controls.MenuFlyoutSubItem">
+      <RootProperty Name="Text" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="Items" />
     </RootType>
   </Roots.RootTypes>
 </Roots>

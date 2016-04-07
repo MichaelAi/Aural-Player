@@ -17,18 +17,10 @@
         </MenuFlyout>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid>
-            <TextBlock Margin="10" VerticalAlignment="Center" Grid.Row="0" Text="Playlists"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Command="{Binding SavePlaylistCommand}"/>
-                <Button x:ConnectionId='3' x:Name="commandBarSettings" Style="{StaticResource TextBlockButtonStyle}" Content="&#xE713;" FontFamily="Segoe MDL2 Assets"                                 />
-            </StackPanel>
-        </Grid>
-        <ListView x:ConnectionId='1' Grid.Row="1" x:Name="playlistsListView" SelectionMode="Single" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+        <ListView x:ConnectionId='1' x:Name="playlistsListView" SelectionMode="Single" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <ListView.Header>
+                <TextBlock Text="Playlists" FontWeight="Normal" Margin="10"/>
+            </ListView.Header>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -41,7 +33,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid x:ConnectionId='2' FlyoutBase.AttachedFlyout="{StaticResource PlaylistControlsFlyout}" x:Name="playlistControlsGrid"                                               >
+                    <Grid x:ConnectionId='4' FlyoutBase.AttachedFlyout="{StaticResource PlaylistControlsFlyout}" x:Name="playlistControlsGrid"                                               >
                         <Button Command="{Binding PlaylistList.SelectedPlaylistChangedCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" Foreground="{ThemeResource SystemBaseHighColor}" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Style="{StaticResource TextBlockButtonStyle}">
                             <Button.Content>
                                 <TextBlock FontWeight="Light"  Text="{Binding PlaylistName}" HorizontalAlignment="Left" Margin="5,0,5,0"/>
@@ -57,6 +49,11 @@
                 <TextBlock Text="Save a playlist to get started." HorizontalAlignment="Center" FontSize="9"/>
             </StackPanel>
         </Grid>
+        <StackPanel Margin="10" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Command="{Binding SavePlaylistCommand}"/>
+            <Button x:ConnectionId='2' x:Name="commandBarNowPlaying" Style="{StaticResource TextBlockButtonStyle}" Content="&#xE90B;" FontFamily="Segoe MDL2 Assets"                                   />
+            <Button x:ConnectionId='3' x:Name="commandBarSettings" Style="{StaticResource TextBlockButtonStyle}" Content="&#xE713;" FontFamily="Segoe MDL2 Assets"                                 />
+        </StackPanel>
     </Grid>
 </UserControl>
 

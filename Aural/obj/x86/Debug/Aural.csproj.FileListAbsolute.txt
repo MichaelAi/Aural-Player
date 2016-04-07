@@ -237,3 +237,11 @@ C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\V
 C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\View\PlayingInfoUserControl.xbf
 C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\View\PlaylistListUserControl.xbf
 C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\View\SettingsUserControl.xbf
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\View\CurrentPlaylistUserControl.xbf
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\View\CurrentPlaylistUserControl.g.i.cs
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\View\CurrentPlaylistUserControl.g.cs
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\View\CurrentPlaylistUserControl.xaml
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\View\CurrentPlaylistUserControl.xbf
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\View\ThemeDictionary.xaml
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\obj\x86\Debug\View\ThemeDictionary.xbf
+C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\View\ThemeDictionary.xbf

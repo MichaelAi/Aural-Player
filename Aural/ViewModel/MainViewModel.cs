@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Aural;
 using Aural.Interface;
+using Windows.UI.Xaml;
 
 namespace Aural.ViewModel
 {
@@ -22,7 +23,8 @@ namespace Aural.ViewModel
         IFileIOService fileIOService;
         IContentDialogService contentDialogService;
 
-        public RelayCommand OpenFilesCommand { get; private set; }      
+        public RelayCommand OpenFilesCommand { get; private set; }
+        public static ElementTheme RequestedAppStyle = ElementTheme.Default;
 
         public MainViewModel(ISettingsService settingsService, IFileIOService fileIOService, IContentDialogService contentDialogService)
         {
@@ -37,6 +39,7 @@ namespace Aural.ViewModel
         private void Startup()
         {
             RegisterMessaging();
+      
         }
 
         //set up the mvvmlight messaging service

@@ -16,7 +16,13 @@
     <UserControl.Resources>
         <MenuFlyout x:Key="PlaylistItemContextMenuFlyout">
             <MenuFlyoutItem Text="&#xE768; Play" FontFamily="Segoe MDL2 Assets"  CommandParameter="{Binding ElementName=PlaylistListView, Path=SelectedItems}" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"/>
+            <MenuFlyoutSubItem Text="&#xE00F; Queue" FontFamily="Segoe MDL2 Assets">
+                <MenuFlyoutItem Text="Next"/>
+                <MenuFlyoutItem Text="Last"/>
+            </MenuFlyoutSubItem>
+            <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:ConnectionId='2'                              Text="&#xE894; Remove" CommandParameter="{Binding}" FontFamily="Segoe MDL2 Assets"/>
+            <MenuFlyoutItem Text="&#xE8E6; Clear Selection" FontFamily="Segoe MDL2 Assets"/>
         </MenuFlyout>
 
         <MenuFlyout x:Key="OrderByFlyout">
@@ -47,8 +53,8 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        
-                        <Button Margin="0" x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Foreground="Gray" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
+
+                        <Button Margin="0" x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Foreground="{ThemeResource SystemBaseLowColor}" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
                         <Grid x:ConnectionId='5'                      Grid.Column="1"                                      FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" IsHitTestVisible="True">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="DoubleTapped">
@@ -74,7 +80,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="12.5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="10" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
             <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE71C;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource SearchFlyout}"/>
             <Button Style="{StaticResource TextBlockButtonStyle}" Content="&#xE8CB;" FontFamily="Segoe MDL2 Assets" Flyout="{StaticResource OrderByFlyout}"/>
         </StackPanel>
