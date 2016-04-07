@@ -21,7 +21,7 @@
         </MenuFlyout>
 
     </UserControl.Resources>
-    <Grid x:Name="PlaylistRoot">
+    <Grid x:Name="PlaylistRoot" Background="{ThemeResource PlayerBackgroundOverlay}">
         <ListView x:Name="PlaylistListView" ItemContainerStyle="{StaticResource ListViewItemNoCheckbox}" AllowDrop="True" ReorderMode="Enabled" ItemsSource="{Binding CurrentPlaylist.Items}" CanDragItems="True" CanReorderItems="True" SelectionMode="Multiple">
             <ListView.Header>
                 <TextBlock Text="Now Playing" FontWeight="Normal" Margin="10"/>
@@ -34,7 +34,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Margin="0" x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Foreground="{ThemeResource SystemBaseLowColor}" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
+                        <Button Margin="0" x:Name="TrackNoLabel" Width="60" RequestedTheme="Dark" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Foreground="{ThemeResource SystemBaseMediumColor}" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
                         <Grid Tapped="Grid_Tapped" Grid.Column="1" RightTapped="StackPanel_RightTapped" FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" IsHitTestVisible="True">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="DoubleTapped">
@@ -44,14 +44,14 @@
                             <Grid>
                                 <StackPanel Orientation="Vertical">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontWeight="Light" Text="{Binding Properties.TrackNumber}" Margin="5,5,0,5"/>
-                                        <TextBlock FontWeight="Light" Text="." Margin="1,5,5,5"/>
-                                        <TextBlock FontWeight="Light" Text="{Binding Properties.Title}" Margin="5"/>
+                                        <TextBlock FontWeight="Light" Foreground="{ThemeResource SystemChromeWhiteColor}" Text="{Binding Properties.TrackNumber}" Margin="5,5,0,5"/>
+                                        <TextBlock FontWeight="Light" Foreground="{ThemeResource SystemChromeWhiteColor}" Text="." Margin="1,5,5,5"/>
+                                        <TextBlock FontWeight="Light" Foreground="{ThemeResource SystemChromeWhiteColor}" Text="{Binding Properties.Title}" Margin="5"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                                        <TextBlock FontWeight="Light" Text="{Binding Properties.Artist}" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}" FontSize="10"/>
-                                        <TextBlock FontWeight="Light" Text="\" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}" FontSize="10"/>
-                                        <TextBlock FontWeight="Light" Text="{Binding Properties.Album}" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}"  FontSize="10"/>
+                                        <TextBlock FontWeight="Light" Foreground="{ThemeResource SystemChromeWhiteColor}" Text="{Binding Properties.Artist}" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}" FontSize="10"/>
+                                        <TextBlock FontWeight="Light" Foreground="{ThemeResource SystemChromeWhiteColor}" Text="\" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}" FontSize="10"/>
+                                        <TextBlock FontWeight="Light" Foreground="{ThemeResource SystemChromeWhiteColor}" Text="{Binding Properties.Album}" Margin="5,0,5,0" Style="{StaticResource BodyTextBlockStyle}"  FontSize="10"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>

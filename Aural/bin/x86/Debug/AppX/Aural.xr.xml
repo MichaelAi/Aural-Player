@@ -115,6 +115,7 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Margin" />
       <RootProperty Name="Width" />
+      <RootProperty Name="RequestedTheme" />
       <RootProperty Name="Style" />
       <RootProperty Name="Content" />
       <RootProperty Name="Foreground" />
@@ -174,7 +175,6 @@
       <RootProperty Name="RenderTransformOrigin" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="IsHitTestVisible" />
-      <RootProperty Name="RequestedTheme" />
       <RootEvent Name="Tapped" />
       <RootEvent Name="RightTapped" />
       <RootMethod Name="GetColumnSpan" />

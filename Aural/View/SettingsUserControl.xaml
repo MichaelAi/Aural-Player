@@ -22,6 +22,6 @@
             </ListView.ItemTemplate>
         </ListView>
         <TextBlock Text="Theme" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Bold" Foreground="{ThemeResource SystemBaseMediumColor}"/>
-        <ToggleSwitch OnContent="Light Theme" OffContent="Dark Theme" IsOn="{Binding UseDarkTheme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <ToggleSwitch OnContent="Dark Theme" OffContent="Light Theme" IsOn="{Binding UseDarkTheme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </StackPanel>
 </UserControl>
