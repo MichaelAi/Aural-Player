@@ -12,27 +12,28 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:helpers="using:Aural.Helpers"
-    control:TitleBarPage.BackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
-    control:TitleBarPage.ForegroundColor="{ThemeResource SystemColorWindowTextColor}"
-    control:TitleBarPage.ButtonBackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
-    control:TitleBarPage.ButtonForegroundColor="{ThemeResource SystemColorWindowTextColor}"
-    control:TitleBarPage.InactiveBackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
-    control:TitleBarPage.ButtonInactiveBackgroundColor="{ThemeResource SystemColorButtonFaceColor}"
-    DataContext="{Binding Main, Source={StaticResource Locator}}">
+    control:TitleBarPage.BackgroundColor="{ThemeResource SystemChromeMediumColor}"
+    control:TitleBarPage.ForegroundColor="{ThemeResource SystemBaseHighColor}"
+    control:TitleBarPage.ButtonBackgroundColor="{ThemeResource SystemChromeMediumColor}"
+    control:TitleBarPage.ButtonForegroundColor="{ThemeResource SystemBaseHighColor}"
+    control:TitleBarPage.InactiveBackgroundColor="{ThemeResource SystemChromeMediumColor}"
+    control:TitleBarPage.ButtonInactiveBackgroundColor="{ThemeResource SystemChromeMediumColor}"
+    DataContext="{Binding Main, Source={StaticResource Locator}}"
+    RequestedTheme="{Binding Settings.UseDarkTheme, Source={StaticResource Locator}, Converter={StaticResource BooleanToThemeConverter}}">
 
     <SplitView x:ConnectionId='1' x:Name="rootSplitView" PanePlacement="Right" IsPaneOpen="False">
         <SplitView.Pane>
-            <Border Background="#99FFFFFF" BorderBrush="{ThemeResource SystemBaseMediumColor}" BorderThickness="1,0,0,0">
+            <Border Background="{ThemeResource SystemAltMediumLowColor}" BorderBrush="{ThemeResource SystemBaseMediumColor}" BorderThickness="1,0,0,0">
                 <view:SettingsUserControl/>
             </Border>
         </SplitView.Pane>
         <SplitView.Content>
             <SplitView x:ConnectionId='2' x:Name="NavBarSplitView">
                 <SplitView.Pane>
-                    <Border Background="#99FFFFFF" BorderBrush="{ThemeResource SystemAccentColor}" BorderThickness="0,0,1,0">
-                        <StackPanel>
-                            <!-- TODO: add things here--> 
-                        </StackPanel>
+                    <Border Background="{ThemeResource SystemAccentColor}" BorderBrush="{ThemeResource SystemBaseHighColor}" BorderThickness="0,0,1,0">
+                        <Grid RequestedTheme="Dark">
+                            <view:CurrentPlaylistUserControl/>
+                        </Grid>
                     </Border>
                 </SplitView.Pane>
                 <SplitView.Content>
@@ -42,9 +43,9 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="48"/>
                         </Grid.RowDefinitions>
-                        <SplitView x:ConnectionId='3' x:Name="playlistSplitView" Grid.Row="0" IsPaneOpen="True" OpenPaneLength="200" DisplayMode="Inline" PaneBackground="{ThemeResource SystemColorButtonFaceColor}">
+                        <SplitView x:ConnectionId='3' x:Name="playlistSplitView" Grid.Row="0" IsPaneOpen="True" OpenPaneLength="200" DisplayMode="Inline">
                             <SplitView.Pane>
-                                <Border Background="#99FFFFFF" BorderBrush="{ThemeResource SystemBaseMediumColor}" BorderThickness="0,0,1,0">
+                                <Border Background="{ThemeResource SystemAltMediumLowColor}" BorderBrush="{ThemeResource SystemBaseMediumColor}" BorderThickness="0,0,1,0">
                                     <view:PlaylistListUserControl x:ConnectionId='4' x:Name="PlaylistList"/>
                                 </Border>
                             </SplitView.Pane>

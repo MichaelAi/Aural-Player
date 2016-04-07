@@ -11,17 +11,19 @@
     d:DesignWidth="400">
 
     <Grid Background="{ThemeResource SystemAccentColor}">
-        <Grid.ColumnDefinitions>
+        <Grid Background="{ThemeResource PlayerBackgroundOverlay}">
+            <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
 
-        <Image Height="60" Width="50" Margin="10,0,10,0" Source="{Binding NowPlayingItem.AlbumArt.Source}"/>
-        <StackPanel Grid.Column="1">
-            <TextBlock Text="{Binding NowPlayingItem.Properties.Title}" Foreground="{ThemeResource SystemAltHighColor}"/>
-            <TextBlock Text="{Binding NowPlayingItem.Properties.Artist}" Foreground="{ThemeResource SystemAltHighColor}"/>
-            <TextBlock Text="{Binding NowPlayingItem.Properties.Album}" Foreground="{ThemeResource SystemAltHighColor}"/>
-        </StackPanel>
+            <Image Height="60" Width="50" Margin="10,0,10,0" Source="{Binding NowPlayingItem.AlbumArt.Source}"/>
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="{Binding NowPlayingItem.Properties.Title}" Foreground="{ThemeResource SystemAltHighColor}"/>
+                <TextBlock Text="{Binding NowPlayingItem.Properties.Artist}" Foreground="{ThemeResource SystemAltHighColor}"/>
+                <TextBlock Text="{Binding NowPlayingItem.Properties.Album}" Foreground="{ThemeResource SystemAltHighColor}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
 

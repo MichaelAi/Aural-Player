@@ -21,6 +21,7 @@ namespace Aural.View
     {
 
         public event EventHandler SettingsButtonClicked;
+        public event EventHandler NowPlayingButtonClicked;
 
         public PlaylistListUserControl()
         {
@@ -39,6 +40,12 @@ namespace Aural.View
         {
             if (this.SettingsButtonClicked != null)
                 this.SettingsButtonClicked(new object(), new EventArgs());
+        }
+
+        private void commandBarNowPlaying_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NowPlayingButtonClicked != null)
+                this.NowPlayingButtonClicked(new object(), new EventArgs());
         }
     }
 }

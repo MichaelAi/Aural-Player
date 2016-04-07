@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace Aural.ViewModel
 {
@@ -21,13 +22,48 @@ namespace Aural.ViewModel
             set { Set("AccessTokens", ref _accessTokens, value); }
         }
 
+        private bool _useDarkTheme = false;
+        public bool UseDarkTheme
+        {
+            get { return _useDarkTheme; }
+            set { Set("UseDarkTheme", ref _useDarkTheme, value); SetTheme(); }
+        }
+
         public RelayCommand SetMasterFolderCommand { get; private set; }
 
         public SettingsViewModel(ISettingsService settingsService)
         {
             this.settingsService = settingsService;
             SetMasterFolderCommand = new RelayCommand(SetMasterFolder);
+            GetTheme();
             AccessTokens = settingsService.GetAccessTokens();
+            
+        }
+
+        private void GetTheme()
+        {
+            try
+            {
+                UseDarkTheme = bool.Parse(Helpers.ApplicationSettingsHelper.ReadSettingsValue("UseDarkTheme").ToString());
+            }
+            catch
+            {
+                //there is no saved style. use light.
+                Helpers.ApplicationSettingsHelper.SaveSettingsValue("UseDarkTheme", false.ToString());
+                UseDarkTheme = false;
+            }
+        }
+
+        private void SetTheme()
+        {
+            if (UseDarkTheme)
+            {
+                Helpers.ApplicationSettingsHelper.SaveSettingsValue("UseDarkTheme", true.ToString());
+            }
+            else
+            {
+                Helpers.ApplicationSettingsHelper.SaveSettingsValue("UseDarkTheme", false.ToString());
+            }
         }
 
         //Set a new master folder
