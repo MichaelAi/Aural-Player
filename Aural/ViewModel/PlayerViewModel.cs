@@ -97,7 +97,9 @@ namespace Aural.ViewModel
         public RelayCommand MediaPreviousCommand { get; private set; }
         public RelayCommand MediaNextCommand { get; private set; }
         public RelayCommand MediaStopAfterCurrentCommand { get; private set; }
-
+        public RelayCommand<ObservableCollection<PlaylistItem>> AddToQueueNextCommand { get; private set; }
+        public RelayCommand<ObservableCollection<PlaylistItem>> AddToQueueLastCommand { get; private set; }
+        public RelayCommand<ObservableCollection<PlaylistItem>> MediaPlaySelectionCommand { get; private set; }
         public PlayerViewModel()
         {
             MediaPlayCommand = new RelayCommand<PlaylistItem>((id) => MediaPlay(id));
@@ -106,8 +108,42 @@ namespace Aural.ViewModel
             MediaPreviousCommand = new RelayCommand(MediaPrevious);
             MediaNextCommand = new RelayCommand(MediaNext);
             MediaStopAfterCurrentCommand = new RelayCommand(MediaStopAfterCurrent);
-
+            AddToQueueNextCommand = new RelayCommand<ObservableCollection<PlaylistItem>>((playItems) => AddToQueueNext(playItems));
+            AddToQueueLastCommand = new RelayCommand<ObservableCollection<PlaylistItem>>((playItems) => AddToQueueLast(playItems));
+            MediaPlaySelectionCommand = new RelayCommand<ObservableCollection<PlaylistItem>>((playItems) => MediaPlaySelection(playItems));
             Startup();
+        }
+
+        private void MediaPlaySelection(ObservableCollection<PlaylistItem> playItems)
+        {
+            CurrentPlaylist.Items.Clear();
+            foreach(var playItem in playItems)
+            {
+                CurrentPlaylist.Items.Add(playItem);
+            }
+            TransferPlaylist(CurrentPlaylist);
+            MediaPlay(CurrentPlaylist.Items.FirstOrDefault());
+        }
+
+        private void AddToQueueLast(ObservableCollection<PlaylistItem> playItems)
+        {
+            foreach (var playItem in playItems)
+            {
+                CurrentPlaylist.Items.Add(playItem);
+            }
+        }
+
+        private void AddToQueueNext(ObservableCollection<PlaylistItem> playItems)
+        {
+            if(NowPlayingItem != null)
+            {
+                int index = CurrentPlaylist.Items.IndexOf(NowPlayingItem);
+                foreach (var playItem in playItems)
+                {
+                    index += 1;
+                    CurrentPlaylist.Items.Insert(index, playItem);
+                }
+            }      
         }
 
         //do stuff at app launch
