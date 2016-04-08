@@ -15,14 +15,16 @@
 
     <UserControl.Resources>
         <MenuFlyout x:Key="PlaylistItemContextMenuFlyout">
-            <MenuFlyoutItem Text="&#xE768; Play" FontFamily="Segoe MDL2 Assets"  CommandParameter="{Binding ElementName=PlaylistListView, Path=SelectedItems}" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"/>
+            <MenuFlyoutItem Text="&#xE768; Play" FontFamily="Segoe MDL2 Assets" CommandParameter="{Binding}" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"/>
             <MenuFlyoutSubItem Text="&#xE00F; Queue" FontFamily="Segoe MDL2 Assets">
-                <MenuFlyoutItem Text="Next"/>
-                <MenuFlyoutItem Text="Last"/>
+                <MenuFlyoutItem x:Name="MenuItemQueueNext" Text="Next"  CommandParameter="{Binding}" Click="MenuItemQueueNext_Click"/>
+                <MenuFlyoutItem x:Name="MenuItemQueueLast" Text="Last" CommandParameter="{Binding}" Click="MenuItemQueueLast_Click"/>
+                <MenuFlyoutItem x:Name="MenuItemPlay" Text="Overwrite" FontFamily="Segoe MDL2 Assets"  CommandParameter="{Binding}" Click="MenuItemPlay_Click"/>
             </MenuFlyoutSubItem>
             <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="&#xE70F; Edit Metadata" FontFamily="Segoe MDL2 Assets"/>
             <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="&#xE894; Remove" CommandParameter="{Binding}" FontFamily="Segoe MDL2 Assets"/>
-            <MenuFlyoutItem Text="&#xE8E6; Clear Selection" FontFamily="Segoe MDL2 Assets"/>
+            <MenuFlyoutItem x:Name="MenuItemClearSelection" Text="&#xE8E6; Clear Selection" FontFamily="Segoe MDL2 Assets" Click="MenuItemClearSelection_Click"/>
         </MenuFlyout>
 
         <MenuFlyout x:Key="OrderByFlyout">
