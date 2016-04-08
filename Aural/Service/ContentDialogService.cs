@@ -160,6 +160,7 @@ namespace Aural.Service
 
             };
 
+            dialog.RequestedTheme = Windows.UI.Xaml.ElementTheme.Dark;
             var result = await dialog.ShowAsync();
             if (result == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
             {

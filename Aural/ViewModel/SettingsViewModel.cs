@@ -44,12 +44,12 @@ namespace Aural.ViewModel
         {
             try
             {
-                UseDarkTheme = bool.Parse(Helpers.ApplicationSettingsHelper.ReadSettingsValue("UseDarkTheme").ToString());
+                UseDarkTheme = Settings.UseDarkTheme;
             }
             catch
             {
                 //there is no saved style. use light.
-                Helpers.ApplicationSettingsHelper.SaveSettingsValue("UseDarkTheme", false.ToString());
+                Settings.UseDarkTheme = false;
                 UseDarkTheme = false;
             }
         }
@@ -58,11 +58,11 @@ namespace Aural.ViewModel
         {
             if (UseDarkTheme)
             {
-                Helpers.ApplicationSettingsHelper.SaveSettingsValue("UseDarkTheme", true.ToString());
+                Settings.UseDarkTheme = true;
             }
             else
             {
-                Helpers.ApplicationSettingsHelper.SaveSettingsValue("UseDarkTheme", false.ToString());
+                Settings.UseDarkTheme = false;
             }
         }
 

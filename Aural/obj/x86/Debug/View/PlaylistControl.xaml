@@ -15,14 +15,16 @@
 
     <UserControl.Resources>
         <MenuFlyout x:Key="PlaylistItemContextMenuFlyout">
-            <MenuFlyoutItem Text="&#xE768; Play" FontFamily="Segoe MDL2 Assets"  CommandParameter="{Binding ElementName=PlaylistListView, Path=SelectedItems}" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"/>
+            <MenuFlyoutItem Text="&#xE768; Play" FontFamily="Segoe MDL2 Assets" CommandParameter="{Binding}" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"/>
             <MenuFlyoutSubItem Text="&#xE00F; Queue" FontFamily="Segoe MDL2 Assets">
-                <MenuFlyoutItem Text="Next"/>
-                <MenuFlyoutItem Text="Last"/>
+                <MenuFlyoutItem x:ConnectionId='4' x:Name="MenuItemQueueNext" Text="Next"  CommandParameter="{Binding}"                                />
+                <MenuFlyoutItem x:ConnectionId='5' x:Name="MenuItemQueueLast" Text="Last" CommandParameter="{Binding}"                                />
+                <MenuFlyoutItem x:ConnectionId='6' x:Name="MenuItemPlay" Text="Overwrite" FontFamily="Segoe MDL2 Assets"  CommandParameter="{Binding}"                           />
             </MenuFlyoutSubItem>
             <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="&#xE70F; Edit Metadata" FontFamily="Segoe MDL2 Assets"/>
             <MenuFlyoutItem x:ConnectionId='2'                              Text="&#xE894; Remove" CommandParameter="{Binding}" FontFamily="Segoe MDL2 Assets"/>
-            <MenuFlyoutItem Text="&#xE8E6; Clear Selection" FontFamily="Segoe MDL2 Assets"/>
+            <MenuFlyoutItem x:ConnectionId='3' x:Name="MenuItemClearSelection" Text="&#xE8E6; Clear Selection" FontFamily="Segoe MDL2 Assets"                                     />
         </MenuFlyout>
 
         <MenuFlyout x:Key="OrderByFlyout">
@@ -44,8 +46,8 @@
         </Flyout>
         
     </UserControl.Resources>
-    <Grid x:ConnectionId='3' x:Name="PlaylistRoot">
-        <ListView x:ConnectionId='4' x:Name="PlaylistListView" ItemContainerStyle="{StaticResource ListViewItemNoCheckbox}" Visibility="{Binding IsPlaylistLoadInProgress, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter='!'}" AllowDrop="True"                                             ReorderMode="Enabled" ItemsSource="{Binding DisplayedPlaylist.Items}" CanDragItems="True" CanReorderItems="True" SelectionMode="Multiple">
+    <Grid x:ConnectionId='7' x:Name="PlaylistRoot">
+        <ListView x:ConnectionId='8' x:Name="PlaylistListView" ItemContainerStyle="{StaticResource ListViewItemNoCheckbox}" Visibility="{Binding IsPlaylistLoadInProgress, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter='!'}" AllowDrop="True"                                             ReorderMode="Enabled" ItemsSource="{Binding DisplayedPlaylist.Items}" CanDragItems="True" CanReorderItems="True" SelectionMode="Multiple">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -55,7 +57,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Margin="0" x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Foreground="{ThemeResource SystemBaseLowColor}" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
-                        <Grid x:ConnectionId='5'                      Grid.Column="1"                                      FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" IsHitTestVisible="True">
+                        <Grid x:ConnectionId='9'                      Grid.Column="1"                                      FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" IsHitTestVisible="True">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="DoubleTapped">
                                     <core:InvokeCommandAction Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>

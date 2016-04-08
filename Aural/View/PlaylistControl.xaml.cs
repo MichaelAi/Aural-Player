@@ -1,6 +1,7 @@
 ﻿using Aural.Converters;
 using Aural.Model;
 using Aural.ViewModel;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
@@ -73,7 +74,7 @@ namespace Aural.View
                 var x = ((sender as UIElement) as MenuFlyoutItem);
                 selectedItems.Add(x.CommandParameter as PlaylistItem);
             }
-            var viewModel = (PlaylistViewModel)DataContext;
+            var viewModel = SimpleIoc.Default.GetInstance<PlaylistViewModel>();
             if (viewModel.RemoveItemsFromPlaylistCommand.CanExecute(null))
                 viewModel.RemoveItemsFromPlaylistCommand.Execute(selectedItems);
         }
@@ -89,5 +90,48 @@ namespace Aural.View
             }         
         }
 
+        private void MenuItemPlay_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedItems.Count == 0)
+            {
+                selectedItems = new ObservableCollection<PlaylistItem>();
+                var x = ((sender as UIElement) as MenuFlyoutItem);
+                selectedItems.Add(x.CommandParameter as PlaylistItem);
+            }
+            var viewModel = SimpleIoc.Default.GetInstance<PlayerViewModel>();
+            if (viewModel.MediaPlaySelectionCommand.CanExecute(null))
+                viewModel.MediaPlaySelectionCommand.Execute(selectedItems);
+        }
+
+        private void MenuItemQueueNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedItems.Count == 0)
+            {
+                selectedItems = new ObservableCollection<PlaylistItem>();
+                var x = ((sender as UIElement) as MenuFlyoutItem);
+                selectedItems.Add(x.CommandParameter as PlaylistItem);
+            }
+            var viewModel = SimpleIoc.Default.GetInstance<PlayerViewModel>();
+            if (viewModel.AddToQueueNextCommand.CanExecute(null))
+                viewModel.AddToQueueNextCommand.Execute(selectedItems);
+        }
+
+        private void MenuItemQueueLast_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedItems.Count == 0)
+            {
+                selectedItems = new ObservableCollection<PlaylistItem>();
+                var x = ((sender as UIElement) as MenuFlyoutItem);
+                selectedItems.Add(x.CommandParameter as PlaylistItem);
+            }
+            var viewModel = SimpleIoc.Default.GetInstance<PlayerViewModel>();
+            if (viewModel.AddToQueueLastCommand.CanExecute(null))
+                viewModel.AddToQueueLastCommand.Execute(selectedItems);
+        }
+
+        private void MenuItemClearSelection_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
