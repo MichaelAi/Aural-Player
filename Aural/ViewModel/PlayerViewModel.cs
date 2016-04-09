@@ -168,12 +168,11 @@ namespace Aural.ViewModel
                         else if (nm.Notification == "DisplayToDisplay")
                         {
                             CurrentPlaylist = nm.Content;
-
                         }
                         else if (nm.Notification == "PlayFirst")
                         {
                             CurrentPlaylist = nm.Content;
-                            MediaPlay(nm.Content.Items.FirstOrDefault());
+                            MediaPlay(nm.Content.Items.FirstOrDefault());         
                         }
                         else if (nm.Notification == "ItemRemovedFromPlaylist")
                         {
@@ -212,9 +211,11 @@ namespace Aural.ViewModel
             //this else block triggers when a displayed playlist item is opened explicitely 
             else
             {
-                NowPlayingItem = CurrentPlaylist.Items.Where(x => x == item).FirstOrDefault();
+                NowPlayingItem = CurrentPlaylist.Items.Where(x => x == item).FirstOrDefault();               
                 Messenger.Default.Send(new NotificationMessage<string>("RequestDisplayed", "RequestDisplayed"));
             }
+            CurrentPlaylist.Items.Select(x => { x.IsPlayingNow = false; return x; }).ToList();
+            NowPlayingItem.IsPlayingNow = true;
             properties = await TryGetProperties(NowPlayingFile);
             MediaElementObject.SeekCompleted += MediaElementObject_SeekCompleted;
         }
@@ -260,7 +261,7 @@ namespace Aural.ViewModel
         private void MediaPrevious()
         {
             int index = CurrentPlaylist.Items.IndexOf(NowPlayingItem);
-            if (index > CurrentPlaylist.Items.Count - 1 && index > -1)
+            if (index <= CurrentPlaylist.Items.Count - 1 && index > -1)
             {
                 NowPlayingItem = CurrentPlaylist.Items.ElementAt(index - 1);
             }

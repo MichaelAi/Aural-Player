@@ -104,7 +104,7 @@ namespace Aural.ViewModel
 
         private void RegisterMessaging()
         {
-            Messenger.Default.Register <NotificationMessage<Playlist>>(this,
+            Messenger.Default.Register<NotificationMessage<Playlist>>(this,
                 nm =>
                 {
                     if (nm.Notification != null)
@@ -114,28 +114,29 @@ namespace Aural.ViewModel
                             ClearDisplayedPlaylist();
                             SelectedPlaylist = nm.Content;
                             PopulatePlaylist(nm.Content.Items);
+                            CheckIfPlaylistHasNowPlayingItem();
                         }
                     }
                 });
-        Messenger.Default.Register<NotificationMessage<ObservableCollection<PlaylistItem>>>(this,
-                nm =>
-                {
-                    if (nm.Notification != null)
-                    {                       
-                        if(nm.Notification == "fromDragDrop")
+            Messenger.Default.Register<NotificationMessage<ObservableCollection<PlaylistItem>>>(this,
+                    nm =>
+                    {
+                        if (nm.Notification != null)
                         {
-                            PopulatePlaylist(nm.Content);
-                            SavePlaylist(SelectedPlaylist);
-                        }
-                        else if (nm.Notification == "fromFileOpen")
-                        {
-                            ClearDisplayedPlaylist();
-                            PopulatePlaylist(nm.Content);
-                            PlayItems(nm.Content);
+                            if (nm.Notification == "fromDragDrop")
+                            {
+                                PopulatePlaylist(nm.Content);
+                                SavePlaylist(SelectedPlaylist);
+                            }
+                            else if (nm.Notification == "fromFileOpen")
+                            {
+                                ClearDisplayedPlaylist();
+                                PopulatePlaylist(nm.Content);
+                                PlayItems(nm.Content);
+                            }
                         }
                     }
-                }
-                );
+                    );
             Messenger.Default.Register<NotificationMessage<string>>(this,
         nm =>
         {
@@ -159,12 +160,12 @@ namespace Aural.ViewModel
                     NowPlayingItem = nm.Content;
                 }
             });
-
         }
 
         private void PlayItems(ObservableCollection<PlaylistItem> play)
         {
-            Messenger.Default.Send(new NotificationMessage<ObservableCollection<PlaylistItem>>(play, "PlayFirst"));
+            Playlist playlist = new Playlist { Items = play, PlaylistId = SelectedPlaylist.PlaylistId, PlaylistName = SelectedPlaylist.PlaylistName };
+            Messenger.Default.Send(new NotificationMessage<Playlist>(playlist, "PlayFirst"));
         }
 
         private bool DisplayedPlaylistHasItemsCheck()
@@ -357,6 +358,16 @@ namespace Aural.ViewModel
         private void HandleReorder(object sender, NotifyCollectionChangedEventArgs e)
         {
             LabelPlaylistNumbers();         
+        }
+
+        private void CheckIfPlaylistHasNowPlayingItem()
+        {
+            SelectedPlaylist.Items.Select(x => { x.IsPlayingNow = false; return x; }).ToList();
+            var nowPlaying = SelectedPlaylist.Items.Where(x => x == NowPlayingItem).FirstOrDefault();
+            if(nowPlaying != null)
+            {
+                nowPlaying.IsPlayingNow = true;
+            }
         }
     }
 }

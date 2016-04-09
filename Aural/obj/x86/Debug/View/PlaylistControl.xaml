@@ -22,9 +22,41 @@
                 <MenuFlyoutItem x:ConnectionId='6' x:Name="MenuItemPlay" Text="Overwrite" FontFamily="Segoe MDL2 Assets"  CommandParameter="{Binding}"                           />
             </MenuFlyoutSubItem>
             <MenuFlyoutSeparator/>
+            <MenuFlyoutSubItem Text="&#xE734; Rating" FontFamily="Segoe MDL2 Assets">
+                <MenuFlyoutItem Text="&#xE738;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE7C6;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;&#xE7C6;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;&#xE735;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;&#xE735;&#xE7C6;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;&#xE735;&#xE735;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;&#xE735;&#xE735;&#xE7C6;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;&#xE735;&#xE735;&#xE735;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;&#xE735;&#xE735;&#xE735;&#xE7C6;" FontFamily="Segoe MDL2 Assets"/>
+                <MenuFlyoutItem Text="&#xE735;&#xE735;&#xE735;&#xE735;&#xE735;" FontFamily="Segoe MDL2 Assets"/>
+            </MenuFlyoutSubItem>
             <MenuFlyoutItem Text="&#xE70F; Edit Metadata" FontFamily="Segoe MDL2 Assets"/>
+            <MenuFlyoutItem Text="&#xE90A; File Properties" FontFamily="Segoe MDL2 Assets"/>
+            <MenuFlyoutItem Text="&#xE8EB; Convert" FontFamily="Segoe MDL2 Assets"/>
+            <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:ConnectionId='2'                              Text="&#xE894; Remove" CommandParameter="{Binding}" FontFamily="Segoe MDL2 Assets"/>
             <MenuFlyoutItem x:ConnectionId='3' x:Name="MenuItemClearSelection" Text="&#xE8E6; Clear Selection" FontFamily="Segoe MDL2 Assets"                                     />
+            <MenuFlyoutSubItem Text="&#xE90F; List" FontFamily="Segoe MDL2 Assets">
+                <MenuFlyoutItem Text="Shuffle"/>
+                <MenuFlyoutSubItem Text="Reorder">
+                    <MenuFlyoutItem Text="Track Number" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="tracknumber"/>
+                    <MenuFlyoutItem Text="Title" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="title"/>
+                    <MenuFlyoutItem Text="Artist" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="artist"/>
+                    <MenuFlyoutItem Text="Album" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="album"/>
+                    <MenuFlyoutItem Text="Album Artist" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="albumartist"/>
+                    <MenuFlyoutItem Text="Year" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="year"/>
+                    <MenuFlyoutItem Text="Genre" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="genre"/>
+                    <MenuFlyoutItem Text="Rating" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="rating"/>
+                    <MenuFlyoutItem Text="Duration" Command="{Binding Playlist.OrderPlaylistCommand, Source={StaticResource Locator}}" CommandParameter="duration"/>
+                </MenuFlyoutSubItem>
+                <MenuFlyoutItem Text="Clear "/>
+                <MenuFlyoutItem Text="Remove Duplicates"/>
+            </MenuFlyoutSubItem>
         </MenuFlyout>
 
         <MenuFlyout x:Key="OrderByFlyout">
@@ -52,19 +84,26 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Margin="0" x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Foreground="{ThemeResource SystemBaseLowColor}" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
+                        <TextBlock Margin="10,0,0,0" Visibility="{Binding IsPlayingNow, Converter={StaticResource BooleanToVisibilityConverter}}" x:Name="TrackIsPlaying" Text="&#xE768;" FontFamily="Segoe MDL2 Assets" Foreground="{ThemeResource SystemAccentColor}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Margin="0" Visibility="{Binding IsPlayingNow, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter='!'}" x:Name="TrackNoLabel" Width="60" Style="{StaticResource PlaylistPlayButton}" Content="{Binding PlaylistTrackNo, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D4}'}" Foreground="{ThemeResource SystemBaseLowColor}" Background="Transparent" VerticalAlignment="Center" Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
                         <Grid x:ConnectionId='9'                      Grid.Column="1"                                      FlyoutBase.AttachedFlyout="{StaticResource PlaylistItemContextMenuFlyout}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" IsHitTestVisible="True">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="DoubleTapped">
                                     <core:InvokeCommandAction Command="{Binding Player.MediaPlayCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                                    <core:ChangePropertyAction PropertyName="SelectedIndex" TargetObject="{Binding ElementName=PlaylistListView}" Value="-1"/>
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                             <Grid>
                                 <StackPanel Orientation="Vertical">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="DoubleTapped">
+
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Properties.TrackNumber}" Margin="5,5,0,5"/>
                                         <TextBlock Text="." Margin="1,5,5,5"/>

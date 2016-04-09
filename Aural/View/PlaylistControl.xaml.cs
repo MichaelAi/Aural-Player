@@ -131,7 +131,14 @@ namespace Aural.View
 
         private void MenuItemClearSelection_Click(object sender, RoutedEventArgs e)
         {
-            
+            ClearSelection(null,null);
         }
+
+        private void ClearSelection(object sender, object parameter)
+        {
+            PlaylistListView.SelectedItems.Clear();
+            PlaylistListView.SelectedItem = null;
+        }
+
     }
 }
