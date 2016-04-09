@@ -47,5 +47,12 @@ namespace Aural.Model
             get { return _playlistTrackNo; }
             set { Set("PlaylistTrackNo", ref _playlistTrackNo, value); }
         }
+
+        private bool _isPlayingNow = false;
+        public bool IsPlayingNow
+        {
+            get { return _isPlayingNow; }
+            set { Set("IsPlayingNow", ref _isPlayingNow, value); }
+        }
     }
 }

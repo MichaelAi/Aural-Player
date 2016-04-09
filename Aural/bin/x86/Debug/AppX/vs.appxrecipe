@@ -22,13 +22,13 @@
     <AppXManifest Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-04-07T21:58:28.003</Modified>
+      <Modified>2016-04-09T12:11:46.577</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Aural.exe">
       <PackagePath>entrypoint\Aural.exe</PackagePath>
-      <Modified>2016-04-07T21:58:25.888</Modified>
+      <Modified>2016-04-09T12:11:42.786</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\micha\.nuget\packages\CommonServiceLocator\1.3.0\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll">
       <PackagePath>Microsoft.Practices.ServiceLocation.dll</PackagePath>
@@ -640,7 +640,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Aural.xr.xml">
       <PackagePath>Aural.xr.xml</PackagePath>
-      <Modified>2016-04-07T11:13:24.685</Modified>
+      <Modified>2016-04-08T16:52:26.553</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -648,11 +648,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2016-04-07T21:58:27.449</Modified>
+      <Modified>2016-04-09T12:11:45.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\micha\Documents\Visual Studio 2015\Projects\Aural\Aural\bin\x86\Debug\Core\Aural.exe">
       <PackagePath>Aural.exe</PackagePath>
-      <Modified>2016-04-07T21:58:27.998</Modified>
+      <Modified>2016-04-09T12:11:46.563</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

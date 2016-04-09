@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Aural.Service
@@ -40,7 +41,7 @@ namespace Aural.Service
             dialog.IsPrimaryButtonEnabled = false;
             dialog.PrimaryButtonCommand = cmd;
             dialog.SecondaryButtonText = "Cancel";
-
+            dialog.RequestedTheme = (ElementTheme)new Converters.BooleanToThemeConverter().Convert(Settings.UseDarkTheme, null, null, null);
             tb.TextChanged += delegate
             {
                 cmd.RaiseCanExecuteChanged();
@@ -107,6 +108,7 @@ namespace Aural.Service
 
             dialog.PrimaryButtonCommand = cmd;
             dialog.SecondaryButtonText = "Cancel";
+            dialog.RequestedTheme = (ElementTheme) new Converters.BooleanToThemeConverter().Convert(Settings.UseDarkTheme,null,null,null);
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
@@ -143,7 +145,7 @@ namespace Aural.Service
 
             dialog.IsPrimaryButtonEnabled = false;
             dialog.PrimaryButtonCommand = cmd;
-
+            dialog.RequestedTheme = (ElementTheme)new Converters.BooleanToThemeConverter().Convert(Settings.UseDarkTheme, null, null, null);
             dialog.SecondaryButtonText = "Cancel";
 
             tb.TextChanged += delegate

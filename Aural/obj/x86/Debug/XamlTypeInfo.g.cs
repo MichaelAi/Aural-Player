@@ -132,7 +132,7 @@ namespace Aural.Aural_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[37];
+            _typeNameTable = new string[39];
             _typeNameTable[0] = "Aural.ViewModel.ViewModelLocator";
             _typeNameTable[1] = "Object";
             _typeNameTable[2] = "Aural.ViewModel.MainViewModel";
@@ -170,8 +170,10 @@ namespace Aural.Aural_XamlTypeInfo
             _typeNameTable[34] = "Aural.View.PlaylistListUserControl";
             _typeNameTable[35] = "Aural.View.PlaylistControl";
             _typeNameTable[36] = "Aural.View.MainPage";
+            _typeNameTable[37] = "Microsoft.Xaml.Interactions.Core.ChangePropertyAction";
+            _typeNameTable[38] = "Windows.UI.Xaml.PropertyPath";
 
-            _typeTable = new global::System.Type[37];
+            _typeTable = new global::System.Type[39];
             _typeTable[0] = typeof(global::Aural.ViewModel.ViewModelLocator);
             _typeTable[1] = typeof(global::System.Object);
             _typeTable[2] = typeof(global::Aural.ViewModel.MainViewModel);
@@ -209,6 +211,8 @@ namespace Aural.Aural_XamlTypeInfo
             _typeTable[34] = typeof(global::Aural.View.PlaylistListUserControl);
             _typeTable[35] = typeof(global::Aural.View.PlaylistControl);
             _typeTable[36] = typeof(global::Aural.View.MainPage);
+            _typeTable[37] = typeof(global::Microsoft.Xaml.Interactions.Core.ChangePropertyAction);
+            _typeTable[38] = typeof(global::Windows.UI.Xaml.PropertyPath);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -263,6 +267,7 @@ namespace Aural.Aural_XamlTypeInfo
         private object Activate_34_PlaylistListUserControl() { return new global::Aural.View.PlaylistListUserControl(); }
         private object Activate_35_PlaylistControl() { return new global::Aural.View.PlaylistControl(); }
         private object Activate_36_MainPage() { return new global::Aural.View.MainPage(); }
+        private object Activate_37_ChangePropertyAction() { return new global::Microsoft.Xaml.Interactions.Core.ChangePropertyAction(); }
         private void VectorAdd_14_BehaviorCollection(object instance, object item)
         {
             var collection = (global::System.Collections.Generic.ICollection<global::Windows.UI.Xaml.DependencyObject>)instance;
@@ -533,6 +538,19 @@ namespace Aural.Aural_XamlTypeInfo
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
+
+            case 37:   //  Microsoft.Xaml.Interactions.Core.ChangePropertyAction
+                userType = new global::Aural.Aural_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
+                userType.Activator = Activate_37_ChangePropertyAction;
+                userType.AddMemberName("PropertyName");
+                userType.AddMemberName("TargetObject");
+                userType.AddMemberName("Value");
+                xamlType = userType;
+                break;
+
+            case 38:   //  Windows.UI.Xaml.PropertyPath
+                xamlType = new global::Aural.Aural_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
             }
             return xamlType;
         }
@@ -704,6 +722,36 @@ namespace Aural.Aural_XamlTypeInfo
         {
             global::Aural.CustomControls.TitleBarPage.SetButtonInactiveBackgroundColor((global::Windows.UI.Xaml.DependencyObject)instance, (global::Windows.UI.Color)Value);
         }
+        private object get_22_ChangePropertyAction_PropertyName(object instance)
+        {
+            var that = (global::Microsoft.Xaml.Interactions.Core.ChangePropertyAction)instance;
+            return that.PropertyName;
+        }
+        private void set_22_ChangePropertyAction_PropertyName(object instance, object Value)
+        {
+            var that = (global::Microsoft.Xaml.Interactions.Core.ChangePropertyAction)instance;
+            that.PropertyName = (global::Windows.UI.Xaml.PropertyPath)Value;
+        }
+        private object get_23_ChangePropertyAction_TargetObject(object instance)
+        {
+            var that = (global::Microsoft.Xaml.Interactions.Core.ChangePropertyAction)instance;
+            return that.TargetObject;
+        }
+        private void set_23_ChangePropertyAction_TargetObject(object instance, object Value)
+        {
+            var that = (global::Microsoft.Xaml.Interactions.Core.ChangePropertyAction)instance;
+            that.TargetObject = (global::System.Object)Value;
+        }
+        private object get_24_ChangePropertyAction_Value(object instance)
+        {
+            var that = (global::Microsoft.Xaml.Interactions.Core.ChangePropertyAction)instance;
+            return that.Value;
+        }
+        private void set_24_ChangePropertyAction_Value(object instance, object Value)
+        {
+            var that = (global::Microsoft.Xaml.Interactions.Core.ChangePropertyAction)instance;
+            that.Value = (global::System.Object)Value;
+        }
 
         private global::Windows.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
@@ -871,6 +919,27 @@ namespace Aural.Aural_XamlTypeInfo
                 xamlMember.SetIsAttachable();
                 xamlMember.Getter = get_21_TitleBarPage_ButtonInactiveBackgroundColor;
                 xamlMember.Setter = set_21_TitleBarPage_ButtonInactiveBackgroundColor;
+                break;
+            case "Microsoft.Xaml.Interactions.Core.ChangePropertyAction.PropertyName":
+                userType = (global::Aural.Aural_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Xaml.Interactions.Core.ChangePropertyAction");
+                xamlMember = new global::Aural.Aural_XamlTypeInfo.XamlMember(this, "PropertyName", "Windows.UI.Xaml.PropertyPath");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_22_ChangePropertyAction_PropertyName;
+                xamlMember.Setter = set_22_ChangePropertyAction_PropertyName;
+                break;
+            case "Microsoft.Xaml.Interactions.Core.ChangePropertyAction.TargetObject":
+                userType = (global::Aural.Aural_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Xaml.Interactions.Core.ChangePropertyAction");
+                xamlMember = new global::Aural.Aural_XamlTypeInfo.XamlMember(this, "TargetObject", "Object");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_23_ChangePropertyAction_TargetObject;
+                xamlMember.Setter = set_23_ChangePropertyAction_TargetObject;
+                break;
+            case "Microsoft.Xaml.Interactions.Core.ChangePropertyAction.Value":
+                userType = (global::Aural.Aural_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Xaml.Interactions.Core.ChangePropertyAction");
+                xamlMember = new global::Aural.Aural_XamlTypeInfo.XamlMember(this, "Value", "Object");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_24_ChangePropertyAction_Value;
+                xamlMember.Setter = set_24_ChangePropertyAction_Value;
                 break;
             }
             return xamlMember;

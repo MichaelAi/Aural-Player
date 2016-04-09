@@ -34,6 +34,8 @@
     <RootPropertyPathName Name="OrderPlaylistCommand" />
     <RootPropertyPathName Name="IsPlaylistLoadInProgress" />
     <RootPropertyPathName Name="DisplayedPlaylist" />
+    <RootPropertyPathName Name="SelectedIndex" />
+    <RootPropertyPathName Name="IsPlayingNow" />
     <RootPropertyPathName Name="PlaylistList" />
     <RootPropertyPathName Name="DeletePlaylistCommand" />
     <RootPropertyPathName Name="EditPlaylistCommand" />
@@ -125,6 +127,7 @@
       <RootProperty Name="CommandParameter" />
       <RootProperty Name="FontFamily" />
       <RootProperty Name="Flyout" />
+      <RootProperty Name="Visibility" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Padding" />
       <RootProperty Name="HorizontalContentAlignment" />
@@ -495,6 +498,11 @@
       <RootProperty Name="Text" />
       <RootProperty Name="FontFamily" />
       <RootProperty Name="Items" />
+    </RootType>
+    <RootType FullName="Microsoft.Xaml.Interactions.Core.ChangePropertyAction">
+      <RootProperty Name="PropertyName" />
+      <RootProperty Name="TargetObject" />
+      <RootProperty Name="Value" />
     </RootType>
   </Roots.RootTypes>
 </Roots>
